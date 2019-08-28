@@ -19,7 +19,7 @@ int main(void){
 	}
 	else {
 		int err;
-		fprintf(stderr,"Oh no. uname(2) failed with %s\n", strerror(err));
+		fprintf(stderr,"Oh no! uname(2) failed with %s\n", strerror(err));
 		exit(1);
 	}
 	return 0;
