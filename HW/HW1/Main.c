@@ -18,8 +18,9 @@ int main(void){
 		printf("Hardware identifier : %s\n",myname.machine);
 	}
 	else {
-		 fprintf(stderr,"Oh no. uname(2) failed with %s\n", strerror(errno));
-		 exit(1);
+		int err;
+		fprintf(stderr,"Oh no. uname(2) failed with %s\n", strerror(err));
+		exit(1);
 	}
 	return 0;
 }
