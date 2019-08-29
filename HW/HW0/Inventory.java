@@ -10,7 +10,7 @@ public class Inventory {
 	private static int maxInventorySize;
 
 	Inventory(int maxInventorySize) {
-
+		this.maxInventorySize = maxInventorySize
 	}
 
 	public int addItem(Item it, int count) {

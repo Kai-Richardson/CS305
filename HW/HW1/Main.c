@@ -1,26 +1,40 @@
-#include <sys/utsname.h>
 #include <stdio.h>
-#include <unistd.h>
 #include <stdlib.h>
-#include <errno.h>
-#include <string.h>
-#include <sys/utsname.h>
 
-int main(void){
-	int i;
-	struct utsname myname;
-	i = uname(&myname); /* hold the structure */
-	if ( i == 0 ){
-		printf("Operating system name : %s\n",myname.sysname);
-		printf("Node name : %s\n",myname.nodename);
-		printf("Operating system release : %s\n",myname.release);
-		printf("Operating system name : %s\n",myname.version);
-		printf("Hardware identifier : %s\n",myname.machine);
-	}
-	else {
-		int err;
-		fprintf(stderr,"Oh no! uname(2) failed with %s\n", strerror(err));
-		exit(1);
-	}
-	return 0;
+int main(void) {
+	int my_array[] = {1, 5, 10, 15};
+	int* an_array[] = { &my_array[2], &my_array[0] };
+	char name[] = "MartinC";
+
+	int* p = my_array;
+	char* pc = name;
+	int** pp = &an_array[0];
+	(*p)++;
+	printf("Value of *p: %d\n", *p);
+
+	p++;
+	printf("Value of p: %p\n", p);
+	p++;
+	*p = 30;
+	printf("Value of my_array[2]: %d\n", my_array[2]);
+
+	  // draw picture for activity
+	printf("DRAW FIRST DATA PICTURE\n\n");
+	pp++;
+	printf("Value of *pp: %p\n", *pp);
+	printf("Value of **pp: %d\n", **pp);
+	pp--;
+	(*p)++;
+	printf("Values in an_array: %p, %p\n", an_array[0], an_array[1]);
+	printf("Dereferencing values in an_array: %d, %d\n", *an_array[0], *an_array[1]);
+
+	// draw picture for activity
+	printf("DRAW SECOND DATA PICTURE\n\n");
+	printf("Value of *pc: %c\n", *pc);
+	(*pc)++;
+	printf("Value of *pc: %c\n", *pc);
+	pc++;
+	printf("Value of *pc: %c\n", *pc);
+	printf("DRAW THIRD DATA PICTURE\n\n");
+	return EXIT_SUCCESS;
 }
