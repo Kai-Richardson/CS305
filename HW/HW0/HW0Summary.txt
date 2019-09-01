@@ -3,6 +3,7 @@ CS 305 HW 0
 
 1. (2 pts) Testing:
     I tested my program by progressively evaluating by changing code and compiling. I also utilized print statements at critical points in the code.
+    I would've used a debugger, but
     There's one difference, my doubles have some floating point arithmetic differences. It could be fixed with the math round function.
 
     Printout:
@@ -123,7 +124,130 @@ CS 305 HW 0
     3a. Writing the whole thing, really. It just takes time.
     3b. 3 hours. I spent an additional hour debugging WSL timecode issues with installing OpenJDK.
 
-Appendix A: copy java
+Appendix A:
+
+
+/**
+ * Item class
+ * Interacts with: Inventory, Main
+ * CS 305, Fall 2019
+ * @author Kai Richardson
+ * @version September 2019
+ */
+public class Item {
+	private double price;
+	private String name;
+	private int ID; //fullcaps should be reserved for compiler defines/consts, imo
+
+	Item(double price, String name, int ID) {
+		this.price = price;
+		this.name = name;
+		this.ID = ID;
+	}
+
+	public void print() {
+		System.out.print("Item " +  this.getPrice() + "\t" + this.name + "\t" + this.getID());
+	}
+
+	public double getPrice() {
+		return this.price;
+	}
+
+	public int getID() {
+		return this.ID;
+	}
+}
+
+/**
+ * Inventory class
+ * Interacts with: Item, Main
+ * CS 305, Fall 2019
+ * @author Kai Richardson
+ * @version September 2019
+ */
+public class Inventory {
+	//declare vars
+	private Item[] inventory;
+	private int[] stock;
+	private int numItems;
+	private static int maxInventorySize;
+
+	Inventory(int maxinv) {
+		//Default size of 10 for maxInvSize if not specified.
+		if (maxinv > 0) maxInventorySize = maxinv;
+		else maxInventorySize = 10;
+		inventory = new Item[maxInventorySize];
+		stock = new int[maxInventorySize];
+		numItems = 0;
+	}
+
+	public int addItem(Item it, int count) {
+		if (numItems >= maxInventorySize--) {
+			System.out.println("Cannot add another item to the Inventory: Maximum number of items reached.");
+			return -1;
+		}
+
+		//Add our new item to inventory[]
+		inventory[numItems] = it;
+
+		//update stock[] accordingly
+		if (count < 0) {
+			stock[numItems] = 0;
+		}
+
+		else {
+			stock[numItems] = count;
+		}
+
+		//increment numItems so we know how far to search
+		numItems++;
+		return 1;
+	}
+
+	public int soldItem(int id) {
+		for (int i=0; i < numItems; i++) {
+			Item it = inventory[i];
+			if (it.getID() == id) { //only use it if the id matches
+				if (stock[i] < 1) {
+					System.out.println("Could not sell item: Item's inventory count is 0.");
+					return -1;
+				}
+
+				stock[i]--;
+				System.out.println("Sold Item and inventory stock decremented");
+				return 1;
+			}
+		}
+		System.out.println("Could not sell item: not in inventory");
+		return -1;
+	}
+
+	public void printInventory() {
+		double calcvalue = 0;
+		double mincost = Double.MAX_VALUE; //extremely high number
+		double maxcost = 0;
+		System.out.println("Store has the following items in the inventory:");
+		System.out.println("Item" + " price" + "\t" + "name" + "\t" + "\t" + "id" + "\t" + "stock");
+		for (int i=0; i < numItems; i++) {
+			Item it = inventory[i];
+			it.print();
+			System.out.print("\t" + stock[i]);
+
+			double cost = it.getPrice();
+
+			//add to total calculated 'value' of the whole Inventory
+			calcvalue += cost * stock[i];
+
+			if (cost < mincost) mincost = cost;
+			if (cost > maxcost) maxcost = cost;
+			System.out.println("");
+		}
+		System.out.println("The total inventory is worth: " + calcvalue);
+		System.out.println("The cheapest item store carries is: " + mincost);
+		System.out.println("The most expensive item store carries is: " + maxcost);
+
+	}
+}
 
 
 Appendix B:

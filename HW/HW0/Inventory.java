@@ -71,7 +71,7 @@ public class Inventory {
 		for (int i=0; i < numItems; i++) {
 			Item it = inventory[i];
 			it.print();
-			System.out.print("\t" + stock[i]);
+			System.out.println("\t" + stock[i]);
 
 			double cost = it.getPrice();
 
@@ -80,7 +80,6 @@ public class Inventory {
 
 			if (cost < mincost) mincost = cost;
 			if (cost > maxcost) maxcost = cost;
-			System.out.println("");
 		}
 		System.out.println("The total inventory is worth: " + calcvalue);
 		System.out.println("The cheapest item store carries is: " + mincost);
