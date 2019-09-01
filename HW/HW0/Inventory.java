@@ -13,6 +13,7 @@ public class Inventory {
 	private static int maxInventorySize;
 
 	Inventory(int maxinv) {
+		//Default size of 10 for maxInvSize if not specified.
 		if (maxinv > 0) maxInventorySize = maxinv;
 		else maxInventorySize = 10;
 		inventory = new Item[maxInventorySize];
@@ -23,11 +24,13 @@ public class Inventory {
 	public int addItem(Item it, int count) {
 		if (numItems >= maxInventorySize--) {
 			System.out.println("Cannot add another item to the Inventory: Maximum number of items reached.");
-			return -1; //early return an error
+			return -1;
 		}
 
+		//Add our new item to inventory[]
 		inventory[numItems] = it;
 
+		//update stock[] accordingly
 		if (count < 0) {
 			stock[numItems] = 0;
 		}
@@ -36,6 +39,7 @@ public class Inventory {
 			stock[numItems] = count;
 		}
 
+		//increment numItems so we know how far to search
 		numItems++;
 		return 1;
 	}
@@ -43,7 +47,7 @@ public class Inventory {
 	public int soldItem(int id) {
 		for (int i=0; i < numItems; i++) {
 			Item it = inventory[i];
-			if (it.getID() == id) {
+			if (it.getID() == id) { //only use it if the id matches
 				if (stock[i] < 1) {
 					System.out.println("Could not sell item: Item's inventory count is 0.");
 					return -1;
@@ -60,7 +64,7 @@ public class Inventory {
 
 	public void printInventory() {
 		double calcvalue = 0;
-		double mincost = Double.MAX_VALUE;
+		double mincost = Double.MAX_VALUE; //extremely high number
 		double maxcost = 0;
 		System.out.println("Store has the following items in the inventory:");
 		System.out.println("Item" + " price" + "\t" + "name" + "\t" + "\t" + "id" + "\t" + "stock");
@@ -71,6 +75,7 @@ public class Inventory {
 
 			double cost = it.getPrice();
 
+			//add to total calculated 'value' of the whole Inventory
 			calcvalue += cost * stock[i];
 
 			if (cost < mincost) mincost = cost;
