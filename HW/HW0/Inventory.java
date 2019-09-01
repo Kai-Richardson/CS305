@@ -1,16 +1,21 @@
 /**
  * Inventory class
  * Interacts with: Item, Main
+ * CS 305, Fall 2019
+ * @author Kai Richardson
+ * @version September 2019
  */
 public class Inventory {
 	//declare vars
 	private Item[] inventory;
 	private int[] stock;
 	private int numItems;
-	private static int maxInventorySize;
+	private static int maxInventorySize = 10;
 
-	Inventory(int maxInventorySize) {
-		this.maxInventorySize = maxInventorySize;
+	Inventory(int maxinv) {
+		if (maxinv > 0) maxInventorySize = maxinv;
+		inventory = new Item[maxInventorySize];
+		stock = new int[maxInventorySize];
 	}
 
 	public int addItem(Item it, int count) {
@@ -20,19 +25,26 @@ public class Inventory {
 		}
 
 		if (count <= 0) {
-			return 0; //set the item’s stock count in the stock array to 0
+			//set the item's stock count in the stock array to 0
+			inventory[it.getID()] = it;
+			stock[it.getID()] = 0;
+			numItems--;
+			return 0;
 		}
 
 		else {
-			return count;
 			//set it the count passed in
+			inventory[it.getID()] = it;
+			stock[it.getID()] = count;
+			numItems++;
+			return 1;
 		}
-
 	}
 
 	public int soldItem(int id) {
-		for (int i=0; i < numItems; i++) {
+		for (int i=0; i < maxInventorySize; i++) {
 			Item it = inventory[i];
+			if (it == null) return -1;
 			if (it.getID() == id) {
 				if (stock[id] < 1) {
 					System.out.println("Could not sell item: Item's inventory count is 0.");
@@ -48,8 +60,9 @@ public class Inventory {
 
 	public void printInventory() {
 		System.out.println("Store has the following items in the inventory:");
-		for (int i=0; i < numItems; i++) {
+		for (int i=0; i < maxInventorySize; i++) {
 			Item it = inventory[i];
+			if (it == null) return;
 			it.print();
 			System.out.print(" " + stock[it.getID()]);
 			//todo lots more

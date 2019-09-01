@@ -1,6 +1,9 @@
 /**
  * Item class
  * Interacts with: Inventory, Main
+ * CS 305, Fall 2019
+ * @author Kai Richardson
+ * @version September 2019
  */
 public class Item {
 	private double price;
@@ -14,7 +17,7 @@ public class Item {
 	}
 
 	public void print() {
-		System.out.print("Item" + getPrice() + "\t" + name + "\t" + getID());
+		System.out.print("Item" + this.getPrice() + "\t" + name + "\t" + this.getID());
 	}
 
 	public double getPrice() {
