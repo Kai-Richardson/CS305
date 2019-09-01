@@ -14,7 +14,7 @@ public class Item {
 	}
 
 	public void print() {
-		System.out.print("Item" + getPrice() + "\t" + name + "\t" + getID())
+		System.out.print("Item" + getPrice() + "\t" + name + "\t" + getID());
 	}
 
 	public double getPrice() {

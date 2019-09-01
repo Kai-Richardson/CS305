@@ -18,7 +18,7 @@ int main(void) {
 	*p = 30;
 	printf("Value of my_array[2]: %d\n", my_array[2]);
 
-	  // draw picture for activity
+	// draw picture for activity
 	printf("DRAW FIRST DATA PICTURE\n\n");
 	pp++;
 	printf("Value of *pp: %p\n", *pp);
