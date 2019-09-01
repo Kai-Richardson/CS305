@@ -48,23 +48,38 @@ public class Inventory {
 					System.out.println("Could not sell item: Item's inventory count is 0.");
 					return -1;
 				}
+
 				stock[i]--;
 				System.out.println("Sold Item and inventory stock decremented");
+				return 1;
 			}
 		}
 		System.out.println("Could not sell item: not in inventory");
-		return -1; //shouldn't get here
+		return -1;
 	}
 
 	public void printInventory() {
+		double calcvalue = 0;
+		double mincost = Double.MAX_VALUE;
+		double maxcost = 0;
 		System.out.println("Store has the following items in the inventory:");
+		System.out.println("Item" + " price" + "\t" + "name" + "\t" + "\t" + "id" + "\t" + "stock");
 		for (int i=0; i < numItems; i++) {
 			Item it = inventory[i];
 			it.print();
 			System.out.print("\t" + stock[i]);
-			//todo lots more
+
+			double cost = it.getPrice();
+
+			calcvalue += cost * stock[i];
+
+			if (cost < mincost) mincost = cost;
+			if (cost > maxcost) maxcost = cost;
+			System.out.println("");
 		}
-		System.out.println(""); //spacing
+		System.out.println("The total inventory is worth: " + calcvalue);
+		System.out.println("The cheapest item store carries is: " + mincost);
+		System.out.println("The most expensive item store carries is: " + maxcost);
 
 	}
 

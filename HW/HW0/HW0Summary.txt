@@ -1,0 +1,130 @@
+Name: Kai Richardson
+CS 305 HW 0
+
+1. (2 pts) Testing:
+    I tested my program by progressively evaluating by changing code and compiling. I also utilized print statements at critical points in the code.
+    There's one difference, my doubles have some floating point arithmetic differences. It could be fixed with the math round function.
+
+    Printout:
+
+    Store has the following items in the inventory:
+    Item price      name            id      stock
+    Item 10.25      WarmFingers     1       10
+    Item 5.75       WarmEars        2       2
+    Item 35.22      KeepOnStomping  3       0
+    Item 67.04      PlankOnWheels   4       0
+    The total inventory is worth: 114.0
+    The cheapest item store carries is: 5.75
+    The most expensive item store carries is: 67.04
+    Store has the following items in the inventory:
+    Item price      name            id      stock
+    Item 10.25      WarmFingers     1       10
+    Item 5.75       WarmEars        2       2
+    Item 35.22      KeepOnStomping  3       0
+    Item 67.04      PlankOnWheels   4       0
+    Item 352.0      QuickPlanks     5       5
+    Item 223.47     Fortress007     6       2
+    Item 125.17     WarmDreams      7       10
+    Item 63.58      SoftDreams      8       12
+    The total inventory is worth: 4335.6
+    The cheapest item store carries is: 5.75
+    The most expensive item store carries is: 352.0
+    Store has the following items in the inventory:
+    Item price      name            id      stock
+    Item 10.25      WarmFingers     1       10
+    Item 5.75       WarmEars        2       2
+    Item 35.22      KeepOnStomping  3       0
+    Item 67.04      PlankOnWheels   4       0
+    Item 352.0      QuickPlanks     5       5
+    Item 223.47     Fortress007     6       2
+    Item 125.17     WarmDreams      7       10
+    Item 63.58      SoftDreams      8       12
+    Item 458.46     QuickDownTheRiver       9       4
+    Item 25.14      Burn Hot        10      6
+    The total inventory is worth: 6320.280000000001
+    The cheapest item store carries is: 5.75
+    The most expensive item store carries is: 458.46
+    Cannot add another item to the Inventory: Maximum number of items reached.
+    Cannot add another item to the Inventory: Maximum number of items reached.
+    Store has the following items in the inventory:
+    Item price      name            id      stock
+    Item 10.25      WarmFingers     1       10
+    Item 5.75       WarmEars        2       2
+    Item 35.22      KeepOnStomping  3       0
+    Item 67.04      PlankOnWheels   4       0
+    Item 352.0      QuickPlanks     5       5
+    Item 223.47     Fortress007     6       2
+    Item 125.17     WarmDreams      7       10
+    Item 63.58      SoftDreams      8       12
+    Item 458.46     QuickDownTheRiver       9       4
+    Item 25.14      Burn Hot        10      6
+    The total inventory is worth: 6320.280000000001
+    The cheapest item store carries is: 5.75
+    The most expensive item store carries is: 458.46
+    Sold Item and inventory stock decremented
+    Sold Item and inventory stock decremented
+    Store has the following items in the inventory:
+    Item price      name            id      stock
+    Item 10.25      WarmFingers     1       10
+    Item 5.75       WarmEars        2       1
+    Item 35.22      KeepOnStomping  3       0
+    Item 67.04      PlankOnWheels   4       0
+    Item 352.0      QuickPlanks     5       4
+    Item 223.47     Fortress007     6       2
+    Item 125.17     WarmDreams      7       10
+    Item 63.58      SoftDreams      8       12
+    Item 458.46     QuickDownTheRiver       9       4
+    Item 25.14      Burn Hot        10      6
+    The total inventory is worth: 5962.530000000001
+    The cheapest item store carries is: 5.75
+    The most expensive item store carries is: 458.46
+    Sold Item and inventory stock decremented
+    Could not sell item: Item's inventory count is 0.
+    Could not sell item: Item's inventory count is 0.
+    Store has the following items in the inventory:
+    Item price      name            id      stock
+    Item 10.25      WarmFingers     1       10
+    Item 5.75       WarmEars        2       0
+    Item 35.22      KeepOnStomping  3       0
+    Item 67.04      PlankOnWheels   4       0
+    Item 352.0      QuickPlanks     5       4
+    Item 223.47     Fortress007     6       2
+    Item 125.17     WarmDreams      7       10
+    Item 63.58      SoftDreams      8       12
+    Item 458.46     QuickDownTheRiver       9       4
+    Item 25.14      Burn Hot        10      6
+    The total inventory is worth: 5956.780000000001
+    The cheapest item store carries is: 5.75
+    The most expensive item store carries is: 458.46
+    Could not sell item: not in inventory
+    Store has the following items in the inventory:
+    Item price      name            id      stock
+    Item 223.47     Fortress007     6       5
+    Item 352.0      QuickPlanks     5       10
+    The total inventory is worth: 4637.35
+    The cheapest item store carries is: 223.47
+    The most expensive item store carries is: 352.0
+
+2. (1 pt) Evaluation:
+    It's reaable and easy to follow. I used spacing and indentation to improve readability.
+    I further commented my code in places where intention might not be clear from reading it.
+
+3. (3 pts) Questions:
+    1a. Inventory@4aa298b7 and Inventory@7d4991ad
+
+    1b. Inventory@4aa298b7 and Inventory@7d4991ad
+
+    1c. I assume those are the hex memory addresses.
+
+    2.
+        Inventory[]: [gloves, hat, boots, skateboard, null, null, null, null, null, null]
+        Stock[]: [10, 2, 0, 0, null, null, null, null, null, null]
+
+    3a. Writing the whole thing, really. It just takes time.
+    3b. 3 hours. I spent an additional hour debugging WSL timecode issues with installing OpenJDK.
+
+Appendix A: copy java
+
+
+Appendix B:
+    I certify that the submitted work is my own work. Any help I received is documented in code comments.
