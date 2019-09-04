@@ -1,0 +1,22 @@
+Special word of the day: kitty
+
+1.
+	We didn't have the file. We used a different C file instead and got no message.
+	We didn't get a message, so we can't answer why.
+
+Checkpoint 1
+	The modified hello world program ran fine.
+
+Part 7
+	ints: 4
+	chars: 1
+	double: 8
+	pointers: 8
+
+	rerun:
+	int && char && double didn't change
+	pointers changed
+	pointing to different memory
+
+	new type: long
+	8 bytes

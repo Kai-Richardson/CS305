@@ -11,7 +11,7 @@
                 "-g",
                 "${file}",
                 "-o",
-                "${workspaceFolder}/HW/HW1/${fileBasenameNoExtension}.out"
+                "${workspaceFolder}/HW/LAB1/${fileBasenameNoExtension}.out"
             ],
             "options": {
                 "cwd": "/usr/bin"

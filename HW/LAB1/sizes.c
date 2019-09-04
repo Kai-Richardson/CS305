@@ -8,6 +8,7 @@ int main(int argv, char* argc[]) {
   int * intPointer;
   char * charPointer;
   double * doublePointer;
+  long longVar = 993756245;
   
   int s_int = sizeof(intVar);
   int s_char = sizeof(charVar);
@@ -15,6 +16,7 @@ int main(int argv, char* argc[]) {
   int s_intPointer = sizeof(intPointer);
   int s_charPointer = sizeof(charPointer);
   int s_doublePointer = sizeof(doublePointer);
+  int s_long = sizeof(longVar);
 
   printf("Size of int in bytes: %d\n", s_int);
   printf("Size of char in bytes: %d\n", s_char);
@@ -22,6 +24,8 @@ int main(int argv, char* argc[]) {
   printf("Size of int pointer in bytes: %d\n", s_intPointer);
   printf("Size of char pointer in bytes: %d\n", s_charPointer);
   printf("Size of double pointer in bytes: %d\n", s_doublePointer);
+  printf("size of long: %d\n", s_long);
+
 
   /* now assign the pointers */
   intPointer = &intVar;   // this assigns the address of intVar to intPointer
