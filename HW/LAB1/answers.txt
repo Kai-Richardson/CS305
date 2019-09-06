@@ -1,13 +1,21 @@
+The head command shows the first few lines of a file.
+
 Special word of the day: kitty
 
+Part 5
+
 1.
-	We didn't have the file. We used a different C file instead and got no message.
+	We didn't have the file. We used a different C file instead and got no message (no errors).
 	We didn't get a message, so we can't answer why.
 
 Checkpoint 1
 	The modified hello world program ran fine.
 
+Checkpoint 2
+	command_line ran fine with the arguments.
+
 Part 7
+	bytes for storage:
 	ints: 4
 	chars: 1
 	double: 8
@@ -16,7 +24,8 @@ Part 7
 	rerun:
 	int && char && double didn't change
 	pointers changed
-	pointing to different memory
+	why: pointing to different memory
 
+	added new type:
 	new type: long
 	8 bytes
