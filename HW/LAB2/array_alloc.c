@@ -5,10 +5,22 @@
 
 /* get_array -- allocates and initializes an array */
 double *get_array(int size) {
-	/* for now, just return NULL */
-	/* you should complete this function */
+	//check to see if it's negative, then make it zero
+	if (size < 0) {
+		size = 0;
+	}
 
-	return NULL;
+	double *a_ptr = malloc(size * __SIZEOF_DOUBLE__);
+
+	for (int i = 0; i < size; i++)
+	{
+
+		*a_ptr = i * 10;
+		a_ptr++; //increment ptr across array
+	}
+	a_ptr -= size; //bring back to beginning
+
+	return a_ptr;
 }
 
 /* print_array -- prints the elements of the array, unless null */

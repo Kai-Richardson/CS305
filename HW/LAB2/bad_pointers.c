@@ -26,6 +26,13 @@ int main() {
 
   /* print values for a[0] to a[25] - add your code here */
 
+  for (int i = 0; i < 25; i++)
+
+  {
+	  printf("Value of %d:%d\n", i, a[i]);
+  }
+
+
 
   /* end your code here */
 
