@@ -4,24 +4,21 @@
 #include "item.h"
 
 /* inventory struct */
-typedef struct inventory {
-/*complete the rest of the struct*/
-
-
-
-
+typedef struct inventory
+{
+    /*complete the rest of the struct*/
 
 } inventory;
 
 /* function prototypes */
-inventory* create_inventory(int max_it);
-int add_item(inventory* rec, item it, int count);
-void sold_item(inventory* rec, int item_id);
-double calc_min_price(inventory* inv);
-double calc_max_price(inventory* inv);
-double calc_inv_value(inventory* inv);
-int delete_item(inventory* inv, int item_id);
-void print_inventory(inventory* inv);
-void free_inventory(inventory* inv);
+inventory *create_inventory(int max_it);
+int add_item(inventory *rec, item it, int count);
+void sold_item(inventory *rec, int item_id);
+double calc_min_price(inventory *inv);
+double calc_max_price(inventory *inv);
+double calc_inv_value(inventory *inv);
+int delete_item(inventory *inv, int item_id);
+void print_inventory(inventory *inv);
+void free_inventory(inventory *inv);
 
 #endif

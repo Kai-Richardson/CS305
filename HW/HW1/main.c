@@ -31,19 +31,21 @@ int run_test(void);
  * using void paramater since we are not using command line arguments
  * for this program
  */
-int main(void) {
+int main(void)
+{
   run_test();
 }
 
 /* run_test
  * runs a test, creating store inventories and adding/deleting items
  */
-int run_test(void) {
+int run_test(void)
+{
   /* create two store inventories */
   /* note: using pointers for store inventories so the inventory data can be
      modified */
-  inventory* rei = create_inventory(-3);
-  inventory* amazon = create_inventory(2);
+  inventory *rei = create_inventory(-3);
+  inventory *amazon = create_inventory(2);
 
   /* create items */
   /* note: not using pointers to items since once they are created
@@ -63,10 +65,10 @@ int run_test(void) {
   item backpack = create_item(125.54, "Heavy sturdy backpack", 12);
 
   // put some items into inventory
-  add_item(rei,gloves,10);
-  add_item(rei,hat,2);
-  add_item(rei,boots,-1);
-  add_item(rei,skateboard,0);
+  add_item(rei, gloves, 10);
+  add_item(rei, hat, 2);
+  add_item(rei, boots, -1);
+  add_item(rei, skateboard, 0);
 
   // for write-up: draw a picture of what rei's store inventory looks like
 
@@ -74,34 +76,34 @@ int run_test(void) {
   print_inventory(rei);
 
   // put more items into rei's inventory
-  add_item(rei,skis,5);
-  add_item(rei,tent,2);
-  add_item(rei,slBag,10);
-  add_item(rei,slPad,12);
+  add_item(rei, skis, 5);
+  add_item(rei, tent, 2);
+  add_item(rei, slBag, 10);
+  add_item(rei, slPad, 12);
 
   // print inventory
   print_inventory(rei);
 
   // add items
-  add_item(rei,canoe,4);
-  add_item(rei,stove,6);
+  add_item(rei, canoe, 4);
+  add_item(rei, stove, 6);
 
   // print inventory
   print_inventory(rei);
 
   // add items to amazon
-  add_item(amazon,hat, 7);
-  add_item(amazon,tent, 3);
+  add_item(amazon, hat, 7);
+  add_item(amazon, tent, 3);
   print_inventory(amazon);
 
   // add another item
-  add_item(amazon,slBag, 4);
+  add_item(amazon, slBag, 4);
   print_inventory(amazon);
 
   /* put more items in */
-  add_item(rei, canoe,2);
+  add_item(rei, canoe, 2);
   printf("Trying to add alrady existing item\n");
-  add_item(rei, canoe,4);
+  add_item(rei, canoe, 4);
   add_item(rei, mug, 7);
   add_item(rei, backpack, 3);
 
@@ -132,9 +134,8 @@ int run_test(void) {
   //printf("Trying to delete item 222\n");
   delete_item(rei, 222);
 
-
   /* add items to amazon */
-  add_item(amazon, backpack,2);
+  add_item(amazon, backpack, 2);
   add_item(amazon, mug, -2);
 
   /* print inventory */
