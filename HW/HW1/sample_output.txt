@@ -1,0 +1,169 @@
+Store inventory:
+    	price	name				id	stock
+Item	10.25	WarmFingers                   	1	10
+Item	5.75	WarmEars                      	2	2
+Item	35.22	KeepOnStomping                	3	0
+Item	67.04	PlankOnWheels                 	4	0
+      The total inventory is worth: 114.00
+      The cheapest item store carries is: 5.75
+      The most expensive item store carries is: 67.04
+
+Store inventory:
+    	price	name				id	stock
+Item	10.25	WarmFingers                   	1	10
+Item	5.75	WarmEars                      	2	2
+Item	35.22	KeepOnStomping                	3	0
+Item	67.04	PlankOnWheels                 	4	0
+Item	352.00	QuickPlanks                   	5	5
+Item	223.47	Fortress007                   	6	2
+Item	125.17	WarmDreams                    	7	10
+Item	63.58	SoftDreams                    	8	12
+      The total inventory is worth: 4335.60
+      The cheapest item store carries is: 5.75
+      The most expensive item store carries is: 352.00
+
+Store inventory:
+    	price	name				id	stock
+Item	10.25	WarmFingers                   	1	10
+Item	5.75	WarmEars                      	2	2
+Item	35.22	KeepOnStomping                	3	0
+Item	67.04	PlankOnWheels                 	4	0
+Item	352.00	QuickPlanks                   	5	5
+Item	223.47	Fortress007                   	6	2
+Item	125.17	WarmDreams                    	7	10
+Item	63.58	SoftDreams                    	8	12
+Item	458.46	QuickDownTheRiver             	9	4
+Item	25.14	Burn Hot                      	10	6
+      The total inventory is worth: 6320.28
+      The cheapest item store carries is: 5.75
+      The most expensive item store carries is: 458.46
+
+Store inventory:
+    	price	name				id	stock
+Item	5.75	WarmEars                      	2	7
+Item	223.47	Fortress007                   	6	3
+      The total inventory is worth: 710.66
+      The cheapest item store carries is: 5.75
+      The most expensive item store carries is: 223.47
+
+Cannot add another item to inventory. Max inventory size exceeded
+Store inventory:
+    	price	name				id	stock
+Item	5.75	WarmEars                      	2	7
+Item	223.47	Fortress007                   	6	3
+      The total inventory is worth: 710.66
+      The cheapest item store carries is: 5.75
+      The most expensive item store carries is: 223.47
+
+Cannot add another item to inventory. Max inventory size exceeded
+Trying to add alrady existing item
+Cannot add another item to inventory. Max inventory size exceeded
+Cannot add another item to inventory. Max inventory size exceeded
+Cannot add another item to inventory. Max inventory size exceeded
+Store inventory:
+    	price	name				id	stock
+Item	10.25	WarmFingers                   	1	10
+Item	5.75	WarmEars                      	2	2
+Item	35.22	KeepOnStomping                	3	0
+Item	67.04	PlankOnWheels                 	4	0
+Item	352.00	QuickPlanks                   	5	5
+Item	223.47	Fortress007                   	6	2
+Item	125.17	WarmDreams                    	7	10
+Item	63.58	SoftDreams                    	8	12
+Item	458.46	QuickDownTheRiver             	9	4
+Item	25.14	Burn Hot                      	10	6
+      The total inventory is worth: 6320.28
+      The cheapest item store carries is: 5.75
+      The most expensive item store carries is: 458.46
+
+Store inventory:
+    	price	name				id	stock
+Item	10.25	WarmFingers                   	1	10
+Item	5.75	WarmEars                      	2	2
+Item	35.22	KeepOnStomping                	3	0
+Item	67.04	PlankOnWheels                 	4	0
+Item	352.00	QuickPlanks                   	5	5
+Item	223.47	Fortress007                   	6	2
+Item	125.17	WarmDreams                    	7	10
+Item	63.58	SoftDreams                    	8	12
+Item	458.46	QuickDownTheRiver             	9	4
+Item	25.14	Burn Hot                      	10	6
+      The total inventory is worth: 6320.28
+      The cheapest item store carries is: 5.75
+      The most expensive item store carries is: 458.46
+
+Item w/ number 11 not found in the inventory.
+Sold one item: Item	458.46	QuickDownTheRiver             	9		3
+Store inventory:
+    	price	name				id	stock
+Item	10.25	WarmFingers                   	1	10
+Item	5.75	WarmEars                      	2	2
+Item	35.22	KeepOnStomping                	3	0
+Item	67.04	PlankOnWheels                 	4	0
+Item	352.00	QuickPlanks                   	5	5
+Item	223.47	Fortress007                   	6	2
+Item	125.17	WarmDreams                    	7	10
+Item	63.58	SoftDreams                    	8	12
+Item	458.46	QuickDownTheRiver             	9	3
+Item	25.14	Burn Hot                      	10	6
+      The total inventory is worth: 5861.82
+      The cheapest item store carries is: 5.75
+      The most expensive item store carries is: 458.46
+
+Sold one item: Item	458.46	QuickDownTheRiver             	9		2
+Sold one item: Item	458.46	QuickDownTheRiver             	9		1
+Sold one item: Item	458.46	QuickDownTheRiver             	9		0
+Cannot sell item that has 0 inventory count
+Cannot sell item that is not in the inventory
+Item w/ number 222 not found in the inventory.
+Cannot add another item to inventory. Max inventory size exceeded
+Cannot add another item to inventory. Max inventory size exceeded
+Store inventory:
+    	price	name				id	stock
+Item	5.75	WarmEars                      	2	7
+Item	223.47	Fortress007                   	6	3
+      The total inventory is worth: 710.66
+      The cheapest item store carries is: 5.75
+      The most expensive item store carries is: 223.47
+
+Cannot add another item to inventory. Max inventory size exceeded
+Cannot add another item to inventory. Max inventory size exceeded
+Item w/ number 11 not found in the inventory.
+Item w/ number 12 not found in the inventory.
+Store inventory:
+    	price	name				id	stock
+Item	5.75	WarmEars                      	2	7
+Item	223.47	Fortress007                   	6	3
+      The total inventory is worth: 710.66
+      The cheapest item store carries is: 5.75
+      The most expensive item store carries is: 223.47
+
+Store inventory:
+    	price	name				id	stock
+Item	5.75	WarmEars                      	2	7
+      The total inventory is worth: 40.25
+      The cheapest item store carries is: 5.75
+      The most expensive item store carries is: 5.75
+
+Cannot add item to inventory. Duplicate item ID number
+Store inventory:
+    	price	name				id	stock
+Item	5.75	WarmEars                      	2	7
+      The total inventory is worth: 40.25
+      The cheapest item store carries is: 5.75
+      The most expensive item store carries is: 5.75
+
+Store inventory:
+    	price	name				id	stock
+      The total inventory is worth: 0
+      The cheapest item store carries is: 0
+      The most expensive item store carries is: 0
+
+Store inventory:
+    	price	name				id	stock
+Item	125.17	WarmDreams                    	7	5
+Item	63.58	SoftDreams                    	8	5
+      The total inventory is worth: 943.75
+      The cheapest item store carries is: 63.58
+      The most expensive item store carries is: 125.17
+
