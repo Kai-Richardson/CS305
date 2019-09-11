@@ -6,7 +6,9 @@
 /* item struct */
 typedef struct item
 {
-    /*complete the rest of the struct*/
+    double price;
+    char name[MAX_NAME_LENGTH + 1];
+    int id_number;
 
 } item;
 
