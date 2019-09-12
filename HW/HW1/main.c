@@ -47,12 +47,12 @@ int run_test(void)
   inventory *rei = create_inventory(-3);
   inventory *amazon = create_inventory(2);
 
-  /* create items */
-  /* note: not using pointers to items since once they are created
-   * they are not later modified -- only used as data */
+  // create items
+  // note: not using pointers to items since once they are created
+  // they are not later modified -- only used as data
   // create items
   item gloves = create_item(10.25, "WarmFingers", 1);
-  item hat = create_item(5.75, "WarmEars", 2);
+/*  item hat = create_item(5.75, "WarmEars", 2);
   item boots = create_item(35.22, "KeepOnStomping", 3);
   item skateboard = create_item(67.04, "PlankOnWheels", 4);
   item skis = create_item(352.00, "QuickPlanks", 5);
@@ -100,27 +100,27 @@ int run_test(void)
   add_item(amazon, slBag, 4);
   print_inventory(amazon);
 
-  /* put more items in */
+  // put more items in
   add_item(rei, canoe, 2);
   printf("Trying to add alrady existing item\n");
   add_item(rei, canoe, 4);
   add_item(rei, mug, 7);
   add_item(rei, backpack, 3);
 
-  /* print the inventory */
+  // print the inventory
   print_inventory(rei);
 
   //item_sold();
-  /* print the inventory */
+  //print the inventory
   print_inventory(rei);
 
-  /* at point to draw picture 1 in report */
+  // at point to draw picture 1 in report
 
-  /* delete items */
+  // delete items
   //printf("Trying to delete item with ID 11\n");
   delete_item(rei, 11);
   sold_item(rei, 9);
-  /* print the inventory */
+  // print the inventory
   print_inventory(rei);
 
   sold_item(rei, 9);
@@ -128,24 +128,24 @@ int run_test(void)
   sold_item(rei, 9);
   sold_item(rei, 9);
   sold_item(rei, 999);
-  /* at point to draw picture 2 in report */
+  // at point to draw picture 2 in report
 
-  /* delete item */
+  // delete item
   //printf("Trying to delete item 222\n");
   delete_item(rei, 222);
 
-  /* add items to amazon */
+  // add items to amazon
   add_item(amazon, backpack, 2);
   add_item(amazon, mug, -2);
 
-  /* print inventory */
+  // print inventory
   print_inventory(amazon);
 
-  /* add another items to amazon */
+  // add another items to amazon
   add_item(amazon, gloves, 3);
   add_item(amazon, skis, 2);
 
-  /* delete items */
+  // delete items
   //printf("Trying to delete item 11\n");
   delete_item(amazon, 11);
   //printf("Trying to delete item 12\n");
@@ -162,14 +162,14 @@ int run_test(void)
   delete_item(amazon, 2);
   print_inventory(amazon);
 
-  /* add items to amazon */
+  // add items to amazon
   add_item(amazon, slBag, 5);
   add_item(amazon, slPad, 5);
   print_inventory(amazon);
-
-  /* free memory for store inventories */
+*/
+  // free memory for store inventories
   free_inventory(amazon);
   free_inventory(rei);
 
   return EXIT_SUCCESS;
-} /* end main */
+} // end main

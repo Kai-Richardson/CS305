@@ -1,3 +1,10 @@
+// ${workspaceRoot} the path of the folder opened in VS Code
+// ${file} the current opened file
+// ${fileBasename} the current opened file's basename
+// ${fileDirname} the current opened file's dirname
+// ${fileExtname} the current opened file's extension
+// ${cwd} the task runner's current working directory on startup
+
 {
     "version": "2.0.0",
     "tasks": [
@@ -31,6 +38,52 @@
             ],
             "options": {
                 "cwd": "/usr/bin"
+            }
+        },
+        {
+            "type": "shell",
+            "label": "build",
+            "group": "build",
+            "command": "/usr/bin/make",
+            "args": [
+                "-C ${workspaceRoot}/HW/HW1",
+                "build"
+            ],
+            // Use the standard less compilation problem matcher.
+            "problemMatcher": {
+                "owner": "c",
+                "fileLocation": ["relative", "${workspaceRoot}"],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
+            "type": "shell",
+            "label": "clean",
+            "group": "build",
+            "command": "/usr/bin/make",
+            "args": [
+                "-C ${workspaceRoot}/HW/HW1",
+                "clean"
+            ],
+            // Use the standard less compilation problem matcher.
+            "problemMatcher": {
+                "owner": "c",
+                "fileLocation": ["relative", "${workspaceRoot}"],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
             }
         }
     ]

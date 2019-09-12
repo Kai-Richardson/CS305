@@ -20,9 +20,9 @@ inventory* create_inventory(int max_it) {
         inv->max_items = 10;
     }
 
-    item* items = (item*)malloc(sizeof(struct item) * inv->max_items);
+    inv->items = (item*)malloc(sizeof(struct item) * inv->max_items);
 
-    int* stock = (int*)malloc(sizeof(int) * inv->max_items);
+    inv->stock = (int*)malloc(sizeof(int) * inv->max_items);
 
     return inv;
 
@@ -128,9 +128,9 @@ void print_inventory(inventory *inv) {
         print(inv->items[i]);
     }
 
-    printf("The total inventory is worth: %.2f", calc_inv_value);
-    printf("The cheapest item store carries is: %.2f", calc_min_price);
-    printf("The most expensive item store carries is: %.2f", calc_max_price);
+    printf("The total inventory is worth: %.2f", calc_inv_value(inv));
+    printf("The cheapest item store carries is: %.2f", calc_min_price(inv));
+    printf("The most expensive item store carries is: %.2f", calc_max_price(inv));
 
 }
 void free_inventory(inventory *inv) {

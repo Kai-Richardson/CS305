@@ -7,7 +7,7 @@
 #include "item.h"
 #include "inventory.h"
 
-item create_item(double price, char *name, int id_number)
+item create_item(double price, char *namearg, int id_number)
 {
     item it;
 
@@ -32,18 +32,27 @@ item create_item(double price, char *name, int id_number)
     }
 
     //only copy MAX_NAME_LENGTH amt of chars
+    int null_reached = 0;
     for (int i = 0; i < MAX_NAME_LENGTH; i++)
     {
-        if (!name[i] || name[i] != EOF) { //spaces/EOF
-            it.name[i] = name[i];
+        if (!null_reached) {
+            if (namearg[i] != '\0') { //spaces/EOF
+                    printf("i: %d, arg: %c", i, namearg[i]);
+                    it.name[i] = namearg[i];
+                }
+                else {
+                    null_reached = 1;
+                    it.name[i] = ' '; //space char default
+                }
         }
         else {
-            it.name[i] = " "; //space char default
+            it.name[i] = ' '; //space char default
         }
+
     }
 
     //setup null-term
-    it.name[MAX_NAME_LENGTH] = "\0";
+    it.name[MAX_NAME_LENGTH] = '\0';
 
     return it;
 }
