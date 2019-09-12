@@ -52,7 +52,7 @@ int run_test(void)
   // they are not later modified -- only used as data
   // create items
   item gloves = create_item(10.25, "WarmFingers", 1);
-/*  item hat = create_item(5.75, "WarmEars", 2);
+  item hat = create_item(5.75, "WarmEars", 2);
   item boots = create_item(35.22, "KeepOnStomping", 3);
   item skateboard = create_item(67.04, "PlankOnWheels", 4);
   item skis = create_item(352.00, "QuickPlanks", 5);
@@ -85,7 +85,7 @@ int run_test(void)
   print_inventory(rei);
 
   // add items
-  add_item(rei, canoe, 4);
+/*  add_item(rei, canoe, 4);
   add_item(rei, stove, 6);
 
   // print inventory

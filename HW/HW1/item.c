@@ -37,7 +37,6 @@ item create_item(double price, char *namearg, int id_number)
     {
         if (!null_reached) {
             if (namearg[i] != '\0') { //spaces/EOF
-                    printf("i: %d, arg: %c", i, namearg[i]);
                     it.name[i] = namearg[i];
                 }
                 else {
@@ -58,5 +57,5 @@ item create_item(double price, char *namearg, int id_number)
 }
 
 void print(item it) {
-    printf("Item %.2f\t%s\t%i", it.price, it.name, it.id_number);
+    printf("Item %.2f\t%30s\t%i\t", it.price, it.name, it.id_number);
 }
