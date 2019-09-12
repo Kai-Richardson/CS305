@@ -134,5 +134,7 @@ void print_inventory(inventory *inv) {
 
 }
 void free_inventory(inventory *inv) {
-
+    free(inv->items);
+    free(inv->stock);
+    free(inv);
 }
