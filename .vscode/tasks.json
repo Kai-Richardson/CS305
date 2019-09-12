@@ -46,8 +46,7 @@
             "group": "build",
             "command": "/usr/bin/make",
             "args": [
-                "-C ${workspaceRoot}/HW/HW1",
-                "build"
+                "-C ${workspaceRoot}/HW/HW1"
             ],
             // Use the standard less compilation problem matcher.
             "problemMatcher": {

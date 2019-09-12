@@ -23,5 +23,6 @@ double calc_inv_value(inventory *inv);
 int delete_item(inventory *inv, int item_id);
 void print_inventory(inventory *inv);
 void free_inventory(inventory *inv);
+void remove_element(item *array, int index, int array_length);
 
 #endif

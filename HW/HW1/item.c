@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include "item.h"
 #include "inventory.h"
+#include <string.h>
 
 item create_item(double price, char *namearg, int id_number)
 {
@@ -32,30 +33,11 @@ item create_item(double price, char *namearg, int id_number)
     }
 
     //only copy MAX_NAME_LENGTH amt of chars
-    int null_reached = 0;
-    for (int i = 0; i < MAX_NAME_LENGTH; i++)
-    {
-        if (!null_reached) {
-            if (namearg[i] != '\0') { //spaces/EOF
-                    it.name[i] = namearg[i];
-                }
-                else {
-                    null_reached = 1;
-                    it.name[i] = ' '; //space char default
-                }
-        }
-        else {
-            it.name[i] = ' '; //space char default
-        }
-
-    }
-
-    //setup null-term
-    it.name[MAX_NAME_LENGTH] = '\0';
+    strncpy(it.name,namearg,MAX_NAME_LENGTH);
 
     return it;
 }
 
 void print(item it) {
-    printf("Item %.2f\t%30s\t%i\t", it.price, it.name, it.id_number);
+    printf("Item %.2f\t%s\t%i\t", it.price, it.name, it.id_number);
 }

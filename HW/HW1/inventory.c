@@ -37,36 +37,57 @@ int add_item(inventory *rec, item it, int count)
         printf("Cannot add another item to inventory. Max inventory size exceeded.\n");
         return -1;
     }
-    else if (it.id_number) //doesn't exist in inventory rec
+    else
     {
-        rec->items[rec->num_items] = it; //stores in array
-        rec->num_items++;
-        if (count > 0)
+        int found = 0;
+        for (int i = 0; i < rec->num_items; i++)
         {
-            rec->stock[rec->num_items] = count; //update stock
+            if (rec->items[i].id_number == it.id_number)
+            {
+                found = 1;
+                break;
+            }
         }
-        else
+        if (!found)
         {
-            rec->stock[rec->num_items] = 0; //no negative stock please
+            rec->items[rec->num_items] = it; //stores in array
+            if (count > 0)
+            {
+                rec->stock[rec->num_items] = count; //update stock
+            }
+            else
+            {
+                rec->stock[rec->num_items] = 0; //no negative stock please
+                return 0;
+            }
+            rec->num_items++;
         }
-
-        return 0;
-    }
-    else //already exists
-    {
-        printf("Canot add item to inventory. Duplicate item ID number.\n");
+        else //already exists
+        {
+            printf("Canot add item to inventory. Duplicate item ID number.\n");
+        }
     }
 }
 void sold_item(inventory *rec, int item_id)
 {
-    if (item_id)
-    { //is found in rec
+    int found_add = -1; //not possible
+    for (int i = 0; i < rec->num_items; i++)
+    {
+        if (rec->items[i].id_number == item_id)
+        {
+            found_add = i;
+            break;
+        }
+    }
+
+    if (found_add >= 0) //if we found the item
+    {
         if (rec->stock[item_id] <= 0)
         {
             printf("Cannot sell item that has 0 inventory count.\n");
             return;
         }
-        //rec.found --;
+        rec->stock[found_add]--;
         printf("Item sold.\n");
     }
     else
@@ -86,7 +107,7 @@ int delete_item(inventory *rec, int item_id)
     {
         if (rec->items[i].id_number == item_id)
         {
-            //delete + shift
+            remove_element(rec->items, i, rec->num_items); //delete + shift
             rec->num_items--;
             return 0;
         }
@@ -100,14 +121,18 @@ int delete_item(inventory *rec, int item_id)
 double calc_min_price(inventory *inv)
 {
     double found = __DBL_MAX__;
+    double exists = 0;
 
     for (int i = 0; i < inv->num_items; i++)
     {
         if (inv->items[i].price < found)
         {
             found = inv->items[i].price;
+            exists = 1;
         }
     }
+    if (!exists)
+        found = 0;
     return found;
 }
 double calc_max_price(inventory *inv)
@@ -137,7 +162,7 @@ double calc_inv_value(inventory *inv)
 void print_inventory(inventory *inv)
 {
     printf("Store inventory:\n");
-    printf("     price\tname\tid\tstock\n"); //manual spaces to align with 'Item ', tab doesn't work
+    printf("     price\tname\t\tid\tstock\n"); //manual spaces to align with 'Item ', tab doesn't work
 
     for (int i = 0; i < inv->num_items; i++)
     {
@@ -154,4 +179,12 @@ void free_inventory(inventory *inv)
     free(inv->items);
     free(inv->stock);
     free(inv);
+}
+
+//From StackOverflow id#15821123
+void remove_element(item *array, int index, int array_length)
+{
+    int i;
+    for (i = index; i < array_length - 1; i++)
+        array[i] = array[i + 1];
 }

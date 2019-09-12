@@ -85,7 +85,7 @@ int run_test(void)
   print_inventory(rei);
 
   // add items
-/*  add_item(rei, canoe, 4);
+  add_item(rei, canoe, 4);
   add_item(rei, stove, 6);
 
   // print inventory
@@ -166,7 +166,7 @@ int run_test(void)
   add_item(amazon, slBag, 5);
   add_item(amazon, slPad, 5);
   print_inventory(amazon);
-*/
+
   // free memory for store inventories
   free_inventory(amazon);
   free_inventory(rei);
