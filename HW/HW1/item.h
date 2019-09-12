@@ -7,7 +7,7 @@
 typedef struct item
 {
     double price;
-    char name[MAX_NAME_LENGTH + 1];
+    char* name; //[MAX_NAME_LENGTH + 1]
     int id_number;
 
 } item;

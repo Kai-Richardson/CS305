@@ -25,5 +25,3 @@ void print_inventory(inventory *inv);
 void free_inventory(inventory *inv);
 
 #endif
-
-//defines the inventory struct and the function prototypes that operate on the inventory data structures
