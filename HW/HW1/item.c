@@ -4,7 +4,6 @@
  */
 
 #include <stdio.h>
-#include <stdlib.h> //for rand()
 #include "item.h"
 #include "inventory.h"
 
@@ -29,7 +28,7 @@ item create_item(double price, char *name, int id_number)
     }
     else
     {
-        it.id_number = rand() % 100; //we don't want conflicting id numbers now do we
+        it.id_number = 0; //default
     }
 
     //only copy MAX_NAME_LENGTH amt of chars
