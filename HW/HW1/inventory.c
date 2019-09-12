@@ -50,21 +50,87 @@ int add_item(inventory *rec, item it, int count) {
 
 }
 void sold_item(inventory *rec, int item_id) {
+    if (item_id) { //is found in rec
+        if (rec->stock[item_id] <= 0) {
+            printf("Cannot sell item that has 0 inventory count.");
+            return;
+        }
+        //rec.found --;
+        printf("Item sold.");
+    }
+    else { //not found
+        printf("Cannot sell item that is not in the inventory.");
+    }
 
 }
-double calc_min_price(inventory *inv) {
 
+int delete_item(inventory *rec, int item_id) {
+    if(rec->num_items <= 0) {
+        printf("Item number %d not found. Store is empty.", item_id);
+        return -1;
+    }
+    for (int i = 0; i < rec->num_items; i++)
+    {
+        if (rec->items[i].id_number == item_id)
+        {
+            //delete + shift
+            rec->num_items--;
+            return 0;
+        }
+    }
+
+    //item not found
+    printf("Item w/ number %d not found in the inventory.", item_id);
+    return -1;
+
+}
+
+double calc_min_price(inventory *inv) {
+    double found = __DBL_MAX__;
+
+    for (int i = 0; i < inv->num_items; i++)
+    {
+        if (inv->items[i].price < found)
+        {
+            found = inv->items[i].price;
+        }
+    }
+    return found;
 }
 double calc_max_price(inventory *inv) {
+    double found = 0;
 
+    for (int i = 0; i < inv->num_items; i++)
+    {
+        if (inv->items[i].price > found)
+        {
+            found = inv->items[i].price;
+        }
+    }
+    return found;
 }
 double calc_inv_value(inventory *inv) {
+    double value = 0;
 
+    for (int i = 0; i < inv->num_items; i++)
+    {
+        value += inv->items[i].price * inv->stock[i];
+    }
+    return value;
 }
-int delete_item(inventory *inv, int item_id) {
 
-}
 void print_inventory(inventory *inv) {
+    printf("Store inventory:\n");
+    printf("\tprice\tname\tid\tstock");
+
+    for (int i = 0; i < inv->num_items; i++)
+    {
+        print(inv->items[i]);
+    }
+
+    printf("The total inventory is worth: %.2f", calc_inv_value);
+    printf("The cheapest item store carries is: %.2f", calc_min_price);
+    printf("The most expensive item store carries is: %.2f", calc_max_price);
 
 }
 void free_inventory(inventory *inv) {
