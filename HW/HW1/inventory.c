@@ -82,7 +82,7 @@ void sold_item(inventory *rec, int item_id)
 
     if (found_add >= 0) //if we found the item
     {
-        if (rec->stock[item_id] <= 0)
+        if (rec->stock[found_add] <= 0)
         {
             printf("Cannot sell item that has 0 inventory count.\n");
             return;

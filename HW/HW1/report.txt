@@ -1,0 +1,49 @@
+Name: Kai Richardson
+CS 305 HW1 REPORT
+
+1a. Meets all specifications.
+1b. See sample_output.txt
+1c. These are all tested by the main run_test() function.
+2.
+2a. You're just accessing the member variables, theres no need for pointers.
+2b. Because your inventory variable is a pointer to the inventory, since you
+make changes to it that you want to persist. Most of the methods inside of inventory.c
+change the contents of the inventory struct, which is why we need a pointer.
+3a.
+                        rei
+    items       stock       num_items       max_items
+      |           |             |               |
+      |           |             9              30
+      |           |
+      | [10, 2, 5, 2, 10, 12, 4, 6, 7, 12]
+      |
+[gloves, hat, skis, tent, slBag, slPad, canoe, stove, backpack]
+
+3b.
+                        rei
+    items       stock       num_items       max_items
+      |           |             |               |
+      |           |            9              30
+      |           |
+      | [10, 2, 5, 2, 10, 12, 0, 6, 7]
+      |
+[gloves, hat, skis, tent, slBag, slPad, canoe, stove, backpack]
+
+4.
+Well, C is not an OO language first off. C is platform dependent. Java has a
+garbage collector. There's no threading in C. There's private members in Java.
+Java's a much higher-level language than C. There's no preprocessor in Java.
+
+4b.
+They are both compiled languages. Most basic syntax is the same, such as comments,
+for loops, and if statements. Java is part of the C family of languages so this
+is to be expected.
+
+5a.
+Compiler Message -  What it means - How I resolved it
+
+munmap_chunk(): invalid pointer - something went wrong in free() - going into
+lab hours and figuring out it was an off-by-one error I spent 4 hours on.
+
+Segmentation Fault - Bad memory accessing - meeting with Dr. Cenek and fixing an
+issue in my item.h struct declerations.
