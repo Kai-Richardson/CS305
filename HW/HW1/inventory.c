@@ -8,6 +8,7 @@
 #include "item.h"
 #include "inventory.h"
 
+//creates inventory with max item size provided, returns inventory*
 inventory *create_inventory(int max_it)
 {
     inventory *inv = (inventory *)malloc(sizeof(struct inventory));
@@ -20,7 +21,7 @@ inventory *create_inventory(int max_it)
     }
     else
     {
-        inv->max_items = 10;
+        inv->max_items = 10; //default
     }
 
     inv->items = (item *)malloc(sizeof(struct item) * inv->max_items);
@@ -30,6 +31,7 @@ inventory *create_inventory(int max_it)
     return inv;
 }
 
+//adds given item to given inventory with given stock count
 int add_item(inventory *rec, item it, int count)
 {
     if (rec->num_items >= rec->max_items)
@@ -68,6 +70,8 @@ int add_item(inventory *rec, item it, int count)
         }
     }
 }
+
+//removes a single item of given id from given inventory
 void sold_item(inventory *rec, int item_id)
 {
     int found_add = -1; //not possible
@@ -87,7 +91,7 @@ void sold_item(inventory *rec, int item_id)
             printf("Cannot sell item that has 0 inventory count.\n");
             return;
         }
-        rec->stock[found_add]--;
+        rec->stock[found_add]--; //decrement stock
         printf("Item sold.\n");
     }
     else
@@ -96,6 +100,7 @@ void sold_item(inventory *rec, int item_id)
     }
 }
 
+//deletes item with given item id from given inventory and shifts
 int delete_item(inventory *rec, int item_id)
 {
     if (rec->num_items <= 0)
@@ -118,6 +123,7 @@ int delete_item(inventory *rec, int item_id)
     return -1;
 }
 
+//returns lowest price found in given inventory
 double calc_min_price(inventory *inv)
 {
     double found = __DBL_MAX__;
@@ -131,10 +137,12 @@ double calc_min_price(inventory *inv)
             exists = 1;
         }
     }
-    if (!exists)
+    if (!exists) //otherwise infinity
         found = 0;
     return found;
 }
+
+//returns highest price found in given inventory
 double calc_max_price(inventory *inv)
 {
     double found = 0;
@@ -148,6 +156,8 @@ double calc_max_price(inventory *inv)
     }
     return found;
 }
+
+//returns sum of each item's price * stock count
 double calc_inv_value(inventory *inv)
 {
     double value = 0;
@@ -159,6 +169,7 @@ double calc_inv_value(inventory *inv)
     return value;
 }
 
+//prints full statistics of given inventory
 void print_inventory(inventory *inv)
 {
     printf("Store inventory:\n");
@@ -174,6 +185,8 @@ void print_inventory(inventory *inv)
     printf("The cheapest item store carries is: %.2f\n", calc_min_price(inv));
     printf("The most expensive item store carries is: %.2f\n", calc_max_price(inv));
 }
+
+//frees memory of given inventory
 void free_inventory(inventory *inv)
 {
     free(inv->items);
@@ -182,6 +195,7 @@ void free_inventory(inventory *inv)
 }
 
 //From StackOverflow id#15821123
+//Removes element from an item array at given index
 void remove_element(item *array, int index, int array_length)
 {
     int i;

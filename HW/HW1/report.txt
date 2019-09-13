@@ -47,3 +47,15 @@ lab hours and figuring out it was an off-by-one error I spent 4 hours on.
 
 Segmentation Fault - Bad memory accessing - meeting with Dr. Cenek and fixing an
 issue in my item.h struct declerations.
+
+5b.
+According to my time tracker, I spent 8h and 42m. 6h 17m in C, with the rest being
+things like make, the .pdf, and others. 2 hours and 40 minutes were spent on
+inventory.c alone.
+
+APPENDIX A:
+I verify that the code and this write-up were authored by me.
+I have documented the help I have received in comments in the code files.
+
+APPENDIX B:
+See attached code files.

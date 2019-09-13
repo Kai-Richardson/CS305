@@ -8,6 +8,7 @@
 #include "inventory.h"
 #include <string.h>
 
+//initalize item with given args
 item create_item(double price, char *namearg, int id_number)
 {
     item it;
@@ -33,11 +34,14 @@ item create_item(double price, char *namearg, int id_number)
     }
 
     //only copy MAX_NAME_LENGTH amt of chars
+    //manual non-library solution was giving make warnings even though it worked
+    //opted for no warnings
     strncpy(it.name,namearg,MAX_NAME_LENGTH);
 
     return it;
 }
 
+//prints statistics about given item
 void print(item it) {
     printf("Item %.2f\t%s\t%i\t", it.price, it.name, it.id_number);
 }
