@@ -6,8 +6,8 @@
 /* inventory struct */
 typedef struct inventory
 {
-    item* items;
-    int* stock;
+    item *items;
+    int *stock;
     int num_items;
     int max_items;
 
