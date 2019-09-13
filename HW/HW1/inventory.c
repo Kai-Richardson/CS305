@@ -196,6 +196,7 @@ void free_inventory(inventory *inv)
 
 //From StackOverflow id#15821123
 //Removes element from an item array at given index
+//My similar solution was giving errors, so I searched online.
 void remove_element(item *array, int index, int array_length)
 {
     int i;
