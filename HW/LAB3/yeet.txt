@@ -1,0 +1,6 @@
+Highest Scoring Player:
+Name: (null)
+
+X Position: 0
+Y Position: 0
+Points: 0

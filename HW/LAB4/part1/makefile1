@@ -1,0 +1,11 @@
+test1: test1.o president.o
+	gcc -o test1 test1.o president.o
+
+test1.o: test1.c test1.h
+	gcc -c test1.c
+
+president.o: president.c president.h
+	gcc -c president.c
+
+clean:
+	/bin/rm -f *.o test1
