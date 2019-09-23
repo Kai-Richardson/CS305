@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 
 /* for lab on gdb
 * Computes n factorial (n!) using a recursive
@@ -33,7 +34,7 @@ int main (int argc, char *argv[]) {
 
 /* recursive factorial function */
 int factorial(int n) {
-  if ((n = 1) || (n = 0)) {
+  if ((n == 1) || (n == 0)) {
     // if n is zero or one, return a 1
     return 1;
   }
