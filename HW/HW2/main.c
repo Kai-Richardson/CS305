@@ -11,9 +11,11 @@
 * version: 1: 20190917
 */
 
-int main(int argv, char* argc[]){
+int main(int argv, char *argc[])
+{
 
-	if(argv != 2){
+	if (argv != 2)
+	{
 		fprintf(stderr, "Cound not open file");
 		return EXIT_FAILURE;
 	}
