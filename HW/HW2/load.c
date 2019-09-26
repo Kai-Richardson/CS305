@@ -2,17 +2,14 @@
 #include "hexmaze.h"
 #include "hexcell.h"
 
-board *file_load(char *filename)
+board* file_load(char* filename)
 {
     board* result;
-    void** v5;
-    board* gameboard;
-    FILE* fp;
 
-    gameboard = (board *)malloc(sizeof(struct board));
+    board* gameboard = (board *)malloc(sizeof(struct board));
     if (gameboard)
     {
-        fp = fopen(filename, "r");
+        FILE* fp = fopen(filename, "r");
         if (fp)
         {
             fscanf(fp, "%d %d %d %d %d %d",
@@ -29,8 +26,8 @@ board *file_load(char *filename)
                     gameboard->hexcells = (hexcell**)malloc(sizeof(struct hexcell) * gameboard->max_row);
                     for (int i = 0; gameboard->max_row > i; ++i)
                     {
-                        v5 = (void **)&gameboard->hexcells[i];
-                        *v5 = malloc(8LL * gameboard->max_col);
+                        void** ptr_void = (void**)&gameboard->hexcells[i];
+                        *ptr_void = malloc(sizeof(struct hexcell) * gameboard->max_col);
                         if (!gameboard->hexcells[i])
                         {
                             fprintf(stderr, "Could not allocate hexcells.\n");
@@ -62,13 +59,13 @@ board *file_load(char *filename)
                 else
                 {
                     printf(
-                        "Incorrect start or end points entered\nmx:%d my:%d\nsx:%d sy:%d\nex:%d ey:%d\n",
+                        "Incorrect start or end points entered:\nmr:%d mc:%d sr:%d sc:%d er:%d ec:%d\n",
                         gameboard->max_row,
                         gameboard->max_col,
-                        gameboard->start_col,
                         gameboard->start_row,
-                        gameboard->end_col,
-                        gameboard->end_row);
+                        gameboard->start_col,
+                        gameboard->end_row,
+                        gameboard->end_col);
                     free(gameboard);
                     result = NULL;
                 }
@@ -81,6 +78,7 @@ board *file_load(char *filename)
             }
         }
         else
+
         {
             fprintf(stderr, "Could not open file for reading.\n");
             result = NULL;
