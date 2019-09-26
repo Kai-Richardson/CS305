@@ -40,7 +40,6 @@ return;
 }
 
 //find path
-
 int find_path(char *f_name)
 {
 	int result;
@@ -54,21 +53,21 @@ int find_path(char *f_name)
 
 		if (start_search(hexboard))
 		{
-			printf("Success: Here is a path.");
+			printf("Success: Here is a path.\n");
 		}
 		else
 		{
-			printf("Could not find a path. Board could not be solved.");
+			printf("Could not find a path. Board could not be solved.\n");
 		}
 
 		print_board(hexboard);
-		printf("Thanks for playing!");
+		printf("Thanks for playing!\n");
 		free_board(hexboard);
 		result = 1;
 	}
 	else
 	{
-		fprintf(stderr, "Could not create board or read from file.");
+		fprintf(stderr, "Could not create board or read from file.\n");
 		result = 0;
 	}
 
@@ -95,7 +94,7 @@ int start_search(board* hexboard) {
   {
     return search(hexboard, hexboard->start_row, hexboard->start_col);
   }
-  printf("Start or end cell are obstacles board cannot be solved");
+  printf("The start cell or the end cell are obstacles; board cannot be solved,\n");
   return 0;
 }
 
@@ -111,7 +110,7 @@ int search(board* hexboard, int row, int col) {
     {
         if (hexboard->hexcells[row][col].obstacle != yes && hexboard->hexcells[row][col].color == white)
         {
-            hexboard->hexcells[row][col].color = 3;
+            hexboard->hexcells[row][col].color = path;
             result = (search(hexboard, row-1, col-1)\
                    || search(hexboard, row-1, col  )\
                    || search(hexboard, row  , col+1)\
@@ -126,7 +125,7 @@ int search(board* hexboard, int row, int col) {
     }
     else
     {
-        printf("------------------------Found Path-----------------------");
+        printf("------------------------Found Path-----------------------\n");
         result = 1;
     }
     return result;

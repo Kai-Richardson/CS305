@@ -16,7 +16,7 @@ int main(int argv, char *argc[])
 
 	if (argv != 2)
 	{
-		fprintf(stderr, "Cound not open file");
+		fprintf(stderr, "Could not open file.\n");
 		return EXIT_FAILURE;
 	}
 	find_path(argc[1]);

@@ -2,30 +2,27 @@
 #include "hexmaze.h"
 #include "hexcell.h"
 
-board* file_load(char *filename)
+board *file_load(char *filename)
 {
     board* result;
     void** v5;
-    int v6;
-    long v7;          // [rsp+0h] [rbp-40h]
-    int i_num;          // [rsp+14h] [rbp-2Ch]
-    board* gameboard; // [rsp+20h] [rbp-20h]
-    FILE* fp;         // [rsp+28h] [rbp-18h]
+    board* gameboard;
+    FILE* fp;
 
-    gameboard = (board*)malloc(sizeof(struct board));
+    gameboard = (board *)malloc(sizeof(struct board));
     if (gameboard)
     {
         fp = fopen(filename, "r");
         if (fp)
         {
-            fscanf(fp,"%d %d %d %d %d %d",\
-                gameboard,\
-                &gameboard->max_col,\
-                &gameboard->start_row,\
-                &gameboard->start_col,\
-                &gameboard->end_row,\
-                &gameboard->end_col);
-            if (gameboard->max_row > 0 && gameboard->max_col > 0)
+            fscanf(fp, "%d %d %d %d %d %d",
+                   &gameboard->max_row,
+                   &gameboard->max_col,
+                   &gameboard->start_row,
+                   &gameboard->start_col,
+                   &gameboard->end_row,
+                   &gameboard->end_col);
+            if (gameboard->max_row >= 0 && gameboard->max_col >= 0)
             {
                 if (gameboard->max_row > gameboard->start_row && gameboard->max_row > gameboard->end_row && gameboard->max_col > gameboard->start_col && gameboard->max_col > gameboard->end_col && gameboard->start_col >= 0 && gameboard->end_col >= 0 && gameboard->start_row >= 0 && gameboard->end_row >= 0)
                 {
@@ -36,42 +33,31 @@ board* file_load(char *filename)
                         *v5 = malloc(8LL * gameboard->max_col);
                         if (!gameboard->hexcells[i])
                         {
-                            fwrite("Could not allocate hexcells", 1uLL, 0x1BuLL, stderr);
+                            fprintf(stderr, "Could not allocate hexcells.\n");
                             free(gameboard);
-                            return 0LL;
+                            return NULL;
                         }
                     }
-                    i_num = 0;
-                LABEL_36:
-                    int j;
-                    if (gameboard->max_row > i_num)
+                    for (int curr_row = 0; curr_row < gameboard->max_row; curr_row++)
                     {
-                        for (j = 0;; j++)
+                        for (int curr_col = 0; curr_col < gameboard->max_col; curr_col++)
                         {
-                            if (gameboard->max_col <= j)
+                            fscanf(fp, "%d ", &gameboard->hexcells[curr_row][curr_col].obstacle);
+                            if (!(gameboard->hexcells[curr_row][curr_col].obstacle == no || gameboard->hexcells[curr_row][curr_col].obstacle == yes))
                             {
-                                ++i_num;
-                                goto LABEL_36;
+                                printf("Invalid hexcell value at %d:%d value %d\n", curr_row, curr_col, gameboard->hexcells[curr_row][curr_col].obstacle);
+                                for (int i = 0; gameboard->max_row > i; ++i)
+                                    free(gameboard->hexcells[i]);
+                                free(gameboard->hexcells[curr_row]);
+                                free(gameboard);
+                                fclose(fp);
+                                result = NULL;
                             }
-                            fscanf(fp, "%d ", &gameboard->hexcells[i_num][j].obstacle, filename);
-                            v6 = gameboard->hexcells[i_num][j].obstacle == no || gameboard->hexcells[i_num][j].obstacle == yes;
-                            if (!v6)
-                                break;
-                            gameboard->hexcells[i_num][j].color = 1;
+                            gameboard->hexcells[curr_row][curr_col].color = white;
                         }
-                        printf("Invalid hexcell value at %d:%d value %d\n", i_num, j, gameboard->hexcells[i_num][j].obstacle);
-                        for (int i = 0; gameboard->max_row > i; ++i)
-                            free(gameboard->hexcells[i]);
-                        free(gameboard->hexcells[i_num]);
-                        free(gameboard);
-                        fclose(fp);
-                        result = 0;
                     }
-                    else
-                    {
-                        fclose(fp);
-                        result = gameboard;
-                    }
+                    fclose(fp);
+                    result = gameboard; //success!
                 }
                 else
                 {
@@ -84,26 +70,26 @@ board* file_load(char *filename)
                         gameboard->end_col,
                         gameboard->end_row);
                     free(gameboard);
-                    result = 0;
+                    result = NULL;
                 }
             }
             else
             {
-                puts("Board dimension(s) must be 0");
+                puts("Board dimension(s) must be 1 or greater.\n");
                 free(gameboard);
-                result = 0;
+                result = NULL;
             }
         }
         else
         {
-            fprintf(stderr, "Could not open file for reading");
-            result = 0;
+            fprintf(stderr, "Could not open file for reading.\n");
+            result = NULL;
         }
     }
     else
     {
-        fprintf(stderr, "Could not allocate board in memory");
-        result = 0;
+        fprintf(stderr, "Could not allocate board in memory.\n");
+        result = NULL;
     }
     return result;
 }
