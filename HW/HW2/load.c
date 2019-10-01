@@ -2,14 +2,14 @@
 #include "hexmaze.h"
 #include "hexcell.h"
 
-board* file_load(char* filename)
+board *file_load(char *filename)
 {
-    board* result;
+    board *result;
 
-    board* gameboard = (board *)malloc(sizeof(struct board));
+    board *gameboard = (board *)malloc(sizeof(struct board));
     if (gameboard)
     {
-        FILE* fp = fopen(filename, "r");
+        FILE *fp = fopen(filename, "r");
         if (fp)
         {
             fscanf(fp, "%d %d %d %d %d %d",
@@ -23,10 +23,10 @@ board* file_load(char* filename)
             {
                 if (gameboard->max_row > gameboard->start_row && gameboard->max_row > gameboard->end_row && gameboard->max_col > gameboard->start_col && gameboard->max_col > gameboard->end_col && gameboard->start_col >= 0 && gameboard->end_col >= 0 && gameboard->start_row >= 0 && gameboard->end_row >= 0)
                 {
-                    gameboard->hexcells = (hexcell**)malloc(sizeof(struct hexcell) * gameboard->max_row);
+                    gameboard->hexcells = (hexcell **)malloc(sizeof(struct hexcell) * gameboard->max_row);
                     for (int i = 0; gameboard->max_row > i; ++i)
                     {
-                        void** ptr_void = (void**)&gameboard->hexcells[i];
+                        void **ptr_void = (void **)&gameboard->hexcells[i];
                         *ptr_void = malloc(sizeof(struct hexcell) * gameboard->max_col);
                         if (!gameboard->hexcells[i])
                         {

@@ -9,7 +9,10 @@
 * args: pointer to the current board struct
 * out: void
 * prints the hexboard board:
-    if hexcell color is path, print 'P'
+    if hexcell color is a successful path, print 'P'
+    if hexcell color if a visited path, print 'V'
+    if hexcell color is the origin point, print 'O'
+    if hexcell color is the goal point, print 'G'
     if hexcell has an obstacle, print 'X'
     otherwise print '0'
 */
@@ -25,7 +28,28 @@ void print_board(board *board)
         {
             if (i % 2 && j == 0)
                 printf("  ");
-            printf("|%c| ", (board->hexcells[i][j].color == path ? 'P' : (board->hexcells[i][j].obstacle == -1 ? 'X' : '0')));
+            char c = '0';
+            if (board->hexcells[i][j].color == path)
+            {
+                c = 'P';
+            }
+            else if (board->hexcells[i][j].color == visited)
+            {
+                c = 'V';
+            }
+            else if (board->hexcells[i][j].color == origin)
+            {
+                c = 'O';
+            }
+            else if (board->hexcells[i][j].color == goal)
+            {
+                c = 'G';
+            }
+            else if (board->hexcells[i][j].obstacle == yes)
+            {
+                c = 'X';
+            }
+            printf("|%c| ", c);
         }
         printf("\n");
 
@@ -42,7 +66,16 @@ void print_board(board *board)
     return;
 }
 
-//find path
+/* find_path
+    args: char* f_name - File pointer that contains the hex data.
+    returns: integer - if it encounters an error or runs fine
+    operation:
+        loads hexboard
+        prints hexboard data
+        starts search on hexboard
+        prints finished hexboard if successful
+        frees memory
+*/
 int find_path(char *f_name)
 {
     int result;
@@ -77,8 +110,14 @@ int find_path(char *f_name)
     return result;
 }
 
-//free board
-
+/* free_board
+    args: board* hexboard - our hexboard to free
+    returns: void
+    operation:
+        frees all the rows/cols of the hexboard
+        frees the hexcell array in the hexboard
+        frees the hexboard
+*/
 void free_board(board *hexboard)
 {
     for (int i = 0; i < hexboard->max_row; i++)
@@ -89,45 +128,77 @@ void free_board(board *hexboard)
     free(hexboard);
 }
 
-//start search
-
+/* start_search
+    args: board* hexboard - our hexboard to search
+    returns: int - if it was solved or not
+    operation:
+        checks to make sure start and end aren't blocked
+        sets origin cell to origin color
+        calls the search method
+        returns the result of the search method
+*/
 int start_search(board *hexboard)
 {
     if (hexboard->hexcells[hexboard->start_row][hexboard->start_col].obstacle == no && hexboard->hexcells[hexboard->end_row][hexboard->end_col].obstacle == no)
     {
+        hexboard->hexcells[hexboard->start_row][hexboard->start_col].color = origin;
         return search(hexboard, hexboard->start_row, hexboard->start_col);
     }
     printf("The start cell or the end cell are obstacles; board cannot be solved.\n");
     return 0;
 }
 
-//search board
-
+/* search
+    args:
+        board* hexboard - our hexboard to search
+        int row - row to use
+        int col - col to use
+    returns: int - if it found a path or not
+    operation:
+        checks if the passed row/col values are valid - used for bounds checking
+        if at the goal - return that we made it and set current cell to goal
+        if we haven't changed the color of this cell, mark it as visited
+        call search function on neighbor cells
+        if successful, mark current cell as a successful path
+*/
 int search(board *hexboard, int row, int col)
 {
     int result;
 
     if (row < 0 || col < 0 || hexboard->max_row - 1 < row || hexboard->max_col - 1 < col)
-    {
         return 0;
-    }
     if (hexboard->end_col != col || hexboard->end_row != row)
     {
-        if (hexboard->hexcells[row][col].obstacle == no && hexboard->hexcells[row][col].color == white)
+        if (hexboard->hexcells[row][col].obstacle == no && (hexboard->hexcells[row][col].color == white || hexboard->hexcells[row][col].color == origin))
         {
-            hexboard->hexcells[row][col].color = path;
-            result = (search(hexboard, row - 1, col - 1) || search(hexboard, row - 1, col) || search(hexboard, row, col + 1) || search(hexboard, row + 1, col) || search(hexboard, row + 1, col - 1) || search(hexboard, row, col - 1));
+            //Mark as visited if we haven't changed this already.
+            if (hexboard->hexcells[row][col].color == white)
+                hexboard->hexcells[row][col].color = visited; //Don't set origin/goal to path.
+            result = (search(hexboard, row - 1, col - 1)
+            || search(hexboard, row - 1, col)
+            || search(hexboard, row, col + 1)
+            || search(hexboard, row + 1, col)
+            || search(hexboard, row + 1, col - 1)
+            || search(hexboard, row, col - 1));
+
+            //If successful, mark this as a successful path.
+            if (result)
+            {
+                if (hexboard->hexcells[row][col].color == visited)
+                    hexboard->hexcells[row][col].color = path;
+            }
         }
         else
         {
-            hexboard->hexcells[row][col].color = visited;
             result = 0;
         }
     }
     else
     {
+        //We've been successful, mark as the goal and return 1 up the chain.
         printf("------------------------Found Path-----------------------\n");
         result = 1;
+        hexboard->hexcells[row][col].color = goal;
     }
     return result;
 }
