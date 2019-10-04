@@ -10,8 +10,9 @@ board *file_load(char *filename)
     if (gameboard)
     {
         FILE *fp = fopen(filename, "r");
-        if (fp)
+        if (fp) //file failure check
         {
+            //Reads/stores data from hexboard header format.
             fscanf(fp, "%d %d %d %d %d %d",
                    &gameboard->max_row,
                    &gameboard->max_col,
@@ -19,13 +20,16 @@ board *file_load(char *filename)
                    &gameboard->start_col,
                    &gameboard->end_row,
                    &gameboard->end_col);
+            //Check board dimensions >= 1
             if (gameboard->max_row >= 0 && gameboard->max_col >= 0)
             {
+                //Check start/end points
                 if (gameboard->max_row > gameboard->start_row && gameboard->max_row > gameboard->end_row && gameboard->max_col > gameboard->start_col && gameboard->max_col > gameboard->end_col && gameboard->start_col >= 0 && gameboard->end_col >= 0 && gameboard->start_row >= 0 && gameboard->end_row >= 0)
                 {
                     gameboard->hexcells = (hexcell **)malloc(sizeof(struct hexcell) * gameboard->max_row);
                     for (int i = 0; gameboard->max_row > i; ++i)
                     {
+                        //Use void pointers to allocate space for the hexcells.
                         void **ptr_void = (void **)&gameboard->hexcells[i];
                         *ptr_void = malloc(sizeof(struct hexcell) * gameboard->max_col);
                         if (!gameboard->hexcells[i])
@@ -40,6 +44,7 @@ board *file_load(char *filename)
                         for (int curr_col = 0; curr_col < gameboard->max_col; curr_col++)
                         {
                             fscanf(fp, "%d ", &gameboard->hexcells[curr_row][curr_col].obstacle);
+                            //Check for invalid obstacle values
                             if (!(gameboard->hexcells[curr_row][curr_col].obstacle == no || gameboard->hexcells[curr_row][curr_col].obstacle == yes))
                             {
                                 printf("Invalid hexcell value at %d:%d value %d\n", curr_row, curr_col, gameboard->hexcells[curr_row][curr_col].obstacle);
@@ -50,6 +55,7 @@ board *file_load(char *filename)
                                 fclose(fp);
                                 result = NULL;
                             }
+                            //Initalize each cell with being white.
                             gameboard->hexcells[curr_row][curr_col].color = white;
                         }
                     }
