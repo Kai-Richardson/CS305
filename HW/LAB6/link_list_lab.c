@@ -46,6 +46,7 @@ int main(void) {
   insertHead(7, &lst1);
   insertHead(5, &lst1);
   insertHead(4, &lst1);
+  insertHead(2, &lst1);
 
   printf("lst1 length: %d\n", length(lst1));
   printf("lst1 length (rec): %d\n", lengthRec(lst1));
@@ -55,14 +56,24 @@ int main(void) {
   insertHead(20, &lst2);
   insertHead(15, &lst2);
   insertHead(13, &lst2);
+  insertHead(10, &lst2);
+  insertHead(7, &lst2);
+  insertHead(4, &lst2);
 
   printf("lst2 length: %d\n", length(lst2));
   printf("lst2 length (rec): %d\n", lengthRec(lst2));
 
+  Node * lst3 = copyList(lst1);
+   printf("cpy: ");
+  print(lst3);
+
   Node * mergedList = mergeList(lst1, lst2);
+  printf("Merged List: ");
+  print(mergedList);
 
   freeList(lst1);
   freeList(lst2);
+  freeList(lst3);
   freeList(mergedList);
 
   return EXIT_SUCCESS;
@@ -78,8 +89,7 @@ int lengthRec(Node * list) {
   if(list == NULL) {
     return 0;
   } else {
-    // LAB EXERCISE 1: complete this recursive function call
-    return 0;  // delete stub
+    return lengthRec(list->next) + 1;
   }
 }
 
@@ -91,10 +101,8 @@ void freeList(Node * list) {
   if(list == NULL) {
     return;
   } else {
-    // LAB EXERCISE 2: complete the function so that it recursively
-    // frees list->next and then frees the list
-    
-
+    freeList(list->next);
+    free(list);
   }
 }
 
@@ -103,17 +111,10 @@ void freeList(Node * list) {
  * returns a copy of the list
  */
 Node * copyList(Node * list) {
-  Node * ret = NULL;
   if(list == NULL) {
     return NULL;
   } else {
-    // LAB EXERCISE 3: complete the function so that it makes a new
-    // node and recusively copies the rest of the list
-    // use makeNode, the second argument to makeNode can be a
-    // recursive call to copyList, since copyList returns a pointer
-    // to a Node
-    return NULL;   // delete stub
-
+    return makeNode(list->num, copyList(list->next));
   }
 }
 
@@ -129,17 +130,11 @@ Node * mergeList(Node * list1, Node * list2) {
     return copyList(list1);
   } else if (list1->num < list2->num) {
 
-    // LAB EXERCISE 4: complete this recursive case to that it makes
-    // a new node and recursively merges the two lists as the
-    // second argument
-    
-    return NULL;   // delete stub
+    return makeNode(list1->num, mergeList(list1->next, list2));
 
   } else {
 
-    // LAB EXERCISE 4: complete this recursive case
-
-    return NULL;   // delete stub
+    return makeNode(list2->num, mergeList(list1, list2->next));
 
   }
 }
@@ -296,4 +291,4 @@ int numPos(Node * list) {
   }
   return countPos;
 }
-    
+
