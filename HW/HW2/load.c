@@ -6,6 +6,7 @@ board *file_load(char *filename)
 {
     board *result;
 
+    //Allocate gameboard and check for failure.
     board *gameboard = (board *)malloc(sizeof(struct board));
     if (gameboard)
     {
@@ -21,7 +22,7 @@ board *file_load(char *filename)
                    &gameboard->end_row,
                    &gameboard->end_col);
             //Check board dimensions >= 1
-            if (gameboard->max_row >= 0 && gameboard->max_col >= 0)
+            if (gameboard->max_row >= 1 && gameboard->max_col >= 1)
             {
                 //Check start/end points
                 if (gameboard->max_row > gameboard->start_row && gameboard->max_row > gameboard->end_row && gameboard->max_col > gameboard->start_col && gameboard->max_col > gameboard->end_col && gameboard->start_col >= 0 && gameboard->end_col >= 0 && gameboard->start_row >= 0 && gameboard->end_row >= 0)
@@ -65,7 +66,7 @@ board *file_load(char *filename)
                 else
                 {
                     printf(
-                        "Incorrect start or end points entered:\nmr:%d mc:%d sr:%d sc:%d er:%d ec:%d\n",
+                        "Incorrect start or end points entered:\nmxro:%d mxco:%d strw:%d stcl:%d enrw:%d encl:%d\n",
                         gameboard->max_row,
                         gameboard->max_col,
                         gameboard->start_row,

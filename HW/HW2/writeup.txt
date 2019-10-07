@@ -1,0 +1,310 @@
+
+CS305 HW 2 Report
+
+Student: Kai Richardson
+
+1.
+
+1a. Meets All Specifications.
+
+1b.
+
+./find_path board1.txt
+/ \ / \ / \ / \ / \ / \ / \
+|0| |0| |0| |0| |0| |0| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |0| |0| |0| |0| |0| |0|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |0| |0| |0| |0| |0| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |0| |0| |0| |0| |0| |0|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |0| |0| |0| |0| |0| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |0| |0| |0| |0| |0| |0|
+/ \ / \ / \ / \ / \ / \ / \ /
+
+------------------------Found Path-----------------------
+Success! There is a path.
+/ \ / \ / \ / \ / \ / \ / \
+|P| |O| |P| |P| |P| |P| |P|
+\ / \ / \ / \ / \ / \ / \ /
+  |P| |P| |P| |P| |P| |P| |P|
+/ \ / \ / \ / \ / \ / \ / \ /
+|P| |P| |P| |P| |P| |P| |P|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |0| |P| |P| |P| |P| |P|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |0| |0| |0| |0| |0| |P|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |0| |0| |0| |0| |0| |G|
+/ \ / \ / \ / \ / \ / \ / \ /
+
+Thanks for playing!
+
+./find_path board2.txt
+/ \ / \ / \ / \ / \ / \ / \
+|0| |0| |0| |0| |0| |0| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |X| |X| |X| |X| |0|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |X| |X| |X| |X| |X| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |X| |X| |X| |X| |0|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |X| |X| |X| |X| |0| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |0| |0| |0| |0| |0| |0|
+/ \ / \ / \ / \ / \ / \ / \ /
+
+------------------------Found Path-----------------------
+Success! There is a path.
+/ \ / \ / \ / \ / \ / \ / \
+|0| |O| |P| |P| |P| |P| |P|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |X| |X| |X| |X| |P|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |X| |X| |X| |X| |X| |P|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |X| |X| |X| |X| |P|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |X| |X| |X| |X| |0| |P|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |0| |0| |0| |0| |0| |G|
+/ \ / \ / \ / \ / \ / \ / \ /
+
+Thanks for playing!
+
+./find_path board3.txt
+/ \ / \ / \ / \ / \ / \ / \
+|0| |0| |0| |0| |0| |0| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |X| |X| |X| |X| |0|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |X| |X| |X| |X| |X| |X|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |X| |X| |X| |X| |X|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |X| |X| |X| |X| |0| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |0| |0| |X| |X| |0| |0|
+/ \ / \ / \ / \ / \ / \ / \ /
+
+Could not find a path. Board could not be solved.
+/ \ / \ / \ / \ / \ / \ / \
+|V| |O| |V| |V| |V| |V| |V|
+\ / \ / \ / \ / \ / \ / \ /
+  |V| |X| |X| |X| |X| |X| |V|
+/ \ / \ / \ / \ / \ / \ / \ /
+|V| |X| |X| |X| |X| |X| |X|
+\ / \ / \ / \ / \ / \ / \ /
+  |V| |X| |X| |X| |X| |X| |X|
+/ \ / \ / \ / \ / \ / \ / \ /
+|V| |X| |X| |X| |X| |0| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |V| |V| |V| |X| |X| |0| |0|
+/ \ / \ / \ / \ / \ / \ / \ /
+
+Thanks for playing!
+
+./find_path board4.txt
+/ \ / \ / \ / \ / \ / \ / \
+|0| |0| |0| |0| |0| |0| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |X| |X| |X| |X| |0|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |X| |X| |X| |X| |0| |X|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |0| |0| |0| |X| |X|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |X| |X| |X| |X| |0| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |0| |0| |X| |X| |0| |0|
+/ \ / \ / \ / \ / \ / \ / \ /
+
+------------------------Found Path-----------------------
+Success! There is a path.
+/ \ / \ / \ / \ / \ / \ / \
+|0| |O| |P| |P| |P| |P| |P|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |X| |X| |X| |X| |P|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |X| |X| |X| |X| |P| |X|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |G| |P| |P| |X| |X|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |X| |X| |X| |X| |0| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |0| |0| |X| |X| |0| |0|
+/ \ / \ / \ / \ / \ / \ / \ /
+
+Thanks for playing!
+
+./find_path board5.txt
+/ \ / \ / \ / \ / \ / \ / \
+|0| |0| |0| |0| |0| |0| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |X| |X| |X| |X| |0|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |X| |X| |X| |X| |X| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |0| |0| |0| |X| |X|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |X| |X| |X| |X| |0| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |0| |0| |0| |0| |0| |0|
+/ \ / \ / \ / \ / \ / \ / \ /
+
+------------------------Found Path-----------------------
+Success! There is a path.
+/ \ / \ / \ / \ / \ / \ / \
+|V| |O| |P| |V| |V| |V| |V|
+\ / \ / \ / \ / \ / \ / \ /
+  |P| |X| |X| |X| |X| |X| |V|
+/ \ / \ / \ / \ / \ / \ / \ /
+|P| |X| |X| |X| |X| |X| |V|
+\ / \ / \ / \ / \ / \ / \ /
+  |P| |X| |G| |P| |P| |X| |X|
+/ \ / \ / \ / \ / \ / \ / \ /
+|P| |X| |X| |X| |X| |P| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |P| |P| |P| |P| |P| |P| |0|
+/ \ / \ / \ / \ / \ / \ / \ /
+
+Thanks for playing!
+
+./find_path board6.txt
+/ \ / \ / \ / \ / \ / \ / \
+|0| |0| |0| |0| |0| |0| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |X| |X| |X| |X| |0|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |X| |X| |X| |X| |X| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |0| |0| |0| |0| |X|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |X| |X| |X| |X| |X| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |0| |0| |0| |0| |X|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |0| |0| |X| |0| |0| |X|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |X| |0| |0| |X| |X|
+/ \ / \ / \ / \ / \ / \ / \ /
+
+------------------------Found Path-----------------------
+Success! There is a path.
+/ \ / \ / \ / \ / \ / \ / \
+|V| |O| |P| |V| |V| |V| |V|
+\ / \ / \ / \ / \ / \ / \ /
+  |P| |X| |X| |X| |X| |X| |V|
+/ \ / \ / \ / \ / \ / \ / \ /
+|P| |X| |X| |X| |X| |X| |V|
+\ / \ / \ / \ / \ / \ / \ /
+  |P| |X| |V| |V| |V| |V| |X|
+/ \ / \ / \ / \ / \ / \ / \ /
+|P| |X| |X| |X| |X| |X| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |P| |X| |P| |P| |P| |P| |X|
+/ \ / \ / \ / \ / \ / \ / \ /
+|P| |P| |P| |X| |0| |P| |X|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |X| |0| |G| |X| |X|
+/ \ / \ / \ / \ / \ / \ / \ /
+
+Thanks for playing!
+
+./find_path board7.txt
+/ \ / \ / \ / \ / \ / \ / \
+|0| |0| |0| |0| |0| |0| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |X| |X| |X| |X| |0|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |X| |X| |X| |X| |X| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |0| |0| |0| |0| |X|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |X| |X| |X| |X| |0| |0|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |0| |X| |0| |0| |X|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |0| |0| |X| |0| |0| |X|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |X| |0| |0| |X| |X|
+/ \ / \ / \ / \ / \ / \ / \ /
+
+------------------------Found Path-----------------------
+Success! There is a path.
+/ \ / \ / \ / \ / \ / \ / \
+|0| |O| |P| |P| |P| |P| |P|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |X| |X| |X| |X| |P|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |X| |X| |X| |X| |X| |P|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |V| |V| |V| |P| |X|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |X| |X| |X| |X| |P| |P|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |0| |X| |P| |P| |X|
+/ \ / \ / \ / \ / \ / \ / \ /
+|0| |0| |0| |X| |P| |P| |X|
+\ / \ / \ / \ / \ / \ / \ /
+  |0| |X| |X| |0| |G| |X| |X|
+/ \ / \ / \ / \ / \ / \ / \ /
+
+Thanks for playing!
+
+./find_path board8.txt
+Incorrect start or end points entered:
+mxro:8 mxco:7 strw:0 stcl:1 enrw:8 encl:2
+Could not create board or read from file.
+
+./find_path board9.txt
+Incorrect start or end points entered:
+mxro:9 mxco:9 strw:9 stcl:1 enrw:8 encl:2
+Could not create board or read from file.
+
+./find_path board10.txt
+Board dimension(s) must be 1 or greater.
+
+Could not create board or read from file.
+
+
+
+2c.
+
+    Filename    |       Status      |   Program
+
+    board6.txt      All Correct         Worked
+    board7.txt      All Correct         Worked
+    board8.txt      Start=Obstacle      Showed Error
+    board9.txt      Start=Obstacle      Showed Error
+    board10.txt     Bad Dimensions      Showed Error
+    board11.txt     Doesn't Exist       Showed Error
+    board12.txt     All Correct         Worked
+    board13.txt     Bad Header          Showed Error
+    board14.txt     All Correct         Worked
+    board15.txt     Bad Format          Showed Error
+
+2d. All Tested.
+
+3.
+
+3a.
+6.3 Hours Total
+5h09m on C
+0h50m on .txt
+0h21m on makefile
+Most time spent on: load.c
+
+3b.
+Doing all of load.c was the most challenging.
+
+Appendix A:
+
+I verify that the code and this write-up were authored by me.
+I have documented the help I have received in comments in the code files.
+
+Appendix B:
+See attached code.
