@@ -8,7 +8,7 @@
 // hexboard struct -- height/width defined as row_max col_max
 // start cell defined as start_row start_col cooridnates
 // goal cell defined as end_row end_col coordinates
-// hexcells is 2D array of  
+// hexcells is 2D array of
 typedef struct board {
   int max_row;
   int max_col;
@@ -22,7 +22,7 @@ typedef struct board {
 /* function prototypes */
 int find_path(char*);
 int start_search(board*);
-int search(board*, int, int);
+int search(board*, int, int, int, int);
 int check_board(board*);
 int is_safe(int, int, int, int);
 void print_board(board*);

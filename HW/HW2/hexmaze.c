@@ -142,7 +142,7 @@ int start_search(board *hexboard)
     if (hexboard->hexcells[hexboard->start_row][hexboard->start_col].obstacle == no && hexboard->hexcells[hexboard->end_row][hexboard->end_col].obstacle == no)
     {
         hexboard->hexcells[hexboard->start_row][hexboard->start_col].color = origin;
-        return search(hexboard, hexboard->start_row, hexboard->start_col);
+        return search(hexboard, hexboard->start_row, hexboard->start_col, 99, 99);
     }
     printf("The start cell or the end cell are obstacles; board cannot be solved.\n");
     return 0;
@@ -161,12 +161,13 @@ int start_search(board *hexboard)
         call search function on neighbor cells
         if successful, mark current cell as a successful path
 */
-int search(board *hexboard, int row, int col)
+int search(board *hexboard, int row, int col, int pr, int pc)
 {
     int result;
 
-    if (row < 0 || col < 0 || hexboard->max_row - 1 < row || hexboard->max_col - 1 < col)
-        return 0;
+    if (row < 0 || col < 0 || hexboard->max_row - 1 < row || hexboard->max_col - 1 < col) {
+        printf("illegal: r%d c%d, pr%d pc%d\n", row, col, pr, pc);
+        return 0;}
     if (hexboard->end_col != col || hexboard->end_row != row)
     {
         if (hexboard->hexcells[row][col].obstacle == no && (hexboard->hexcells[row][col].color == white || hexboard->hexcells[row][col].color == origin))
@@ -174,22 +175,24 @@ int search(board *hexboard, int row, int col)
             //Mark as visited if we haven't changed this already.
             if (hexboard->hexcells[row][col].color == white)
                 hexboard->hexcells[row][col].color = visited; //Don't set origin/goal to path.
-            result = (search(hexboard, row - 1, col - 1)
-            || search(hexboard, row - 1, col)
-            || search(hexboard, row, col + 1)
-            || search(hexboard, row + 1, col)
-            || search(hexboard, row + 1, col - 1)
-            || search(hexboard, row, col - 1));
+            result = (search(hexboard, row - 1, col - 1, row, col)
+            || search(hexboard, row - 1, col, row, col)
+            || search(hexboard, row, col + 1, row, col)
+            || search(hexboard, row + 1, col, row, col)
+            || search(hexboard, row + 1, col - 1, row, col)
+            || search(hexboard, row, col - 1, row, col));
 
             //If successful, mark this as a successful path.
             if (result)
             {
                 if (hexboard->hexcells[row][col].color == visited)
+                    printf("yee: r%d c%d, pr%d pc%d\n", row, col, pr, pc);
                     hexboard->hexcells[row][col].color = path;
             }
         }
         else
         {
+            printf("no: r%d c%d, pr%d pc%d\n", row, col, pr, pc);
             result = 0;
         }
     }

@@ -27,6 +27,7 @@ board *file_load(char *filename)
                 //Check start/end points
                 if (gameboard->max_row > gameboard->start_row && gameboard->max_row > gameboard->end_row && gameboard->max_col > gameboard->start_col && gameboard->max_col > gameboard->end_col && gameboard->start_col >= 0 && gameboard->end_col >= 0 && gameboard->start_row >= 0 && gameboard->end_row >= 0)
                 {
+                    //Allocate the rows for the hexcell array.
                     gameboard->hexcells = (hexcell **)malloc(sizeof(struct hexcell) * gameboard->max_row);
                     for (int i = 0; gameboard->max_row > i; ++i)
                     {
