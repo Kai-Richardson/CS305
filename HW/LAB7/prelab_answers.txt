@@ -1,0 +1,41 @@
+Prelab Question Answers:
+
+1.
+    a. 10
+    b. 01
+    c. 1 11 7
+2.
+    a. 10
+    b. 04
+    c. 2 11 8
+3.
+
+int isPalindrome(char *str)
+{
+    if (str == NULL)
+    {
+        return 0;
+    }
+    Stack s = initStack();
+    int i = 0;
+    // push each character of str to the stack
+    while (str[i] != '\0')
+    {
+        push(s, str[i]);
+        i++;
+    }
+    // now pop stack, checking that the value on top of the stack equals the str char
+    i = 0;
+    while (str[i] != '\0')
+    {
+        if (pop(s) == str[i])
+        {
+            i++;
+        }
+        else
+        {
+            break;
+        }
+    }
+    return 1;
+}

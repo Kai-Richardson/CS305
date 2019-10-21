@@ -1,0 +1,36 @@
+2.
+    2.
+        top of stack - 15
+        bottom of stack - 8
+    3. It is correct, but doing this doesn't tell me that.
+    4. Done.
+    5. Done.
+CHECKPOINT 1: Done
+3.
+    1. Done.
+    2. Done.
+CHECKPOINT 2: Done
+4.
+    2.
+        a. 5 8 4
+    4. Yes, but the readouts don't tell me that.
+    5.
+        a. 0
+        b. 3
+        c. 2
+        d. 4
+    9.
+        a. 14
+        b. They were deleted because it's a shoddy circular queue that's not properly circular.
+        c. 2
+        d. 3
+    10. The other option is not to use arrays because they're bad for queues.
+        a. It works.
+        b. 4 20 40 50
+    11. Done.
+CHECKPOINT 3: Done as much as I can
+    2.
+        a. tail-head
+        b. head+tail
+        c. Done.
+CHECKPOINT 4: Done
