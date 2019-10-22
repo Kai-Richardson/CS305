@@ -166,7 +166,7 @@ int search(board *hexboard, int row, int col, int pr, int pc)
     int result;
 
     if (row < 0 || col < 0 || hexboard->max_row - 1 < row || hexboard->max_col - 1 < col) {
-        printf("illegal: r%d c%d, pr%d pc%d\n", row, col, pr, pc);
+        //printf("illegal: r%d c%d, pr%d pc%d\n", row, col, pr, pc);
         return 0;}
     if (hexboard->end_col != col || hexboard->end_row != row)
     {
@@ -186,13 +186,13 @@ int search(board *hexboard, int row, int col, int pr, int pc)
             if (result)
             {
                 if (hexboard->hexcells[row][col].color == visited)
-                    printf("yee: r%d c%d, pr%d pc%d\n", row, col, pr, pc);
+                    //printf("yee: r%d c%d, pr%d pc%d\n", row, col, pr, pc);
                     hexboard->hexcells[row][col].color = path;
             }
         }
         else
         {
-            printf("no: r%d c%d, pr%d pc%d\n", row, col, pr, pc);
+            //printf("no: r%d c%d, pr%d pc%d\n", row, col, pr, pc);
             result = 0;
         }
     }

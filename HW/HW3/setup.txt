@@ -1,0 +1,23 @@
+3
+P1 1
+P2 2
+P3 1
+J1 3
+J2 5
+J3 2
+J4 1
+J5 2
+J6 3
+J7 1
+
+/*
+The file structure is a decimal value that is the maximum number (N) of
+printers that the MOAP has. Followed by the list of N printers and their
+print capacity (in pages per minute). Assume that at the start of the program
+all printers are online. The rest of the lines in the file are print jobs with
+the name and a number of pages the print job has. The jobs are distributed into
+the printer queues in a round robin fashion.After the jobs are read in, the
+program will hang on a command line to accept and process one of the user defined
+commands.
+
+*/
