@@ -1,6 +1,4 @@
 {
-    "files.associations": {
-        "stdbool.h": "c",
-        "cstdbool": "c"
-    }
+    "makefileCommandRunner.makefileName": "makefile",
+    "makefileCommandRunner.filePathEnv": "/"
 }

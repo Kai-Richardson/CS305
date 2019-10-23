@@ -4,6 +4,9 @@
 #include "stdlib.h"
 #include "string.h"
 
+/* add_job(printer, char*, int)
+ * Adds a given job name and size to the end of given printer's LLqueue
+ */
 void add_job(printer p, char *j_name, int size)
 {
 
@@ -47,8 +50,8 @@ void add_job(printer p, char *j_name, int size)
 
 void update_printer();
 
-/* Turns a
- *
+/* offline(printer[], int, int)
+ * Turns given printer from the printer array offline.
  */
 void offline(printer p_arr[], int p_index, int num_prints)
 {
@@ -76,7 +79,7 @@ void offline(printer p_arr[], int p_index, int num_prints)
     return;
 }
 
-/* online()
+/* online(printer*)
  * Sets the given printer online if it is offline
  */
 void online(printer *p)
@@ -87,6 +90,9 @@ void online(printer *p)
     }
 }
 
+/* print(printer*)
+ * Prints information about given printer + its printjobs
+ */
 void print(printer *p)
 {
     printf("%s@%d->", p->name, *p->speed); //print printer information

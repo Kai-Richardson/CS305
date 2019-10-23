@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     int num_prints = -1; //starts at -1 so we don't have to deal with i-1
 
     //Setup array of printer structs
-    printer* p_arr;
+    printer *p_arr;
     p_arr = calloc(MAX_PRINTERS, sizeof(*p_arr));
 
     //Only read from file if we have a second arg, else just listen.
@@ -41,8 +41,12 @@ int main(int argc, char *argv[])
                     add_job(p_arr[curr_printer], tmp_name, tmp_num);
                 }
             }
-
-            return EXIT_SUCCESS;
+            fclose(fp); //close since we're done
         }
     }
+
+    //temp
+    free(p_arr);
+
+    return EXIT_SUCCESS;
 }
