@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[])
 {
-    int num_prints;
+    int num_prints = -1; //starts at -1 so we don't have to deal with i-1
 
     //Setup array of printer structs
     printer *p_arr[MAX_PRINTERS];

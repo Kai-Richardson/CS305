@@ -10,6 +10,6 @@ typedef struct printJob {
 /* function prototypes */
 void create_printJob();
 void print();
-printJob* yankTopJob(struct printJob* head);
+void disposeTopJob(struct printJob* head);
 
 #endif

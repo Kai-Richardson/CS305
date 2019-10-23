@@ -50,23 +50,29 @@ void update_printer();
 /* Turns a
  *
  */
-void offline(printer* p_arr[], int p_index, int num_prints)
+void offline(printer *p_arr[], int p_index, int num_prints)
 {
     p_arr[p_index]->online = false;
-    for (int i = 0; i < num_prints; i++)
+    for (int i = 0; i < queue_length(p_arr[p_index]); i++)
     {
-        //done
-        if (p_arr[p_index]->printQueue == NULL) return;
+        int curr_print = 0;
+
+        if (p_arr[p_index]->printQueue == NULL)
+            return;
 
         if (p_arr[i]->online != false)
         {
-            add
-            addyankTopJob(p_arr[p_index]->printQueue);
+            add_job(p_arr[curr_print], p_arr[p_index]->printQueue->name, p_arr[p_index]->printQueue->size);
+            disposeTopJob(p_arr[p_index]->printQueue); //delete old now that we're done with it
+            curr_print++;
         }
-
+        if (curr_print >= num_prints)
+        {
+            curr_print = 0; //go back to 1st
+        }
     }
 
-        //go through printjobs and weave them into other printers round robin
+    //go through printjobs and weave them into other printers round robin
     return;
 }
 

@@ -13,19 +13,18 @@ void create_printJob() {
     return;
 }
 
-printJob* yankTopJob(struct printJob* head)
+void disposeTopJob(struct printJob* head)
 {
-    if (head == NULL)
-        return NULL;
+    if (head == NULL) return;
 
     // Move the head pointer to the next node
     printJob* old_head = head;
     if (head->next != NULL)
     {
          head = head->next;
+         free(old_head);
     }
-
-    return old_head;
+    return;
 }
 
 int queue_length(printer *j)
