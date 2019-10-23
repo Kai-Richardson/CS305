@@ -4,18 +4,18 @@
 #include "stdlib.h"
 #include "string.h"
 
-void add_job(printer *p, char *j_name, int size)
+void add_job(printer p, char *j_name, int size)
 {
 
     //No operations on printer if offline.
-    if (p->online == false)
+    if (p.online == false)
         return;
 
     //No additions if the queue is full.
     if (queue_length(p) >= MAX_IN_QUEUE)
         return;
 
-    //No operations on printer if bad size
+    //No operations on printer if bad size92
     if (size < 1)
         return;
 
@@ -26,15 +26,15 @@ void add_job(printer *p, char *j_name, int size)
     new_job->size = size;
 
     //If the queue is empty, no need to traverse
-    if (p->printQueue == NULL)
+    if (p.printQueue == NULL)
     {
-        p->printQueue = new_job;
+        p.printQueue = new_job;
         return;
     }
 
     //traverse to find tail
     printJob *tail;
-    tail = p->printQueue;
+    tail = p.printQueue;
     while (tail != NULL)
     {
         tail = tail->next;
@@ -50,30 +50,29 @@ void update_printer();
 /* Turns a
  *
  */
-void offline(printer *p_arr[], int p_index, int num_prints)
+void offline(printer p_arr[], int p_index, int num_prints)
 {
-    p_arr[p_index]->online = false;
+    p_arr[p_index].online = false;
     for (int i = 0; i < queue_length(p_arr[p_index]); i++)
     {
         int curr_print = 0;
 
-        if (p_arr[p_index]->printQueue == NULL)
+        if (p_arr[p_index].printQueue == NULL)
             return;
 
         //needs to weave-skip by one
-        if (p_arr[i]->online != false)
+        if (p_arr[i].online != false)
         {
-            add_job(p_arr[curr_print], p_arr[p_index]->printQueue->name, p_arr[p_index]->printQueue->size);
-            disposeTopJob(p_arr[p_index]->printQueue); //delete old now that we're done with it
+            add_job(p_arr[curr_print], p_arr[p_index].printQueue->name, p_arr[p_index].printQueue->size);
+            disposeTopJob(p_arr[p_index].printQueue); //delete old now that we're done with it
             curr_print++;
         }
-        if (curr_print >= num_prints)
+        if (curr_print % num_prints != 0) //wraparound
         {
             curr_print = 0; //go back to 1st
         }
     }
 
-    //go through printjobs and weave them into other printers round robin
     return;
 }
 
@@ -90,7 +89,7 @@ void online(printer *p)
 
 void print(printer *p)
 {
-    printf("%s@%d->", p->name, p->speed); //print printer information
+    printf("%s@%d->", p->name, *p->speed); //print printer information
 
     //Empty, early return
     if (!p->printQueue)

@@ -5,11 +5,6 @@
 #include "printer.h"
 #include "printJob.h"
 
-void create_printJob()
-{
-    return;
-}
-
 void disposeTopJob(struct printJob *head)
 {
     if (head == NULL)
@@ -25,15 +20,15 @@ void disposeTopJob(struct printJob *head)
     return;
 }
 
-int queue_length(printer *j)
+int queue_length(printer j)
 {
 
-    if (!j->printQueue)
+    if (!j.printQueue)
         return 0; //print queue is empty
 
     int length = 0;
     printJob *i;
-    i = j->printQueue;
+    i = j.printQueue;
     while (i != NULL)
     {
         i = i->next;

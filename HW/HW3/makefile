@@ -14,6 +14,6 @@ printer.o: printer.c printer.h printJob.h
 printJob.o: printJob.c printer.h printJob.h
 	$(COMPILE) -c printJob.c
 
-
+lean: clean #ahh yes
 clean:
 	/bin/rm -f *.o run
