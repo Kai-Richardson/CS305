@@ -5,20 +5,22 @@
 #include "printer.h"
 #include "printJob.h"
 
-void create_printJob() {
+void create_printJob()
+{
     return;
 }
 
-void disposeTopJob(struct printJob* head)
+void disposeTopJob(struct printJob *head)
 {
-    if (head == NULL) return;
+    if (head == NULL)
+        return;
 
     // Move the head pointer to the next node
-    printJob* old_head = head;
+    printJob *old_head = head;
     if (head->next != NULL)
     {
-         head = head->next;
-         free(old_head);
+        head = head->next;
+        free(old_head);
     }
     return;
 }
