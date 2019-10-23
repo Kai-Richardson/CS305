@@ -18,11 +18,11 @@ typedef struct printer {
 } printer;
 
 /* function prototypes */
-void add_job(printer* p, char j_name[MAX_NAME_LEN], int size);
+void add_job(printer* p, char* j_name, int size);
 void update_printer();
 void offline(printer* p_arr[], int p_index, int num_prints);
 void online(printer* p);
-void print();
+void print(printer *p);
 
 int queue_length(printer* j);
 

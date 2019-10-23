@@ -4,7 +4,7 @@
 #include "stdlib.h"
 #include "string.h"
 
-void add_job(printer *p, char j_name[MAX_NAME_LEN], int size)
+void add_job(printer *p, char *j_name, int size)
 {
 
     //No operations on printer if offline.
@@ -60,6 +60,7 @@ void offline(printer *p_arr[], int p_index, int num_prints)
         if (p_arr[p_index]->printQueue == NULL)
             return;
 
+        //needs to weave-skip by one
         if (p_arr[i]->online != false)
         {
             add_job(p_arr[curr_print], p_arr[p_index]->printQueue->name, p_arr[p_index]->printQueue->size);
@@ -89,11 +90,24 @@ void online(printer *p)
 
 void print(printer *p)
 {
-    printf("<%s>:<spd: %d>->", p->name, p->speed);
-    for (int i = 0; i < queue_length(p->printQueue); i++)
+    printf("%s@%d->", p->name, p->speed); //print printer information
+
+    //Empty, early return
+    if (!p->printQueue)
     {
-        //traverse between all
+        printf("\n");
         return;
     }
+
+    //traverse + print all jobs
+    printJob *j;
+    j = p->printQueue;
+    while (j != NULL)
+    {
+        printf("%s:%d->", j->name, j->size);
+        j = j->next;
+    }
+
+    printf("\n"); //Done with printer, newline time
     return;
 }

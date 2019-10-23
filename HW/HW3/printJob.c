@@ -5,10 +5,6 @@
 #include "printer.h"
 #include "printJob.h"
 
-void print() {
-    return;
-}
-
 void create_printJob() {
     return;
 }
