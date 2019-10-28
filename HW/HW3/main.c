@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 {
 	int num_prints = -1; //starts at -1 so we don't have to deal with i-1
 	int exited = false;  //used to keep track if user has prompted exit
-	int time = 1;        //system controller clock
+	int time = 1;		 //system controller clock
 
 	//Setup array of printer structs
 	printer *p_arr;
@@ -68,12 +68,12 @@ int main(int argc, char *argv[])
 		fgets(input, MAX_ALLOWED_INPUT, stdin);
 		if (input != NULL)
 		{
+			char in0[MAX_ALLOWED_INPUT];
 			char in1[MAX_ALLOWED_INPUT];
 			char in2[MAX_ALLOWED_INPUT];
 			char in3[MAX_ALLOWED_INPUT];
-			char in4[MAX_ALLOWED_INPUT];
 
-			sscanf(input, " %s %s %s %s", in1, in2, in3, in4);
+			sscanf(input, " %s %s %s %s", in0, in1, in2, in3);
 
 			switch (input[0]) //1st char is command operation
 			{
@@ -87,22 +87,33 @@ int main(int argc, char *argv[])
 			case 'o': //o <printer name> --set <printer name > online
 				for (int i = 0; i < MAX_PRINTERS; i++)
 				{
-					if (strncmp(p_arr[i].name, in2, sizeof(p_arr[i].name) / sizeof(char)))
+					if (strncmp(p_arr[i].name, in1, sizeof(p_arr[i].name) / sizeof(char)))
 					{
 						p_arr[i].online = true;
 					}
 				}
 				break;
-			case 'f':
-				//offline();
+			case 'f': //f <printer name>  --set <printer name > offline and distributes jobs
+				for (int i = 0; i < MAX_PRINTERS; i++)
+				{
+					if (strncmp(p_arr[i].name, in1, sizeof(p_arr[i].name) / sizeof(char)))
+					{
+						p_arr[i].online = false;
+					}
+				}
 				break;
-				//f <printer name>  --set <printer name > offline and distributes jobs
-			case 'a':
-				//add_job(YEET, INPUT1st, INPUTCHAR);
+			case 'a': //a <printer name> <job name> <job duration> --add a print job with its size to the printer's queue
+
+				for (int i = 0; i < MAX_PRINTERS; i++)
+				{
+					if (strncmp(p_arr[i].name, in1, sizeof(p_arr[i].name) / sizeof(char)))
+					{
+						add_job(p_arr[i], in2, atoi(in3));
+					}
+				}
 				time++;
 				break;
-				//a <printer name> <job name> <job duration> --add a print job with its size to the printer’s queue
-			case 'p':
+			case 'p': //p --explicit print callto print all printers and their queues.
 				for (int i = 0; i < MAX_PRINTERS; i++)
 				{
 					if (p_arr[i].name != NULL)
@@ -110,10 +121,9 @@ int main(int argc, char *argv[])
 						print(p_arr[i]);
 					}
 				}
-
-				time++;
+				//time++; -not sure tick should be advanced, otherwise will print again
 				break;
-				//explicit print callto print all printers and their queues. After every printer or queue update, the print function of all printers+queuesis executed by default.
+
 			default:
 				printf("\033[0;31mInvalid input.\033[0m\n");
 				break;
@@ -126,7 +136,7 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	//temp
+	//Free used memory
 	for (int i = 0; i < MAX_PRINTERS; i++)
 	{
 		//job queue handling

@@ -50,6 +50,7 @@ void add_job(printer p, char *j_name, int size)
     return;
 }
 
+//After every printer or queue update, the print function of all printers+queuesis executed by default.
 void update_printer()
 {
     return;
