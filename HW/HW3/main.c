@@ -8,14 +8,12 @@
 int main(int argc, char *argv[])
 {
     int num_prints = -1; //starts at -1 so we don't have to deal with i-1
-
     int exited = false; //used to keep track if user has prompted exit
-
-    int time = 1;
+    int time = 1; //system controller clock
 
     //Setup array of printer structs
     printer *p_arr;
-    p_arr = malloc(sizeof(*p_arr) * MAX_PRINTERS);
+    p_arr = malloc(sizeof(printer) * MAX_PRINTERS);
 
     //Only read from file if we have a second arg, else just listen.
     if (argc > 1)
@@ -27,13 +25,10 @@ int main(int argc, char *argv[])
             fscanf(fp, "%d", &num_prints);
             for (int i = 0; i < num_prints; i++) //process printers
             {
-                char *temp_name = malloc(sizeof(temp_name) * MAX_NAME_LEN);
-                int temp_speed;
+                char *temp_name = malloc(sizeof(char) * MAX_NAME_LEN);
 
-                fscanf(fp, "%10s %d", temp_name, &temp_speed);
-                //printf("%d, %d\n", (int)sizeof(p_arr[i].name), (int)sizeof(temp_name));
-                memcpy(&p_arr[i].name, &temp_name, sizeof(p_arr[i].name));
-                temp_speed = p_arr[i].speed;
+                fscanf(fp, "%10s %d", temp_name, &p_arr[i].speed);
+                p_arr[i].name = temp_name; //heap -> stack
             }
 
             //process jobs

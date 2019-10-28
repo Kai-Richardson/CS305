@@ -23,7 +23,7 @@ void disposeTopJob(struct printJob *head)
 int queue_length(printer j)
 {
 
-	if (!j.printQueue)
+	if (j.printQueue == NULL)
 		return 0; //print queue is empty
 
 	int length = 0;

@@ -26,8 +26,7 @@ void add_job(printer p, char *j_name, int size)
     printJob *new_job;
     new_job = (printJob *)malloc(sizeof(struct printJob));
 
-    memcpy(&new_job->name, &j_name, sizeof(new_job->name));
-
+	new_job->name = j_name;
     new_job->size = size;
 
     //If the queue is empty, no need to traverse
