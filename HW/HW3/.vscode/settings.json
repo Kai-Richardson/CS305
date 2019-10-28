@@ -1,4 +1,5 @@
 {
-    "makefileCommandRunner.makefileName": "makefile",
-    "makefileCommandRunner.filePathEnv": "/"
+    "files.associations": {
+        "typeinfo": "c"
+    }
 }

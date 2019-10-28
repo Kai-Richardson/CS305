@@ -11,21 +11,23 @@ void add_job(printer p, char *j_name, int size)
 {
 
     //No operations on printer if offline.
-    if (p.online == false)
-        return;
+    // if (p.online == false)
+    //   return;
 
     //No additions if the queue is full.
     if (queue_length(p) >= MAX_IN_QUEUE)
         return;
 
-    //No operations on printer if bad size92
+    //No operations on printer if bad size
     if (size < 1)
         return;
 
     //Malloc new printjob + assign data
     printJob *new_job;
     new_job = (printJob *)malloc(sizeof(struct printJob));
-    strcpy(new_job->name, j_name);
+
+    memcpy(&new_job->name, &j_name, sizeof(new_job->name));
+
     new_job->size = size;
 
     //If the queue is empty, no need to traverse
@@ -48,7 +50,10 @@ void add_job(printer p, char *j_name, int size)
     return;
 }
 
-void update_printer();
+void update_printer()
+{
+    return;
+}
 
 /* offline(printer[], int, int)
  * Turns given printer from the printer array offline.
@@ -95,7 +100,7 @@ void online(printer *p)
  */
 void print(printer *p)
 {
-    printf("%s@%d->", p->name, *p->speed); //print printer information
+    printf("%s@%d->", p->name, p->speed); //print printer information
 
     //Empty, early return
     if (!p->printQueue)
