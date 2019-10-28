@@ -11,8 +11,8 @@ void add_job(printer p, char *j_name, int size)
 {
 
     //No operations on printer if offline.
-    // if (p.online == false)
-    //   return;
+     if (p.online == false)
+       return;
 
     //No additions if the queue is full.
     if (queue_length(p) >= MAX_IN_QUEUE)
@@ -28,6 +28,7 @@ void add_job(printer p, char *j_name, int size)
 
 	new_job->name = j_name;
     new_job->size = size;
+	new_job->next = NULL;
 
     //If the queue is empty, no need to traverse
     if (p.printQueue == NULL)
@@ -97,12 +98,12 @@ void online(printer *p)
 /* print(printer*)
  * Prints information about given printer + its printjobs
  */
-void print(printer *p)
+void print(printer p)
 {
-    printf("%s@%d->", p->name, p->speed); //print printer information
+    printf("%s@%d->", p.name, p.speed); //print printer information
 
     //Empty, early return
-    if (!p->printQueue)
+    if (p.printQueue == NULL)
     {
         printf("\n");
         return;
@@ -110,7 +111,7 @@ void print(printer *p)
 
     //traverse + print all jobs
     printJob *j;
-    j = p->printQueue;
+    j = p.printQueue;
     while (j != NULL)
     {
         printf("%s:%d->", j->name, j->size);

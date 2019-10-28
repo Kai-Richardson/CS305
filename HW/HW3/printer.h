@@ -24,7 +24,7 @@ void add_job(printer p, char *j_name, int size);
 void update_printer();
 void offline(printer p_arr[], int p_index, int num_prints);
 void online(printer *p);
-void print(printer *p);
+void print(printer p);
 
 int queue_length(printer j);
 
