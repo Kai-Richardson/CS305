@@ -10,46 +10,46 @@
 void add_job(printer p, char *j_name, int size)
 {
 
-    //No operations on printer if offline.
-    if (p.online == false)
-        return;
+	//No operations on printer if offline.
+	if (p.online == false)
+		return;
 
-    //No operations on printer if bad size
-    if (size < 1)
-        return;
+	//No operations on printer if bad size
+	if (size < 1)
+		return;
 
-    //Malloc new printjob + assign data
-    printJob *new_job;
-    new_job = (printJob *)malloc(sizeof(struct printJob));
+	//Malloc new printjob + assign data
+	printJob *new_job;
+	new_job = (printJob *)malloc(sizeof(struct printJob));
 
-    new_job->name = j_name;
-    new_job->size = size;
-    new_job->next = NULL;
+	new_job->name = j_name;
+	new_job->size = size;
+	new_job->next = NULL;
 
-    //If the queue is empty, no need to traverse
-    if (p.printQueue == NULL)
-    {
-        p.printQueue = new_job;
-        return;
-    }
+	//If the queue is empty, no need to traverse
+	if (p.printQueue == NULL)
+	{
+		p.printQueue = new_job;
+		return;
+	}
 
-    //traverse to find tail
-    printJob *tail;
-    tail = p.printQueue;
-    while (tail != NULL)
-    {
-        tail = tail->next;
-    }
+	//traverse to find tail
+	printJob *tail;
+	tail = p.printQueue;
+	while (tail != NULL)
+	{
+		tail = tail->next;
+	}
 
-    //Arrived at tail, time to append
-    tail->next = new_job;
-    return;
+	//Arrived at tail, time to append
+	tail->next = new_job;
+	return;
 }
 
 //After every printer or queue update, the print function of all printers+queues is executed by default.
-void update_printer()
+void update_printer(printer p_arr[], int num_prints)
 {
-    return;
+	return;
 }
 
 /* offline(printer[], int, int)
@@ -57,45 +57,46 @@ void update_printer()
  */
 void offline(printer p_arr[], int p_index, int num_prints)
 {
-    p_arr[p_index].online = false;
+	p_arr[p_index].online = false;
 
-    int skippy = 1;
-    for (int i = 0; i < queue_length(p_arr[p_index]); i++)
-    {
-        int curr_print = 0;
+	int skippy = 1;
+	for (int i = 0; i < queue_length(p_arr[p_index]); i++)
+	{
+		int curr_print = 0;
 
-        if (p_arr[p_index].printQueue == NULL)
-            return;
+		if (p_arr[p_index].printQueue == NULL)
+			return;
 
-        if (p_arr[i].online != false)
-        {
-            if (skippy != 1)
-            {
-                if (curr_print+1 > num_prints)
-                {
-                    add_job(p_arr[curr_print+1], p_arr[p_index].printQueue->name, p_arr[p_index].printQueue->size);
-                }
-                else {
-                    add_job(p_arr[curr_print], p_arr[p_index].printQueue->name, p_arr[p_index].printQueue->size);
-                }
+		if (p_arr[i].online != false)
+		{
+			if (skippy != 1)
+			{
+				if (curr_print + 1 > num_prints)
+				{
+					add_job(p_arr[curr_print + 1], p_arr[p_index].printQueue->name, p_arr[p_index].printQueue->size);
+				}
+				else
+				{
+					add_job(p_arr[curr_print], p_arr[p_index].printQueue->name, p_arr[p_index].printQueue->size);
+				}
+			}
+			else
+			{
+				add_job(p_arr[curr_print], p_arr[p_index].printQueue->name, p_arr[p_index].printQueue->size);
+			}
 
-            }
-            else {
-                add_job(p_arr[curr_print], p_arr[p_index].printQueue->name, p_arr[p_index].printQueue->size);
-            }
+			skippy = !skippy;
 
-            skippy = !skippy;
+			disposeTopJob(p_arr[p_index].printQueue); //delete old now that we're done with it
+			curr_print++;
+		}
+		if (curr_print % num_prints != 0) //wraparound
+		{
+			curr_print = 0; //go back to 1st
+		}
+	}
 
-            disposeTopJob(p_arr[p_index].printQueue); //delete old now that we're done with it
-            curr_print++;
-        }
-        if (curr_print % num_prints != 0) //wraparound
-        {
-            curr_print = 0; //go back to 1st
-        }
-    }
-
-    return;
+	return;
 }
 
 /* online(printer)
@@ -103,10 +104,10 @@ void offline(printer p_arr[], int p_index, int num_prints)
  */
 void online(printer p)
 {
-    if (p.online == false)
-    {
-        p.online = true;
-    }
+	if (p.online == false)
+	{
+		p.online = true;
+	}
 }
 
 /* print(printer)
@@ -114,24 +115,24 @@ void online(printer p)
  */
 void print(printer p)
 {
-    printf("\033[0;32m%s\033[0;33m@\033[0;36m%d\033[0m->", p.name, p.speed); //print printer information
+	printf("\033[0;32m%s\033[0;33m@\033[0;36m%d\033[0m->", p.name, p.speed); //print printer information
 
-    //Empty, early return
-    if (p.printQueue == NULL)
-    {
-        printf("\n");
-        return;
-    }
+	//Empty, early return
+	if (p.printQueue == NULL)
+	{
+		printf("\n");
+		return;
+	}
 
-    //traverse + print all jobs
-    printJob *j;
-    j = p.printQueue;
-    while (j != NULL)
-    {
-        printf("\033[0;31m%s\033[0;33m:%d\033[0;36m\033[0m->", j->name, j->size);
-        j = j->next;
-    }
+	//traverse + print all jobs
+	printJob *j;
+	j = p.printQueue;
+	while (j != NULL)
+	{
+		printf("\033[0;31m%s\033[0;33m:%d\033[0;36m\033[0m->", j->name, j->size);
+		j = j->next;
+	}
 
-    printf("\n"); //Done with printer, newline time
-    return;
+	printf("\n"); //Done with printer, newline time
+	return;
 }

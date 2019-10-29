@@ -97,7 +97,8 @@ int main(int argc, char *argv[])
 			case 'f': //f <printer name>  --set <printer name > offline and distributes jobs
 				for (int i = 0; i < MAX_PRINTERS; i++)
 				{
-					if (p_arr[i].name == NULL) break;
+					if (p_arr[i].name == NULL)
+						break;
 					if (strncmp(p_arr[i].name, in1, sizeof(p_arr[i].name) / sizeof(char)) == 0)
 					{
 						offline(p_arr, i, num_prints);
