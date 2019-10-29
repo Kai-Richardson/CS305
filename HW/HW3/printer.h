@@ -8,7 +8,6 @@
 
 #define MAX_NAME_LEN 10
 #define MAX_PRINTERS 10
-#define MAX_IN_QUEUE 10
 #define MAX_ALLOWED_INPUT 40
 
 typedef struct printer
@@ -23,7 +22,7 @@ typedef struct printer
 void add_job(printer p, char *j_name, int size);
 void update_printer();
 void offline(printer p_arr[], int p_index, int num_prints);
-void online(printer *p);
+void online(printer p);
 void print(printer p);
 
 int queue_length(printer j);

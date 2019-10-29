@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
 				else
 				{
 					add_job(p_arr[curr_printer], tmp_jname, tmp_jnum);
+					curr_printer++;
 				}
 			}
 			fclose(fp); //close since we're done
@@ -75,7 +76,7 @@ int main(int argc, char *argv[])
 
 			sscanf(input, " %s %s %s %s", in0, in1, in2, in3);
 
-			switch (input[0]) //1st char is command operation
+			switch (in0[0]) //1st char is command operation (allows for "quit", "time", etc.)
 			{
 			case 'q': //q --quit program
 				printf("\033[0;31mQuitting...\033[0m\n");
@@ -89,16 +90,18 @@ int main(int argc, char *argv[])
 				{
 					if (strncmp(p_arr[i].name, in1, sizeof(p_arr[i].name) / sizeof(char)))
 					{
-						p_arr[i].online = true;
+						online(p_arr[i]);
 					}
 				}
 				break;
 			case 'f': //f <printer name>  --set <printer name > offline and distributes jobs
 				for (int i = 0; i < MAX_PRINTERS; i++)
 				{
-					if (strncmp(p_arr[i].name, in1, sizeof(p_arr[i].name) / sizeof(char)))
+					if (p_arr[i].name == NULL) break;
+					if (strncmp(p_arr[i].name, in1, sizeof(p_arr[i].name) / sizeof(char)) == 0)
 					{
-						p_arr[i].online = false;
+						offline(p_arr, i, num_prints);
+						break;
 					}
 				}
 				break;
@@ -131,8 +134,7 @@ int main(int argc, char *argv[])
 		}
 		if (time_old < time) //tick advanced
 		{
-			update_printer();
-			//processes non-empty printer queues
+			update_printer(); //processes non-empty printer queues
 		}
 	}
 
@@ -157,9 +159,11 @@ int main(int argc, char *argv[])
 			}
 		}
 
+		//free printer names
 		free(p_arr[i].name);
 	}
 
+	//free printer array
 	free(p_arr);
 
 	return EXIT_SUCCESS;

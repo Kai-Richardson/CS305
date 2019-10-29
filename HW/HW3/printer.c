@@ -11,11 +11,7 @@ void add_job(printer p, char *j_name, int size)
 {
 
     //No operations on printer if offline.
-     if (p.online == false)
-       return;
-
-    //No additions if the queue is full.
-    if (queue_length(p) >= MAX_IN_QUEUE)
+    if (p.online == false)
         return;
 
     //No operations on printer if bad size
@@ -26,9 +22,9 @@ void add_job(printer p, char *j_name, int size)
     printJob *new_job;
     new_job = (printJob *)malloc(sizeof(struct printJob));
 
-	new_job->name = j_name;
+    new_job->name = j_name;
     new_job->size = size;
-	new_job->next = NULL;
+    new_job->next = NULL;
 
     //If the queue is empty, no need to traverse
     if (p.printQueue == NULL)
@@ -50,7 +46,7 @@ void add_job(printer p, char *j_name, int size)
     return;
 }
 
-//After every printer or queue update, the print function of all printers+queuesis executed by default.
+//After every printer or queue update, the print function of all printers+queues is executed by default.
 void update_printer()
 {
     return;
@@ -62,6 +58,8 @@ void update_printer()
 void offline(printer p_arr[], int p_index, int num_prints)
 {
     p_arr[p_index].online = false;
+
+    int skippy = 1;
     for (int i = 0; i < queue_length(p_arr[p_index]); i++)
     {
         int curr_print = 0;
@@ -69,10 +67,25 @@ void offline(printer p_arr[], int p_index, int num_prints)
         if (p_arr[p_index].printQueue == NULL)
             return;
 
-        //needs to weave-skip by one
         if (p_arr[i].online != false)
         {
-            add_job(p_arr[curr_print], p_arr[p_index].printQueue->name, p_arr[p_index].printQueue->size);
+            if (skippy != 1)
+            {
+                if (curr_print+1 > num_prints)
+                {
+                    add_job(p_arr[curr_print+1], p_arr[p_index].printQueue->name, p_arr[p_index].printQueue->size);
+                }
+                else {
+                    add_job(p_arr[curr_print], p_arr[p_index].printQueue->name, p_arr[p_index].printQueue->size);
+                }
+
+            }
+            else {
+                add_job(p_arr[curr_print], p_arr[p_index].printQueue->name, p_arr[p_index].printQueue->size);
+            }
+
+            skippy = !skippy;
+
             disposeTopJob(p_arr[p_index].printQueue); //delete old now that we're done with it
             curr_print++;
         }
@@ -85,23 +98,23 @@ void offline(printer p_arr[], int p_index, int num_prints)
     return;
 }
 
-/* online(printer*)
+/* online(printer)
  * Sets the given printer online if it is offline
  */
-void online(printer *p)
+void online(printer p)
 {
-    if (p->online == false)
+    if (p.online == false)
     {
-        p->online = true;
+        p.online = true;
     }
 }
 
-/* print(printer*)
+/* print(printer)
  * Prints information about given printer + its printjobs
  */
 void print(printer p)
 {
-    printf("%s@%d->", p.name, p.speed); //print printer information
+    printf("\033[0;32m%s\033[0;33m@\033[0;36m%d\033[0m->", p.name, p.speed); //print printer information
 
     //Empty, early return
     if (p.printQueue == NULL)
@@ -115,7 +128,7 @@ void print(printer p)
     j = p.printQueue;
     while (j != NULL)
     {
-        printf("%s:%d->", j->name, j->size);
+        printf("\033[0;31m%s\033[0;33m:%d\033[0;36m\033[0m->", j->name, j->size);
         j = j->next;
     }
 
