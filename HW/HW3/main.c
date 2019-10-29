@@ -34,7 +34,6 @@ int main(int argc, char *argv[])
 			for (int i = 0; i < num_prints; i++) //process printers
 			{
 				char *temp_name = malloc(sizeof(char) * MAX_NAME_LEN);
-
 				fscanf(fp, "%10s %d", temp_name, &p_arr[i].speed);
 				p_arr[i].name = temp_name; //heap -> stack
 			}
@@ -46,17 +45,17 @@ int main(int argc, char *argv[])
 
 			while (fscanf(fp, "%10s %d", tmp_jname, &tmp_jnum) != EOF)
 			{
-				if (curr_printer % num_prints != 0) //wraparound
-				{
-					curr_printer = 0;
-				}
-				else
-				{
-					add_job(p_arr[curr_printer], tmp_jname, tmp_jnum);
-					printf("out: %s\n", p_arr[curr_printer].printQueue);
-					curr_printer++;
-				}
+				printJob *newjob;
+
+				curr_printer = curr_printer % num_prints; //wraparound
+
+				newjob = create_job_for_printer(p_arr[curr_printer], tmp_jname, tmp_jnum);
+
+				add_job(p_arr, newjob, curr_printer);
+
+				curr_printer++;
 			}
+			free(tmp_jname); //no longer needed
 			fclose(fp); //close since we're done
 		}
 	}
@@ -113,7 +112,7 @@ int main(int argc, char *argv[])
 				{
 					if (strncmp(p_arr[i].name, in1, sizeof(p_arr[i].name) / sizeof(char)))
 					{
-						add_job(p_arr[i], in2, atoi(in3));
+						create_job_for_printer(p_arr[i], in2, atoi(in3));
 					}
 				}
 				time++;

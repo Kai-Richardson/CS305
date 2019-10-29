@@ -4,49 +4,64 @@
 #include "stdlib.h"
 #include "string.h"
 
-/* add_job(printer, char*, int)
- * Adds a given job name and size to the end of given printer's LLqueue
+/* create_job_for_printer(printer, char*, int)
+ * Creates a given job name and size regarding printer settings and returns it
  */
-void add_job(printer p, char *j_name, int size)
+printJob *create_job_for_printer(printer p, char *j_name, int size)
 {
 
 	//No operations on printer if offline.
 	if (p.online == false)
-		return;
+		return NULL;
 
 	//No operations on printer if bad size
 	if (size < 1)
-		return;
+		return NULL;
 
 	//Malloc new printjob + assign data
 	printJob *new_job;
 	new_job = (printJob *)malloc(sizeof(struct printJob));
 
-	new_job->name = j_name;
+	//so we don't use original temp and we have our own ptr
+	char *jobname = malloc(sizeof(char) * MAX_NAME_LEN);
+	strncpy(jobname, j_name, MAX_NAME_LEN);
+	new_job->name = jobname;
+
 	new_job->size = size;
 	new_job->next = NULL;
 
+	return new_job;
+}
+
+void add_job(printer p_arr[], printJob *passed_job, int p_index)
+{
 	//If the queue is empty, no need to traverse
-	if (p.printQueue == NULL)
+	if (p_arr[p_index].printQueue == NULL)
 	{
-		p.printQueue = new_job;
-		printf("in: %s\n", &p.printQueue);
+		p_arr[p_index].printQueue = passed_job;
 		return;
 	}
 
 	//traverse to find tail
 	printJob *tail;
-	tail = p.printQueue;
+	tail = p_arr[p_index].printQueue;
 	while (tail != NULL)
 	{
-		tail = tail->next;
+		//If there's further elements
+		if (tail->next != NULL)
+		{
+			tail = tail->next;
+		}
+		else
+		{
+			break; //we found the end
+		}
 	}
 
 	//Arrived at tail, time to append
-	tail->next = new_job;
+	tail->next = passed_job;
 	return;
 }
-
 
 void update_printer(printer p_arr[], int num_prints)
 {
@@ -58,12 +73,12 @@ void update_printer(printer p_arr[], int num_prints)
 		if (p_arr[i].online == true)
 		{
 			//if queue is empty, no process to do
-			if (p_arr[i].printQueue == NULL) {
-
+			if (p_arr[i].printQueue == NULL)
+			{
 			}
 			else if (p_arr[i].printQueue->size >= avail_speed) //if we can finish, do & dispose top
 			{
-				printf("Done: %s : %s\n", p_arr[i].name, p_arr[i].printQueue->name);
+				printf("\033[0;31mDone: %s : %s\033[0m\n", p_arr[i].name, p_arr[i].printQueue->name);
 				disposeTopJob(p_arr[i].printQueue);
 				avail_speed -= p_arr[i].speed;
 			}
@@ -100,16 +115,16 @@ void offline(printer p_arr[], int p_index, int num_prints)
 			{
 				if (curr_print + 1 > num_prints)
 				{
-					add_job(p_arr[curr_print + 1], p_arr[p_index].printQueue->name, p_arr[p_index].printQueue->size);
+					create_job_for_printer(p_arr[curr_print + 1], p_arr[p_index].printQueue->name, p_arr[p_index].printQueue->size);
 				}
 				else
 				{
-					add_job(p_arr[curr_print], p_arr[p_index].printQueue->name, p_arr[p_index].printQueue->size);
+					create_job_for_printer(p_arr[curr_print], p_arr[p_index].printQueue->name, p_arr[p_index].printQueue->size);
 				}
 			}
 			else
 			{
-				add_job(p_arr[curr_print], p_arr[p_index].printQueue->name, p_arr[p_index].printQueue->size);
+				create_job_for_printer(p_arr[curr_print], p_arr[p_index].printQueue->name, p_arr[p_index].printQueue->size);
 			}
 
 			skippy = !skippy;
