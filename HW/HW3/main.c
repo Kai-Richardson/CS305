@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
 				else
 				{
 					add_job(p_arr[curr_printer], tmp_jname, tmp_jnum);
+					printf("out: %s\n", p_arr[curr_printer].printQueue);
 					curr_printer++;
 				}
 			}

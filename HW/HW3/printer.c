@@ -30,6 +30,7 @@ void add_job(printer p, char *j_name, int size)
 	if (p.printQueue == NULL)
 	{
 		p.printQueue = new_job;
+		printf("in: %s\n", &p.printQueue);
 		return;
 	}
 
