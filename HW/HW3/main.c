@@ -135,7 +135,7 @@ int main(int argc, char *argv[])
 		}
 		if (time_old < time) //tick advanced
 		{
-			update_printer(); //processes non-empty printer queues
+			update_printer(p_arr, num_prints); //processes non-empty printer queues
 		}
 	}
 

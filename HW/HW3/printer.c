@@ -46,9 +46,35 @@ void add_job(printer p, char *j_name, int size)
 	return;
 }
 
-//After every printer or queue update, the print function of all printers+queues is executed by default.
+
 void update_printer(printer p_arr[], int num_prints)
 {
+	for (int i = 0; i < num_prints; i++)
+	{
+		int avail_speed = p_arr[i].speed;
+
+		//only process if online
+		if (p_arr[i].online == true)
+		{
+			//if queue is empty, no process to do
+			if (p_arr[i].printQueue == NULL) {
+
+			}
+			else if (p_arr[i].printQueue->size >= avail_speed) //if we can finish, do & dispose top
+			{
+				printf("Done: %s : %s\n", p_arr[i].name, p_arr[i].printQueue->name);
+				disposeTopJob(p_arr[i].printQueue);
+				avail_speed -= p_arr[i].speed;
+			}
+			else //if we can't
+			{
+				p_arr[i].printQueue->size -= avail_speed;
+			}
+		}
+
+		print(p_arr[i]);
+	}
+
 	return;
 }
 
