@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 				curr_printer++;
 			}
 			free(tmp_jname); //no longer needed
-			fclose(fp); //close since we're done
+			fclose(fp);		 //close since we're done
 		}
 	}
 
@@ -118,6 +118,7 @@ int main(int argc, char *argv[])
 				time++;
 				break;
 			case 'p': //p --explicit print callto print all printers and their queues.
+				printf("\n");
 				for (int i = 0; i < MAX_PRINTERS; i++)
 				{
 					if (p_arr[i].name != NULL)
@@ -125,6 +126,7 @@ int main(int argc, char *argv[])
 						print(p_arr[i]);
 					}
 				}
+				printf("\n");
 				//time++; -not sure tick should be advanced, otherwise will print again
 				break;
 
@@ -153,7 +155,10 @@ int main(int argc, char *argv[])
 			while (job != NULL)
 			{
 				other = job;
-				job = job->next;
+				if (job->next != NULL)
+				{
+					job = job->next;
+				}
 
 				free(other->name);
 				free(other);

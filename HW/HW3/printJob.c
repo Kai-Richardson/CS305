@@ -7,6 +7,7 @@
 
 void disposeTopJob(struct printJob *head)
 {
+	//got passed garbagio!
 	if (head == NULL)
 		return;
 
@@ -15,8 +16,8 @@ void disposeTopJob(struct printJob *head)
 	if (head->next != NULL)
 	{
 		head = head->next;
-		free(old_head);
 	}
+	free(old_head);
 	return;
 }
 

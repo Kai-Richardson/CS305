@@ -65,6 +65,7 @@ void add_job(printer p_arr[], printJob *passed_job, int p_index)
 
 void update_printer(printer p_arr[], int num_prints)
 {
+	printf("\n");
 	for (int i = 0; i < num_prints; i++)
 	{
 		int avail_speed = p_arr[i].speed;
@@ -76,9 +77,9 @@ void update_printer(printer p_arr[], int num_prints)
 			if (p_arr[i].printQueue == NULL)
 			{
 			}
-			else if (p_arr[i].printQueue->size >= avail_speed) //if we can finish, do & dispose top
+			else if (p_arr[i].printQueue->size <= avail_speed) //if we can finish, do & dispose top
 			{
-				printf("\033[0;31mDone: %s : %s\033[0m\n", p_arr[i].name, p_arr[i].printQueue->name);
+				printf("\033[0;33mDone: \033[0;32m%s\033[0m:\033[0;31m%s\033[0m\n", p_arr[i].name, p_arr[i].printQueue->name);
 				disposeTopJob(p_arr[i].printQueue);
 				avail_speed -= p_arr[i].speed;
 			}
@@ -90,6 +91,7 @@ void update_printer(printer p_arr[], int num_prints)
 
 		print(p_arr[i]);
 	}
+	printf("\n");
 
 	return;
 }
@@ -157,7 +159,7 @@ void online(printer p)
  */
 void print(printer p)
 {
-	printf("\033[0;32m%s\033[0;33m@\033[0;36m%d\033[0m->", p.name, p.speed); //print printer information
+	printf("\033[0;32m%s\033[0;33m@\033[0;36m%d\033[0m", p.name, p.speed); //print printer information
 
 	//Empty, early return
 	if (p.printQueue == NULL)
@@ -165,14 +167,24 @@ void print(printer p)
 		printf("\n");
 		return;
 	}
+	else
+	{
+		printf("->");
+	}
+
 
 	//traverse + print all jobs
 	printJob *j;
 	j = p.printQueue;
 	while (j != NULL)
 	{
-		printf("\033[0;31m%s\033[0;33m:%d\033[0;36m\033[0m->", j->name, j->size);
+		printf("\033[0;31m%s\033[0;33m:%d\033[0;36m\033[0m", j->name, j->size);
 		j = j->next;
+		if (j != NULL)
+		{
+			printf("->");
+		}
+
 	}
 
 	printf("\n"); //Done with printer, newline time
