@@ -1,6 +1,7 @@
-#include "stdio.h"
-#include "stdlib.h"
-#include "string.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
 #include "printer.h"
 #include "printJob.h"
@@ -10,6 +11,8 @@ int main(int argc, char *argv[])
 	int num_prints = -1; //starts at -1 so we don't have to deal with i-1
 	int exited = false;  //used to keep track if user has prompted exit
 	int time = 1;		 //system controller clock
+
+	int is_terminal = isatty(fileno(stdout)); //no printing color escape codes to files
 
 	//Setup array of printer structs
 	printer *p_arr;
@@ -65,10 +68,19 @@ int main(int argc, char *argv[])
 		int time_old = time;
 
 		char input[MAX_ALLOWED_INPUT];
-		printf("\033[0m[\033[0;36m Time: \033[0m%d | \033[0;32mPrinters: \033[0m%d ]: \033[0;33m", time, num_prints);
+		if (is_terminal)
+		{
+			printf("\033[0m[\033[0;36m Time: \033[0m%d | \033[0;32mPrinters: \033[0m%d ]: \033[0;33m", time, num_prints);
+		}
+		else
+		{
+			printf("[ Time: %d | Printers: %d ]: ", time, num_prints);
+		}
+
 		fgets(input, MAX_ALLOWED_INPUT, stdin);
 		if (input != NULL)
 		{
+			//arrays to store input
 			char in0[MAX_ALLOWED_INPUT];
 			char in1[MAX_ALLOWED_INPUT];
 			char in2[MAX_ALLOWED_INPUT];
@@ -79,7 +91,15 @@ int main(int argc, char *argv[])
 			switch (in0[0]) //1st char is command operation (allows for "quit", "time", etc.)
 			{
 			case 'q': //q --quit program
-				printf("\033[0;31mQuitting...\033[0m\n");
+				if (is_terminal)
+				{
+					printf("\033[0;31mQuitting...\033[0m\n");
+				}
+				else
+				{
+					printf("Quitting...\n");
+				}
+
 				exited = true;
 				break;
 			case 't': //t --increment clocktime
@@ -91,6 +111,7 @@ int main(int argc, char *argv[])
 					if (strncmp(p_arr[i].name, in1, sizeof(p_arr[i].name) / sizeof(char)))
 					{
 						online(p_arr[i]);
+						break;
 					}
 				}
 				break;
@@ -123,7 +144,7 @@ int main(int argc, char *argv[])
 				{
 					if (p_arr[i].name != NULL)
 					{
-						print(p_arr[i]);
+						print(p_arr[i], p_arr[i].printQueue, is_terminal);
 					}
 				}
 				printf("\n");
@@ -131,13 +152,21 @@ int main(int argc, char *argv[])
 				break;
 
 			default:
-				printf("\033[0;31mInvalid input.\033[0m\n");
+				if (is_terminal)
+				{
+					printf("\033[0;31mInvalid input.\033[0m\n");
+				}
+				else
+				{
+					printf("Invalid input.\n");
+				}
+
 				break;
 			}
 		}
 		if (time_old < time) //tick advanced
 		{
-			update_printer(p_arr, num_prints); //processes non-empty printer queues
+			update_printer(p_arr, num_prints, is_terminal); //processes non-empty printer queues
 		}
 	}
 

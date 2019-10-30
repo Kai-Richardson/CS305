@@ -5,31 +5,43 @@
 #include "printer.h"
 #include "printJob.h"
 
-void disposeTopJob(struct printJob *head)
+/* printJob *getNewTopJob(printer)
+ * Deletes printer's current job and returns the next one in line.
+ */
+printJob *getNewTopJob(printer p)
 {
-	//got passed garbagio!
-	if (head == NULL)
-		return;
+	//got passed printer with no top job!
+	if (p.printQueue == NULL)
+		return NULL;
 
 	// Move the head pointer to the next node
-	printJob *old_head = head;
-	if (head->next != NULL)
+	printJob *old_head = p.printQueue;
+	printJob *to_return = NULL;
+
+	//If there's a next element, move it up the queue
+	if (p.printQueue->next != NULL)
 	{
-		head = head->next;
+		to_return = p.printQueue->next;
 	}
+
+	//free old job
+	free(old_head->name);
 	free(old_head);
-	return;
+	return to_return;
 }
 
-int queue_length(printer j)
+/* int queue_length(printer)
+ * Returns length of current printer's queue.
+ */
+int queue_length(printer p)
 {
 
-	if (j.printQueue == NULL)
+	if (p.printQueue == NULL)
 		return 0; //print queue is empty
 
 	int length = 0;
 	printJob *i;
-	i = j.printQueue;
+	i = p.printQueue;
 	while (i != NULL)
 	{
 		i = i->next;

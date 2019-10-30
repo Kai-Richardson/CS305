@@ -8,7 +8,6 @@ typedef struct printJob
 	struct printJob *next;
 } printJob;
 
-/* function prototypes */
-void disposeTopJob(struct printJob *head);
+/* no function prototypes here due to having printer-focused methodology */
 
 #endif
