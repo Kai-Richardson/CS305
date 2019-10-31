@@ -98,36 +98,42 @@ void offline(printer p_arr[], int p_index, int num_prints)
 
 	int curr_print = 0; //current printer
 	int curr_head_col = 0;   //current header column
-	int op_done = 0;
 
 	while (p_arr[p_index].printQueue != NULL)
 	{
 
-		if (p_arr[curr_print].online == true)
-		{
-				printJob *whereInsert = getListN(p_arr[curr_print].printQueue, curr_head_col);
-				printJob *toInsert = grabTopJob(p_arr[p_index], p_arr[p_index].printQueue);
-				printJob *tempHolder = toInsert->next;
-				toInsert->next = whereInsert->next;
-				whereInsert->next = toInsert;
-				p_arr[p_index].printQueue = tempHolder;
+		if (curr_print == 0) {
+			curr_head_col += 2;
 		}
 
-		//if there's no online printers rip
-		/*if (curr_head_col > 999)
+		if (p_arr[curr_print].online == true)
 		{
-			printf("No online printers to distribute jobs to. Aborting.\n");
-			p_arr[p_index].online = true;
-			break;
-		}*/
+				printJob *whereInsert = getListN(p_arr[curr_print].printQueue, curr_head_col-2);
+				printJob *toInsert = grabTopJob(p_arr[p_index], p_arr[p_index].printQueue);
+				printJob *tempHolder = toInsert->next;
+
+				if (whereInsert == NULL)
+				{
+					toInsert->next = p_arr[curr_print].printQueue;
+					p_arr[curr_print].printQueue->next = toInsert;
+				}
+				else
+				{
+					toInsert->next = whereInsert->next;
+					whereInsert->next = toInsert;
+				}
+				p_arr[p_index].printQueue = tempHolder;
+
+				/*
+				for (int k = 0; k < num_prints; k++)
+				{
+					print(p_arr[k], p_arr[k].printQueue, num_prints);
+				}
+				*/
+		}
 
 		curr_print++;
 		curr_print = curr_print % num_prints;
-		if (curr_print == 0) {
-			curr_head_col++;
-
-		}
-
 	}
 
 	return;
@@ -151,7 +157,13 @@ void print(printer p, printJob *head, int is_term)
 {
 	if (is_term)
 	{
-		printf("\033[0;32m%s\033[0;33m@\033[0;36m%d\033[0m", p.name, p.speed); //print printer information
+		char *online_str = "\033[0;32m";
+		if (p.online == false)
+		{
+			online_str = "\033[7;32m";
+		}
+
+		printf("%s%s\033[0;33m@\033[0;36m%d\033[0m", online_str, p.name, p.speed); //print printer information
 	}
 	else
 	{

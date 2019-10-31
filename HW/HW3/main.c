@@ -108,7 +108,9 @@ int main(int argc, char *argv[])
 			case 'o': //o <printer name> --set <printer name > online
 				for (int i = 0; i < MAX_PRINTERS; i++)
 				{
-					if (strncmp(p_arr[i].name, in1, sizeof(p_arr[i].name) / sizeof(char)))
+					if (p_arr[i].name == NULL)
+						break;
+					if (strncmp(p_arr[i].name, in1, sizeof(p_arr[i].name) / sizeof(char)) == 0)
 					{
 						online(p_arr, i);
 						break;
@@ -131,7 +133,9 @@ int main(int argc, char *argv[])
 
 				for (int i = 0; i < MAX_PRINTERS; i++)
 				{
-					if (strncmp(p_arr[i].name, in1, sizeof(p_arr[i].name) / sizeof(char)))
+					if (p_arr[i].name == NULL)
+						break;
+					if (strncmp(p_arr[i].name, in1, sizeof(p_arr[i].name) / sizeof(char)) == 0)
 					{
 						create_job_for_printer(p_arr[i], in2, atoi(in3));
 					}
