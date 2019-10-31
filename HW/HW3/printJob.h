@@ -4,13 +4,13 @@
 typedef struct printJob
 {
 	char *name; //10 chars max no spaces
-	int size;
+	int size;   //size of the job
 	struct printJob *next;
 } printJob;
 
-/* not many prototypes here due to having printer-focused methodology */
-
+/* printJob helper functions */
 printJob *getTail(printJob *);
 printJob *getListN(printJob *, int);
+printJob *getNewTopJob(printJob *);
 
 #endif

@@ -1,0 +1,39 @@
+[ Time: 1 | Printers: 3 ]: 
+P1@1->J1:3->J4:1->J7:1
+P2@2->J2:5->J5:2
+P3@1->J3:2->J6:3
+
+[ Time: 1 | Printers: 3 ]: 
+P1@1->J1:2->J4:1->J7:1->BIGJOB:8
+P2@2->J2:3->J5:2
+P3@1->J3:1->J6:3
+
+[ Time: 2 | Printers: 3 ]: 
+P1@1->J1:2->J4:1->J7:1->BIGJOB:8
+P2@2->J2:3->J5:2
+P3@1->J3:1->J6:3
+
+[ Time: 2 | Printers: 3 ]: [ Time: 2 | Printers: 3 ]: 
+P1@1->J1:2->J2:3->J4:1->J7:1->BIGJOB:8
+P2@2
+P3@1->J3:1->J5:2->J6:3
+
+[ Time: 2 | Printers: 3 ]: [ Time: 2 | Printers: 3 ]: [ Time: 2 | Printers: 3 ]: 
+P1@1
+Done: P2:J1
+P2@2->J4:1->BIGJOB:8
+Done: P3:J3
+P3@1->J2:3->J5:2->J7:1->J6:3
+
+[ Time: 3 | Printers: 3 ]: 
+P1@1
+P2@2->J4:1->BIGJOB:8
+P3@1->J2:3->J5:2->J7:1->J6:3
+
+[ Time: 3 | Printers: 3 ]: [ Time: 3 | Printers: 3 ]: [ Time: 3 | Printers: 3 ]: Error: No online printers to distribute to. Aborting job distribution.
+[ Time: 3 | Printers: 3 ]: [ Time: 3 | Printers: 3 ]: 
+P1@1
+P2@2
+P3@1->J2:2->J4:1->J5:2->BIGJOB:8->J7:1->J6:3
+
+[ Time: 4 | Printers: 3 ]: Quitting...

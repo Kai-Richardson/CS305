@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "typeinfo": "c",
-        "printer.h": "c"
+        "printer.h": "c",
+        "string.h": "c"
     }
 }

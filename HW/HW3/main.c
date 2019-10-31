@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
 				time++;
 				break;
 			case 'o': //o <printer name> --set <printer name > online
-				for (int i = 0; i < MAX_PRINTERS; i++)
+				for (int i = 0; i < num_prints; i++)
 				{
 					if (p_arr[i].name == NULL)
 						break;
@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
 				}
 				break;
 			case 'f': //f <printer name>  --set <printer name > offline and distributes jobs
-				for (int i = 0; i < MAX_PRINTERS; i++)
+				for (int i = 0; i < num_prints; i++)
 				{
 					if (p_arr[i].name == NULL)
 						break;
@@ -131,20 +131,22 @@ int main(int argc, char *argv[])
 				break;
 			case 'a': //a <printer name> <job name> <job duration> --add a print job with its size to the printer's queue
 
-				for (int i = 0; i < MAX_PRINTERS; i++)
+				for (int i = 0; i < num_prints; i++)
 				{
 					if (p_arr[i].name == NULL)
 						break;
 					if (strncmp(p_arr[i].name, in1, sizeof(p_arr[i].name) / sizeof(char)) == 0)
 					{
-						create_job_for_printer(p_arr[i], in2, atoi(in3));
+						printJob *new = create_job_for_printer(p_arr[i], in2, atoi(in3));
+						add_job(p_arr, new, i);
+						break;
 					}
 				}
 				time++;
 				break;
 			case 'p': //p --explicit print callto print all printers and their queues.
 				printf("\n");
-				for (int i = 0; i < MAX_PRINTERS; i++)
+				for (int i = 0; i < num_prints; i++)
 				{
 					if (p_arr[i].name != NULL)
 					{
@@ -175,26 +177,14 @@ int main(int argc, char *argv[])
 	}
 
 	//Free used memory
-	for (int i = 0; i < MAX_PRINTERS; i++)
+	for (int i = 0; i < num_prints; i++)
 	{
-		//job queue handling
-		if (p_arr[i].printQueue != NULL)
+
+		while (p_arr[i].printQueue != NULL)
 		{
-
-			printJob *job;
-			printJob *other;
-
-			job = p_arr[i].printQueue;
-			while (job != NULL)
+			if (p_arr[i].printQueue != NULL)
 			{
-				other = job;
-				if (job->next != NULL)
-				{
-					job = job->next;
-				}
-
-				free(other->name);
-				free(other);
+				p_arr[i].printQueue = getNewTopJob(p_arr[i].printQueue);
 			}
 		}
 

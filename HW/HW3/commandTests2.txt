@@ -1,0 +1,16 @@
+p
+a P1 NEW 1
+a P2 NEWNEW 2
+a P3 NEWNEWNEW 3
+p
+f P2
+f P3
+o P2
+p
+t
+t
+t
+t
+t
+t
+q

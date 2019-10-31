@@ -1,27 +1,27 @@
-#include "string.h"
-#include "stdio.h"
-#include "stdlib.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "printer.h"
 #include "printJob.h"
 
-/* printJob *getNewTopJob(printer)
+/* printJob *getNewTopJob(printJob)
  * Deletes printer's current job and returns the next one in line.
  */
-printJob *getNewTopJob(printer p)
+printJob *getNewTopJob(printJob *j)
 {
 	//got passed printer with no top job!
-	if (p.printQueue == NULL)
+	if (j == NULL)
 		return NULL;
 
 	// Move the head pointer to the next node
-	printJob *old_head = p.printQueue;
+	printJob *old_head = j;
 	printJob *to_return = NULL;
 
 	//If there's a next element, move it up the queue
-	if (p.printQueue->next != NULL)
+	if (j->next != NULL)
 	{
-		to_return = p.printQueue->next;
+		to_return = j->next;
 	}
 
 	//free old job
@@ -33,7 +33,7 @@ printJob *getNewTopJob(printer p)
 /* printJob *grabTopJob(printer, printJob)
  * Grabs the top job from a printer and moves everything up
  */
-printJob *grabTopJob(printer p, printJob* head)
+printJob *grabTopJob(printer p, printJob *head)
 {
 	//got passed null top job
 	if (head == NULL)
@@ -53,29 +53,11 @@ printJob *grabTopJob(printer p, printJob* head)
 	return head;
 }
 
-/* int queue_length(printJob *j)
- * Returns length of current printer's queue.
- */
-int queue_length(printJob *j)
-{
-	if (j == NULL)
-		return 0; //print queue is empty
-
-	int length = 0;
-	printJob *i;
-	i = j;
-	while (i != NULL)
-	{
-		i = i->next;
-		length++;
-	}
-	return length;
-}
-
 /* printJob *getTail(printJob*)
  * Returns tail of given printjob*.
  */
-printJob *getTail(printJob *head) {
+printJob *getTail(printJob *head)
+{
 	//traverse to find tail
 	printJob *tail;
 	tail = head;
@@ -99,9 +81,11 @@ printJob *getTail(printJob *head) {
 /* printJob *getListN(printJob *head, int n)
  * Returns the queue item at the nth depth of a given queue
  */
-printJob *getListN(printJob *head, int n) {
+printJob *getListN(printJob *head, int n)
+{
 
-	if (n == 0) return head;
+	if (n == 0)
+		return head;
 
 	//what we'll be returning
 	printJob *to_return = head;
@@ -119,5 +103,4 @@ printJob *getListN(printJob *head, int n) {
 	}
 
 	return to_return;
-
 }

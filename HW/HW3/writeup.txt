@@ -1,0 +1,32 @@
+CS Homework 3
+By Kai Richardson
+Halloween 2019
+
+1a. Meets all specifications.
+    Improvement over specification: colored easily-readable output.
+
+1b. Done.
+
+2. Done. Test cases check for all errors.
+
+3. It's the same as a queue, there were no abnormal differences.
+
+4a. See 4a.png in /images
+
+4b. See 4b.png in /images
+
+5a. O(n)
+
+5b. O(n^2)
+
+5c. Array: 120000 bytes, Linked List: 240 bytes, Wasted: 119760 bytes
+
+5d. Less memory use than a static array with a high maximum
+
+5e. Easier handling, less memory if you have a small maximum
+
+6. 13 hours, 5h 33m on printer.c, 4h 51m on main.c
+
+Appendix A: I verify that the code and this write-up were authored by me. I have documented the help I have received in comments in the code files.
+
+Appendix B: See attached code.

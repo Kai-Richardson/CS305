@@ -1,8 +1,9 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "printer.h"
 #include "printJob.h"
-#include "stdio.h"
-#include "stdlib.h"
-#include "string.h"
 
 /* create_job_for_printer(printer, char*, int)
  * Creates a given job name and size regarding printer settings and returns it
@@ -73,7 +74,7 @@ void update_printer(printer p_arr[], int num_prints, int is_term)
 					printf("Done: %s:%s\n", p_arr[i].name, p_arr[i].printQueue->name);
 				}
 
-				p_arr[i].printQueue = getNewTopJob(p_arr[i]);
+				p_arr[i].printQueue = getNewTopJob(p_arr[i].printQueue);
 				avail_speed -= p_arr[i].speed;
 			}
 			else //if we can't
@@ -96,44 +97,55 @@ void offline(printer p_arr[], int p_index, int num_prints)
 {
 	p_arr[p_index].online = false;
 
-	int curr_print = 0; //current printer
-	int curr_head_col = 0;   //current header column
+	int curr_print = 0;	//current printer
+	int curr_head_col = 0; //current header column
+	printJob *first_to_process = p_arr[p_index].printQueue;
 
 	while (p_arr[p_index].printQueue != NULL)
 	{
 
-		if (curr_print == 0) {
-			curr_head_col += 2;
+		if (curr_print == 0)
+		{
+			curr_head_col += 2; //Move header col
 		}
 
+		//Only eat jobs if online
 		if (p_arr[curr_print].online == true)
 		{
-				printJob *whereInsert = getListN(p_arr[curr_print].printQueue, curr_head_col-2);
-				printJob *toInsert = grabTopJob(p_arr[p_index], p_arr[p_index].printQueue);
-				printJob *tempHolder = toInsert->next;
+			printJob *whereInsert = getListN(p_arr[curr_print].printQueue, curr_head_col - 2);
+			printJob *toInsert = grabTopJob(p_arr[p_index], p_arr[p_index].printQueue);
+			printJob *tempHolder = toInsert->next;
 
-				if (whereInsert == NULL)
+			if (whereInsert == NULL)
+			{
+				toInsert->next = p_arr[curr_print].printQueue;
+				if (p_arr[curr_print].printQueue == NULL)
 				{
-					toInsert->next = p_arr[curr_print].printQueue;
-					p_arr[curr_print].printQueue->next = toInsert;
+					p_arr[curr_print].printQueue = toInsert;
 				}
 				else
 				{
-					toInsert->next = whereInsert->next;
-					whereInsert->next = toInsert;
+					p_arr[curr_print].printQueue->next = toInsert;
 				}
-				p_arr[p_index].printQueue = tempHolder;
-
-				/*
-				for (int k = 0; k < num_prints; k++)
-				{
-					print(p_arr[k], p_arr[k].printQueue, num_prints);
-				}
-				*/
+			}
+			else
+			{
+				toInsert->next = whereInsert->next;
+				whereInsert->next = toInsert;
+			}
+			p_arr[p_index].printQueue = tempHolder;
 		}
 
 		curr_print++;
-		curr_print = curr_print % num_prints;
+
+		//Couldn't find anything! Abort.
+		if (first_to_process == p_arr[p_index].printQueue && (curr_print % num_prints == 0))
+		{
+			printf("Error: No online printers to distribute to. Aborting job distribution.\n");
+			return;
+		}
+
+		curr_print = curr_print % num_prints; //wraparound
 	}
 
 	return;
