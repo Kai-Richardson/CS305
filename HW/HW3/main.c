@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
 				{
 					if (strncmp(p_arr[i].name, in1, sizeof(p_arr[i].name) / sizeof(char)))
 					{
-						online(p_arr[i]);
+						online(p_arr, i);
 						break;
 					}
 				}

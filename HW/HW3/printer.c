@@ -43,22 +43,7 @@ void add_job(printer p_arr[], printJob *passed_job, int p_index)
 	}
 
 	//traverse to find tail
-	printJob *tail;
-	tail = p_arr[p_index].printQueue;
-	while (tail != NULL)
-	{
-		//If there's further elements
-		if (tail->next != NULL)
-		{
-			tail = tail->next;
-		}
-		else
-		{
-			break; //we found the end
-		}
-	}
-
-	//Arrived at tail, time to append
+	printJob *tail = getTail(p_arr[p_index].printQueue);
 	tail->next = passed_job;
 	return;
 }
@@ -111,54 +96,51 @@ void offline(printer p_arr[], int p_index, int num_prints)
 {
 	p_arr[p_index].online = false;
 
-	int skippy = 1;
-	for (int i = 0; i < queue_length(p_arr[p_index]); i++)
+	int curr_print = 0; //current printer
+	int curr_head_col = 0;   //current header column
+	int op_done = 0;
+
+	while (p_arr[p_index].printQueue != NULL)
 	{
-		int curr_print = 0;
 
-		if (p_arr[p_index].printQueue == NULL)
-			return;
-
-		if (p_arr[i].online != false)
+		if (p_arr[curr_print].online == true)
 		{
-			if (skippy != 1)
-			{
-				if (curr_print + 1 > num_prints)
-				{
-					create_job_for_printer(p_arr[curr_print + 1], p_arr[p_index].printQueue->name, p_arr[p_index].printQueue->size);
-				}
-				else
-				{
-					create_job_for_printer(p_arr[curr_print], p_arr[p_index].printQueue->name, p_arr[p_index].printQueue->size);
-				}
-			}
-			else
-			{
-				create_job_for_printer(p_arr[curr_print], p_arr[p_index].printQueue->name, p_arr[p_index].printQueue->size);
-			}
-
-			skippy = !skippy;
-
-			p_arr[p_index].printQueue = getNewTopJob(p_arr[p_index]); //delete old now that we're done with it
-			curr_print++;
+				printJob *whereInsert = getListN(p_arr[curr_print].printQueue, curr_head_col);
+				printJob *toInsert = grabTopJob(p_arr[p_index], p_arr[p_index].printQueue);
+				printJob *tempHolder = toInsert->next;
+				toInsert->next = whereInsert->next;
+				whereInsert->next = toInsert;
+				p_arr[p_index].printQueue = tempHolder;
 		}
-		if (curr_print % num_prints != 0) //wraparound
+
+		//if there's no online printers rip
+		/*if (curr_head_col > 999)
 		{
-			curr_print = 0; //go back to 1st
+			printf("No online printers to distribute jobs to. Aborting.\n");
+			p_arr[p_index].online = true;
+			break;
+		}*/
+
+		curr_print++;
+		curr_print = curr_print % num_prints;
+		if (curr_print == 0) {
+			curr_head_col++;
+
 		}
+
 	}
 
 	return;
 }
 
-/* online(printer)
- * Sets the given printer online if it is offline
+/* online(printer[], int)
+ * Sets the given printer in array index online if it is offline
  */
-void online(printer p)
+void online(printer p_arr[], int p_index)
 {
-	if (p.online == false)
+	if (p_arr[p_index].online == false)
 	{
-		p.online = true;
+		p_arr[p_index].online = true;
 	}
 }
 
@@ -200,8 +182,6 @@ void print(printer p, printJob *head, int is_term)
 		{
 			printf("%s:%d", j->name, j->size);
 		}
-
-
 
 		j = j->next;
 		if (j != NULL)

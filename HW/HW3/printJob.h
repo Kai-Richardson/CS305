@@ -8,6 +8,9 @@ typedef struct printJob
 	struct printJob *next;
 } printJob;
 
-/* no function prototypes here due to having printer-focused methodology */
+/* not many prototypes here due to having printer-focused methodology */
+
+printJob *getTail(printJob *);
+printJob *getListN(printJob *, int);
 
 #endif
