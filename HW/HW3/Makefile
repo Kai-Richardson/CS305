@@ -1,7 +1,6 @@
 
 COMPILE = gcc -g
 
-
 run: main.o printer.o printJob.o
 	$(COMPILE) -o run main.o printer.o printJob.o
 
