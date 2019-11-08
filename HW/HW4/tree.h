@@ -1,7 +1,7 @@
 typedef struct TreeNode
 {
-    char *value;
-    struct TreeNode *left, *right;
+	char *value;
+	struct TreeNode *left, *right;
 } TreeNode;
 
 TreeNode *newNode(char *value);

@@ -1,5 +1,5 @@
 typedef struct list
 {
-    void* value;
-    list* next;
+	void* value;
+	list* next;
 } list;
