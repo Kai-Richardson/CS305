@@ -1,7 +1,12 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
-
 #include "tree.h"
+
+#ifndef max
+#define max(a, b) (((a) > (b)) ? (a) : (b))
+#define min(a, b) (((a) < (b)) ? (a) : (b))
+#endif
 
 /* TreeNode *newNode(char *)
  * Returns a new node with the given value.
@@ -102,7 +107,7 @@ int height(TreeNode *t)
 	{
 		return -1;
 	}
-	return 1 + max(height(t->left), height(t->right));
+	return (1 + max(height(t->left), height(t->right)));
 }
 
 /* void print_inorder(TreeNode*)
@@ -112,8 +117,8 @@ void print_inorder(TreeNode *root)
 {
 	if (root != NULL)
 	{
-		inorder(root->left);
+		print_inorder(root->left);
 		printf("%s ", root->value);
-		inorder(root->right);
+		print_inorder(root->right);
 	}
 }

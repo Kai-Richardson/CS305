@@ -1,3 +1,6 @@
+#ifndef TREE_H
+#define TREE_H
+
 typedef struct TreeNode
 {
 	char *value;
@@ -11,3 +14,5 @@ void print_inorder(TreeNode *root);
 int height(TreeNode *t);
 
 int int_greater(int i1, int i2);
+
+#endif

@@ -8,15 +8,15 @@
 
 #define false 0
 #define true 1
-#define MAX_ALLOWED_INPUT 40
 #define MAX_STRINGLEN 50
 
 int main(int argc, char *argv[])
 {
 	int exited = false; //used to keep track if user has prompted exit
 
-	list *llhead = NULL; //Our master llist head
-	list *lltail = NULL; //Keep track of tail for fast addition
+	LNode *llhead = NULL; //Our master llist head
+
+	int num_ports = 0;
 
 	printf("Starting Init\n");
 
@@ -25,75 +25,58 @@ int main(int argc, char *argv[])
 		FILE *fp = fopen(argv[1], "r");
 		if (fp) //file failure check
 		{
-			//All overwritten every time, init here
-			char *tmp_name = malloc(sizeof(char) * MAX_STRINGLEN);
-			char *tmp_city = malloc(sizeof(char) * MAX_STRINGLEN);
-			char *tmp_country = malloc(sizeof(char) * MAX_STRINGLEN);
-			char *tmp_id1 = malloc(sizeof(char) * MAX_STRINGLEN);
-			char *tmp_id2 = malloc(sizeof(char) * MAX_STRINGLEN);
-			float tmp_lat = -9999;
-			float tmp_lng = -9999;
-			int tmp_alt = -9999;
-			char *tmp_zone = malloc(sizeof(char) * MAX_STRINGLEN);
-			char *tmp_dst = malloc(sizeof(char) * MAX_STRINGLEN);
-			char *tmp_dst2 = malloc(sizeof(char) * MAX_STRINGLEN);
-			char *tmp_type = malloc(sizeof(char) * MAX_STRINGLEN);
-			char *tmp_source = malloc(sizeof(char) * MAX_STRINGLEN);
-
-			while (fscanf(fp, "%s %s %s %s %s %f %f %d %s %s %s %s %s", tmp_name, tmp_city, tmp_country, tmp_id1, tmp_id2, &tmp_lat, &tmp_lng, &tmp_alt, tmp_zone, tmp_dst, tmp_dst2, tmp_type, tmp_source) != EOF)
+			char buffer[500];
+			int ret;
+			while (ret = fscanf(fp, "%s", buffer) != EOF)
 			{
-				airport *new_air = malloc(sizeof(airport));
+				airport *air = (airport *)malloc(sizeof(airport));
+				ret = fscanf(fp, "%s", buffer);
+				air->name = strdup(buffer);
+				ret = fscanf(fp, "%s", buffer);
+				air->city = strdup(buffer);
+				ret = fscanf(fp, "%s", buffer);
+				air->country = strdup(buffer);
+				ret = fscanf(fp, "%s", buffer);
+				air->id1 = strdup(buffer);
+				ret = fscanf(fp, "%s", buffer);
+				air->id2 = strdup(buffer);
+				ret = fscanf(fp, "%s", buffer);
+				air->lat = atof(buffer);
+				ret = fscanf(fp, "%s", buffer);
+				air->lng = atof(buffer);
+				ret = fscanf(fp, "%s", buffer);
+				air->alt = atoi(buffer);
+				ret = fscanf(fp, "%s", buffer);
+				air->zone = strdup(buffer);
+				ret = fscanf(fp, "%s", buffer);
+				air->dst = strdup(buffer);
+				ret = fscanf(fp, "%s", buffer);
+				air->dst2 = strdup(buffer);
+				ret = fscanf(fp, "%s", buffer);
+				air->type = strdup(buffer);
+				ret = fscanf(fp, "%s", buffer);
+				air->source = strdup(buffer);
 
-				new_air->name = tmp_name;
-				new_air->city = tmp_city;
-				new_air->country = tmp_country;
-				new_air->id1 = tmp_id1;
-				new_air->id2 = tmp_id2;
-				new_air->lat = tmp_lat;
-				new_air->lng = tmp_lng;
-				new_air->alt = tmp_alt;
-				new_air->zone = tmp_zone;
-				new_air->dst = tmp_dst;
-				new_air->dst2 = tmp_dst2;
-				new_air->type = tmp_type;
-				new_air->source = tmp_source;
-
-				if (llhead == NULL)
-				{
-					llhead = malloc(sizeof(list));
-					llhead->value = new_air;
-
-				}
-
+				llhead = insertHead(air, llhead);
 			}
 
-			//Free all temp. holders
-			free(tmp_name);
-			free(tmp_city);
-			free(tmp_country);
-			free(tmp_id1);
-			free(tmp_id2);
-			free(tmp_zone);
-			free(tmp_dst);
-			free(tmp_dst2);
-			free(tmp_type);
-			free(tmp_source);
+			fclose(fp);
 		}
 	}
 
 	while (exited == false)
 	{
-		char input[MAX_ALLOWED_INPUT];
-
-		fgets(input, MAX_ALLOWED_INPUT, stdin);
-
-		//arrays to store input
-		char in0[MAX_ALLOWED_INPUT];
-		char in1[MAX_ALLOWED_INPUT];
-
-		sscanf(input, " %s %s", in0, in1);
+		char input[MAX_STRINGLEN];
 
 		printf("Enter Command: ");
+
+		fgets(input, MAX_STRINGLEN, stdin);
+
+		//arrays to store input
+		char in0[MAX_STRINGLEN];
+		char in1[MAX_STRINGLEN];
+
+		sscanf(input, " %s %s", in0, in1);
 
 		switch (in0[0]) //1st char is command operation (allows for "quit", "time", etc.)
 		{
@@ -130,6 +113,8 @@ int main(int argc, char *argv[])
 			break;
 		}
 	}
+
+	freeList(llhead);
 
 	return EXIT_SUCCESS;
 }

@@ -1,3 +1,5 @@
+#ifndef AIRPORT_H
+#define AIRPORT_H
 
 typedef struct airport
 {
@@ -18,3 +20,5 @@ typedef struct airport
 
 void printAirport(airport *air);
 void freeAirport(airport *air);
+
+#endif

@@ -1,4 +1,6 @@
 #include "airport.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 void printAirport(airport *air)
 {
