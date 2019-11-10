@@ -22,4 +22,4 @@ clean:
 	/bin/rm -f *.o run
 
 production: airport.o ll.o tree.o
-	gcc -O3 -o airport.o ll.o tree.o
+	gcc -O3 -o main main.o airport.o ll.o tree.o

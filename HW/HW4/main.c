@@ -95,23 +95,18 @@ int main(int argc, char *argv[])
 
 		switch (tolower(in0[0])) //1st char is command operation (allows for "quit", "delete", etc.)
 		{
-		case 'q':
+		case 'q': //quits program
 			exited = true;
 			break;
 
-		case 'd':
-			/*TreeNode *temp;
-			temp = */
-			deleteNode(tree_id, in1, ID_SEARCH);
-			//temp->value->city;
-			//deleteNode(tree_city, in1, CITY_SEARCH);
+		case 'd': //deletes the airport by airport ID from the trees and LList and the struct itself and repairs the structures as needed
+			tmp = deleteNodeID(tree_id, in1);
 
-			//deleteNodeCity
+			//deleteNodeID(tree_city, in1, CITY_SEARCH);
 
 			deleList(findNode(in1, llhead), &llhead);
-
-			//deletes the airport by airport ID from the trees and LListand the struct itself and repairs the structures as needed
-
+			freeAirport(tmp->value);
+			free(tmp);
 			break;
 
 		case 's':

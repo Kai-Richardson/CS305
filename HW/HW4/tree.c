@@ -33,66 +33,55 @@ TreeNode *minValueNode(TreeNode *root)
 }
 //////////////////////////////////////////////////////////////////////////////////////
 
-/* TreeNode *deleteNode(TreeNode*, char *, int)
- * Deletes the given id in the passed tree (determined by int), returns it.
+/* TreeNode *deleteNodeID(TreeNode*, char *)
+ * Deletes the given id in the passed tree, returns it.
  * Note: Partially adapted from StackOverflow code.
  */
-TreeNode *deleteNode(TreeNode *root, char *thing_to_del, int what_cmp)
+TreeNode* deleteNodeID(TreeNode* root, char* to_del)
 {
-	// if NULL, error
-	if (root == NULL)
-		return root;
+    // base case
+    if (root == NULL) return root;
 
-	//smaller than root value, on left
-	if (what_cmp == ID_SEARCH && strncmp(root->value->id2, thing_to_del, MAX_STRINGLEN) < 0)
-		root->left = deleteNode(root->left, thing_to_del, what_cmp);
+    // If the key to be deleted is smaller than the root's key,
+    // then it lies in left subtree
+    if (strncmp(root->value->id2, to_del, MAX_STRINGLEN) < 0)
+        root->left = deleteNodeID(root->left, to_del);
 
-	else if (what_cmp == CITY_SEARCH && strncmp(root->value->city, thing_to_del, MAX_STRINGLEN) < 0)
-	{
-		root->left = deleteNode(root->left, thing_to_del, what_cmp);
-	}
+    // If the key to be deleted is greater than the root's key,
+    // then it lies in right subtree
+    else if (strncmp(root->value->id2, to_del, MAX_STRINGLEN) > 0)
+        root->right = deleteNodeID(root->right, to_del);
 
-	//larger than root value, on right
-	else if (what_cmp == ID_SEARCH && strncmp(root->value->id2, thing_to_del, MAX_STRINGLEN) > 0)
-		root->right = deleteNode(root->right, thing_to_del, what_cmp);
+    //found it
+    else
+    {
+        // node with only one child or no child
+        if (root->left == NULL)
+        {
+            TreeNode *temp = root->right;
+			printf("Deleted");
+            free(root);
+            return temp;
+        }
+        else if (root->right == NULL)
+        {
+            TreeNode *temp = root->left;
+			printf("Deleted");
+            free(root);
+            return temp;
+        }
 
-	else if (what_cmp == CITY_SEARCH && strncmp(root->value->id2, thing_to_del, MAX_STRINGLEN) > 0)
-	{
-		root->right = deleteNode(root->right, thing_to_del, what_cmp);
-	}
+        // node with two children: Get the inorder successor (smallest
+        // in the right subtree)
+        TreeNode* temp = minValueNode(root->right);
 
-	//else, we found the node to delete
-	else
-	{
-		//only one child or no child
-		if (root->left == NULL)
-		{
-			TreeNode *temp = root->right;
-			free(root);
-			return temp;
-		}
-		else if (root->right == NULL)
-		{
-			TreeNode *temp = root->left;
-			free(root);
-			return temp;
-		}
+        // Copy the inorder successor's content to this node
+        root->value = temp->value;
 
-		//two children, find inorder successor
-		TreeNode *temp = minValueNode(root->right);
-
-		//move inorder successor
-		root->value = temp->value;
-		if (what_cmp == ID_SEARCH)
-		{
-			root->right = deleteNode(root->right, temp->value->id2, what_cmp);
-		}
-		else
-		{
-			root->right = deleteNode(root->right, temp->value->city, what_cmp);
-		}
-	}
-	return root;
+        // Delete the inorder successor
+        root->right = deleteNodeID(root->right, temp->value->id2);
+    }
+    return root;
 }
 
 /* TreeNode *insert(TreeNode *, airport *, int)
@@ -112,32 +101,6 @@ TreeNode *insert(TreeNode *root, airport *value, int what_cmp)
 
 	//return original head if we want it
 	return root;
-}
-
-/* int height(TreeNode*)
- * Returns the height of the given tree
- */
-int height(TreeNode *t)
-{
-
-	if (t == NULL)
-	{
-		return -1;
-	}
-	return (1 + max(height(t->left), height(t->right)));
-}
-
-/* void print_inorder(TreeNode*)
- * Prints the elements of the given tree inorder
- */
-void print_inorder(TreeNode *root)
-{
-	if (root != NULL)
-	{
-		print_inorder(root->left);
-		printAirport(root->value);
-		print_inorder(root->right);
-	}
 }
 
 /* int compareport(TreeNode*, airport*, int)

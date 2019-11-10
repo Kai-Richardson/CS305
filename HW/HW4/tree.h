@@ -20,12 +20,10 @@ typedef struct TreeNode
 } TreeNode;
 
 TreeNode *newNode(airport *value);
-TreeNode *deleteNode(TreeNode *root, char *id_to_del, int what_cmp);
+TreeNode *deleteNodeID(TreeNode *root, char *id_to_del);
 TreeNode *insert(TreeNode *root, airport *value, int what_cmp);
 TreeNode *findByID(TreeNode *root, char *id_to_find);
 void printByCity(TreeNode *root, char *city_to_find);
-void print_inorder(TreeNode *root);
-int height(TreeNode *t);
 int compareport(TreeNode *node, airport *port, int what_cmp);
 void freeTree(TreeNode *root);
 
