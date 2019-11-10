@@ -185,6 +185,7 @@ int deleList(LNode *toDelete, LNode **listPtr)
         {
             // redo pointers and then free memory
             before->next = list->next;
+            freeAirport(list->value); //Frees the airport in the list since we run this last
             free(list);
             return 1;
         }

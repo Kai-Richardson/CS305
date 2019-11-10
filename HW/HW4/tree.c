@@ -61,7 +61,6 @@ TreeNode *deleteNode(TreeNode *root, char *thing_to_del, int what_cmp)
 		root->right = deleteNode(root->right, thing_to_del, what_cmp);
 	}
 
-
 	//else, we found the node to delete
 	else
 	{
@@ -92,9 +91,6 @@ TreeNode *deleteNode(TreeNode *root, char *thing_to_del, int what_cmp)
 		{
 			root->right = deleteNode(root->right, temp->value->city, what_cmp);
 		}
-
-
-
 	}
 	return root;
 }

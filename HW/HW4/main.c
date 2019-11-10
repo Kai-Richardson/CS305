@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "tree.h"
 #include "ll.h"
@@ -91,25 +92,26 @@ int main(int argc, char *argv[])
 
 		sscanf(input, " %s %s", in0, in1);
 
-		switch (in0[0]) //1st char is command operation (allows for "quit", "delete", etc.)
+		switch (tolower(in0[0])) //1st char is command operation (allows for "quit", "delete", etc.)
 		{
 		case 'q':
 			exited = true;
 			break;
 
 		case 'd':
-			TreeNode *temp;
-			temp = deleteNode(tree_id, in1, ID_SEARCH);
-			temp->value->city;
-			deleteNode(tree_city, in1, CITY_SEARCH);
-			deleList(findPort(in1, llhead), llhead);
+			//TreeNode *temp;
+			/*temp = */deleteNode(tree_id, in1, ID_SEARCH);
+			//temp->value->city;
+			//deleteNode(tree_city, in1, CITY_SEARCH);
+
+			deleList(findNode(in1, llhead), &llhead);
 
 			//deletes the airport by airport ID from the trees and LListand the struct itself and repairs the structures as needed
 
 			break;
 
 		case 's':
-			switch (in0[1]) //switch on 2nd character
+			switch (tolower(in0[1])) //switch on 2nd character
 			{
 			case 'n':
 				//search for an ariport by airport ID in the id tree
@@ -119,8 +121,7 @@ int main(int argc, char *argv[])
 				//search for all ariports in a search city in the city tree
 				break;
 
-			case 'l': //search for
-				printf("%d", lengthList(llhead));
+			case 'l': //search for airport by ID and print info
 				printAirport(findPort(in1, llhead));
 				break;
 

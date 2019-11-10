@@ -6,18 +6,18 @@ void printAirport(airport *air)
 {
 	if (air == NULL) return;
 
-	printf("Name: %s ", air->name);
-	printf("City: %s ", air->city);
-	printf("Country: %s ", air->country);
-	printf("ID1: %s ", air->id1);
-	printf("ID2: %s ", air->id2);
-	printf("Lat: %f ", air->lat);
-	printf("Long: %f ", air->lng);
-	printf("Alt: %i ", air->alt);
-	printf("Zone: %s ", air->zone);
-	printf("Dst: %s ", air->dst);
-	printf("Dst2: %s ", air->dst2);
-	printf("Type: %s ", air->type);
+	printf(" Name: %s | ", air->name);
+	printf("City: %s | ", air->city);
+	printf("Country: %s | ", air->country);
+	printf("ID1: %s | ", air->id1);
+	printf("ID2: %s | ", air->id2);
+	printf("Lat: %f | ", air->lat);
+	printf("Long: %f | ", air->lng);
+	printf("Alt: %i | ", air->alt);
+	printf("Zone: %s | ", air->zone);
+	printf("Dst: %s | ", air->dst);
+	printf("Dst2: %s | ", air->dst2);
+	printf("Type: %s | ", air->type);
 	printf("Source: %s\n", air->source);
 }
 
