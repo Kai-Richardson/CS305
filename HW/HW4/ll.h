@@ -13,7 +13,8 @@ struct LNode
 LNode *makeNode(airport *ptr, LNode *nextItem);
 int lengthList(LNode *list);
 void print(LNode *list);
-LNode *find(airport *, LNode *list);
+airport *findPort(char *, LNode *list);
+LNode *findNode(char *, LNode *list);
 int deleList(LNode *toDelete, LNode **listPtr);
 LNode *insertHead(airport *, LNode *list);
 int numPos(LNode *list);

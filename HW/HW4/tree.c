@@ -3,15 +3,14 @@
 #include <string.h>
 #include "tree.h"
 
-#ifndef max
-#define max(a, b) (((a) > (b)) ? (a) : (b))
-#define min(a, b) (((a) < (b)) ? (a) : (b))
+#ifndef AIRPORT_H
+#include "airport.h"
 #endif
 
 /* TreeNode *newNode(char *)
  * Returns a new node with the given value.
  */
-TreeNode *newNode(char *value)
+TreeNode *newNode(airport *value)
 {
 	TreeNode *newND = (TreeNode *)malloc(sizeof(TreeNode));
 	newND->value = value;
@@ -22,9 +21,9 @@ TreeNode *newNode(char *value)
 /* Given a non-empty binary search tree, return the node with minimum
    key value found in that tree. Note that the entire tree does not
    need to be searched. */
-TreeNode *minValueNode(TreeNode *node)
+TreeNode *minValueNode(TreeNode *root)
 {
-	TreeNode *current = node;
+	TreeNode *current = root;
 
 	//find leftmost leaf
 	while (current && current->left != NULL)
@@ -32,24 +31,36 @@ TreeNode *minValueNode(TreeNode *node)
 
 	return current;
 }
+//////////////////////////////////////////////////////////////////////////////////////
 
-/* TreeNode *deleteNode(TreeNode*, char *)
- * Deletes the given value in the passed tree, returns it.
+/* TreeNode *deleteNode(TreeNode*, char *, int)
+ * Deletes the given id in the passed tree (determined by int), returns it.
  * Note: Partially adapted from StackOverflow code.
  */
-TreeNode *deleteNode(TreeNode *root, char *value)
+TreeNode *deleteNode(TreeNode *root, char *thing_to_del, int what_cmp)
 {
 	// if NULL, error
 	if (root == NULL)
 		return root;
 
 	//smaller than root value, on left
-	if (value < root->value)
-		root->left = deleteNode(root->left, value);
+	if (what_cmp == ID_SEARCH && strncmp(root->value->id2, thing_to_del, MAX_STRINGLEN) < 0)
+		root->left = deleteNode(root->left, thing_to_del, what_cmp);
+
+	else if (what_cmp == CITY_SEARCH && strncmp(root->value->city, thing_to_del, MAX_STRINGLEN) < 0)
+	{
+		root->left = deleteNode(root->left, thing_to_del, what_cmp);
+	}
 
 	//larger than root value, on right
-	else if (value > root->value)
-		root->right = deleteNode(root->right, value);
+	else if (what_cmp == ID_SEARCH && strncmp(root->value->id2, thing_to_del, MAX_STRINGLEN) > 0)
+		root->right = deleteNode(root->right, thing_to_del, what_cmp);
+
+	else if (what_cmp == CITY_SEARCH && strncmp(root->value->id2, thing_to_del, MAX_STRINGLEN) > 0)
+	{
+		root->right = deleteNode(root->right, thing_to_del, what_cmp);
+	}
+
 
 	//else, we found the node to delete
 	else
@@ -73,28 +84,38 @@ TreeNode *deleteNode(TreeNode *root, char *value)
 
 		//move inorder successor
 		root->value = temp->value;
-		root->right = deleteNode(root->right, temp->value);
+		if (what_cmp == ID_SEARCH)
+		{
+			root->right = deleteNode(root->right, temp->value->id2, what_cmp);
+		}
+		else
+		{
+			root->right = deleteNode(root->right, temp->value->city, what_cmp);
+		}
+
+
+
 	}
 	return root;
 }
 
-/* TreeNode *insert(TreeNode *, char *)
+/* TreeNode *insert(TreeNode *, airport *, int)
  * Inserts the given value into the given tree and returns the head back.
  */
-TreeNode *insert(TreeNode *node, char *value)
+TreeNode *insert(TreeNode *root, airport *value, int what_cmp)
 {
 	//empty, return new node
-	if (node == NULL)
+	if (root == NULL)
 		return newNode(value);
 
 	//else, there's stuff in the tree
-	if (strcmp(value, node->value) <= 0)
-		node->left = insert(node->left, value);
+	if (compareport(root, value, what_cmp) <= 0)
+		root->left = insert(root->left, value, what_cmp);
 	else
-		node->right = insert(node->right, value);
+		root->right = insert(root->right, value, what_cmp);
 
 	//return original head if we want it
-	return node;
+	return root;
 }
 
 /* int height(TreeNode*)
@@ -118,7 +139,42 @@ void print_inorder(TreeNode *root)
 	if (root != NULL)
 	{
 		print_inorder(root->left);
-		printf("%s ", root->value);
+		printAirport(root->value);
 		print_inorder(root->right);
 	}
 }
+
+/* int compareport(TreeNode*, airport*, int)
+ * Compares either the city or ID depending on last arg and returns the strncmp
+ */
+int compareport(TreeNode *node, airport *port, int what_cmp)
+{
+	switch (what_cmp)
+	{
+	case ID_SEARCH:
+		return strncmp(node->value->id2, port->id2, MAX_STRINGLEN);
+
+	case CITY_SEARCH:
+		return strncmp(node->value->city, port->city, MAX_STRINGLEN);
+
+	//search by default by ID
+	default:
+		return strncmp(node->value->id2, port->id2, MAX_STRINGLEN);
+	}
+}
+
+/* void freeTree(TreeNode*)
+ * Recursively frees all elements within the BST.
+ */
+void freeTree(TreeNode *node)
+{
+	if (node == NULL)
+		return;
+
+	//Recusrively call and free
+	freeTree(node->left);
+	freeTree(node->right);
+	free(node);
+}
+
+void searchTree(char *);

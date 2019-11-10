@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+
 #include "ll.h"
 
 /* lengthList
@@ -106,17 +108,37 @@ void print(LNode *list)
     printf("\n");
 }
 
-/* find
- * parameters -- n (the value to search for)
+/* findPort
+ * parameters -- to_find (the string to search for)
  *            -- list (the linked list)
- * returns a pointer to the first LNode found with value n
+ * returns a pointer to the first airport found with id to_find
  * if no such value is found, returns NULL
  */
-LNode *find(airport *air, LNode *list)
+airport *findPort(char *to_find, LNode *list)
 {
     while (list != NULL)
     {
-        if (list->value == air)
+        if (strcmp(list->value->id2, to_find) == 0)
+        {
+            return list->value;
+        }
+        list = list->next;
+    }
+    // no LNode with value n found
+    return NULL; // or could return list, since list has value NULL
+}
+
+/* findNode
+ * parameters -- to_find (the string to search for)
+ *            -- list (the linked list)
+ * returns a pointer to the first LNode found with airport id == to_find
+ * if no such value is found, returns NULL
+ */
+LNode *findNode(char *to_find, LNode *list)
+{
+    while (list != NULL)
+    {
+        if (strcmp(list->value->id2, to_find) == 0)
         {
             return list;
         }

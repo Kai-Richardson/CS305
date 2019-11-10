@@ -1,6 +1,10 @@
 #ifndef AIRPORT_H
 #define AIRPORT_H
 
+#define false 0
+#define true 1
+#define MAX_STRINGLEN 50
+
 typedef struct airport
 {
 	char *name;

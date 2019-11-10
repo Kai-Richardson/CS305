@@ -6,22 +6,32 @@
 #include "ll.h"
 #include "airport.h"
 
-#define false 0
-#define true 1
-#define MAX_STRINGLEN 50
-
 int main(int argc, char *argv[])
 {
 	int exited = false; //used to keep track if user has prompted exit
 
-	LNode *llhead = NULL; //Our master llist head
-
-	int num_ports = 0;
-
-	printf("Starting Init\n");
+	LNode *llhead = NULL;		//Our master llist head
+	TreeNode *tree_id = NULL;   //BST by ID2
+	TreeNode *tree_city = NULL; //BST by City
 
 	if (argc > 1)
 	{
+
+		int shuffle = 0;
+
+		//Prompt user if they want to shuffle the input file or not
+		printf("Shuffle input (1/0): ");
+		scanf("%d", &shuffle);
+		printf("\n");
+
+		if (shuffle)
+		{
+			char filebuf[100];
+			snprintf(filebuf, 99, "shuf -o %s <%s", argv[1], argv[1]);
+			system(filebuf);
+		}
+
+		printf("Starting loading of %s...\n", argv[1]);
 		FILE *fp = fopen(argv[1], "r");
 		if (fp) //file failure check
 		{
@@ -58,6 +68,9 @@ int main(int argc, char *argv[])
 				air->source = strdup(buffer);
 
 				llhead = insertHead(air, llhead);
+
+				tree_city = insert(tree_city, llhead->value, CITY_SEARCH);
+				tree_id = insert(tree_id, llhead->value, ID_SEARCH);
 			}
 
 			fclose(fp);
@@ -78,15 +91,21 @@ int main(int argc, char *argv[])
 
 		sscanf(input, " %s %s", in0, in1);
 
-		switch (in0[0]) //1st char is command operation (allows for "quit", "time", etc.)
+		switch (in0[0]) //1st char is command operation (allows for "quit", "delete", etc.)
 		{
 		case 'q':
-			//quit the airport tracker and deallocate ALL memory
 			exited = true;
 			break;
 
 		case 'd':
+			TreeNode *temp;
+			temp = deleteNode(tree_id, in1, ID_SEARCH);
+			temp->value->city;
+			deleteNode(tree_city, in1, CITY_SEARCH);
+			deleList(findPort(in1, llhead), llhead);
+
 			//deletes the airport by airport ID from the trees and LListand the struct itself and repairs the structures as needed
+
 			break;
 
 		case 's':
@@ -100,13 +119,15 @@ int main(int argc, char *argv[])
 				//search for all ariports in a search city in the city tree
 				break;
 
-			case 'l':
-				//search for an ariport by airport ID in the LList
+			case 'l': //search for
+				printf("%d", lengthList(llhead));
+				printAirport(findPort(in1, llhead));
 				break;
 
 			default:
 				break;
 			}
+			break;
 
 		default:
 			printf("Invalid input.\n");
@@ -114,7 +135,10 @@ int main(int argc, char *argv[])
 		}
 	}
 
+	//quit the airport tracker and deallocate ALL memory
 	freeList(llhead);
+	freeTree(tree_city);
+	freeTree(tree_id);
 
 	return EXIT_SUCCESS;
 }

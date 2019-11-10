@@ -1,18 +1,31 @@
 #ifndef TREE_H
 #define TREE_H
 
+#ifndef AIRPORT_H
+#include "airport.h"
+#endif
+
+#ifndef max
+#define max(a, b) (((a) > (b)) ? (a) : (b))
+#define min(a, b) (((a) < (b)) ? (a) : (b))
+#endif
+
+#define ID_SEARCH 0
+#define CITY_SEARCH 1
+
+
 typedef struct TreeNode
 {
-	char *value;
+	airport *value;
 	struct TreeNode *left, *right;
 } TreeNode;
 
-TreeNode *newNode(char *value);
-TreeNode *deleteNode(TreeNode *root, char *value);
-TreeNode *insert(TreeNode *node, char *value);
+TreeNode *newNode(airport *value);
+TreeNode *deleteNode(TreeNode *root, char *id_to_del, int what_cmp);
+TreeNode *insert(TreeNode *root, airport *value, int what_cmp);
 void print_inorder(TreeNode *root);
 int height(TreeNode *t);
-
-int int_greater(int i1, int i2);
+int compareport(TreeNode *node, airport *port, int what_cmp);
+void freeTree(TreeNode *root);
 
 #endif
