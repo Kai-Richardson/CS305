@@ -1,6 +1,7 @@
 #ifndef AIRPORT_H
 #define AIRPORT_H
 
+#define NOT_INIT -1
 #define false 0
 #define true 1
 #define MAX_STRINGLEN 50

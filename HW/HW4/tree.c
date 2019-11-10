@@ -33,130 +33,175 @@ TreeNode *minValueNode(TreeNode *root)
 }
 //////////////////////////////////////////////////////////////////////////////////////
 
-/* deleteByID(char*, Treenode**)
+/* deleteByID(char*, Treenode**, int)
  * deletes node with data value d from the tree
  * note: passing in a pointer to the root of the tree in case the
  * root is updated
  */
-void deleteByID(char *to_del, TreeNode ** tptr) {
-  TreeNode * curr = *tptr;
-  TreeNode * found = NULL;
-  TreeNode * parent = NULL;
-  if(curr == NULL) { // no data in tree
-    return;
-  }
-  parent = NULL;
-  while(curr != NULL) {
-    if(strncmp(to_del, curr->value->id2, MAX_STRINGLEN) == 0) {
-      found = curr;
-      break;
-    } else if(strncmp(to_del, curr->value->id2, MAX_STRINGLEN) < 0) {
-      parent = curr;
-      curr = curr->left;
-    } else {
-      parent = curr;
-      curr = curr->right;
-    }
-  }
-  if(found == NULL) {
-    return;   // not found in tree
-  }
+void deleteByID(char *to_del, TreeNode **tptr, int what_cmp)
+{
+	TreeNode *curr = *tptr;
+	TreeNode *found = NULL;
+	TreeNode *parent = NULL;
+	if (curr == NULL)
+	{ // no data in tree
+		return;
+	}
+	parent = NULL;
+	while (curr != NULL)
+	{
 
-  // case 1: found is a leaf (just delete the node)
-  if(found->left == NULL && found->right == NULL) {
-    // printf("case 1\n");
-    // update parent's correct child
-    if(parent == NULL) {
-      // found was the only node in the tree
-      free(found);
-      *tptr = NULL;
-      return;
-    }
-    // parent is not null, so need to update its child to be null
-    if(parent->left == found) {
-      parent->left = NULL;
-    } else if(parent->right == found) {
-      parent->right = NULL;
-    } else {
-      printf("something went wrong: parent has invalid children\n");
-      return;
-    }
-    free(found);
-    return;
-  }
+		if ((what_cmp == ID_SEARCH) ?
+		(strncmp(to_del, curr->value->id2, MAX_STRINGLEN) == 0) :
+		((strncmp(to_del, curr->value->city, MAX_STRINGLEN) == 0) && (strncmp(to_del, curr->value->id2, MAX_STRINGLEN) == 0)))
 
-  // case 2: found is an interior node with just one child on right side
-  if(found->left == NULL) {
-    // printf("case 2:\n");
-    // determine if found is left or right child of parent
-    if(parent->left == found) {
-      parent->left = found->right;
-    } else if(parent->right == found) {
-      parent->right = found->right;
-    } else {
-      printf("something went wrong: parent has invalid children\n");
-      return;
-    }
-    free(found);
-    return;
-  }
+		{
+			found = curr;
+			break;
+		}
+		else if ((what_cmp == ID_SEARCH) ?
+		(strncmp(to_del, curr->value->id2, MAX_STRINGLEN) < 0) :
+		((strncmp(to_del, curr->value->city, MAX_STRINGLEN) <= 0)))
+		{
+			parent = curr;
+			curr = curr->left;
+		}
+		else
+		{
+			parent = curr;
+			curr = curr->right;
+		}
+	}
+	if (found == NULL)
+	{
+		return; // not found in tree
+	}
 
-  // case 3: found is an interior node with just one child on the left side
-  if(found->right == NULL) {
-    // printf("case 3:\n");
-    // determine if found is left or right child of parent
-    if(parent->left == found) {
-      parent->left = found->left;
-    } else if(parent->right == found) {
-      parent->right = found->left;
-    } else {
-      printf("something went wrong: parent has invalid children\n");
-      return;
-    }
-    free(found);
-    return;
-  }
+	// case 1: found is a leaf (just delete the node)
+	if (found->left == NULL && found->right == NULL)
+	{
+		// printf("case 1\n");
+		// update parent's correct child
+		if (parent == NULL)
+		{
+			// found was the only node in the tree
+			free(found);
+			*tptr = NULL;
+			return;
+		}
+		// parent is not null, so need to update its child to be null
+		if (parent->left == found)
+		{
+			parent->left = NULL;
+		}
+		else if (parent->right == found)
+		{
+			parent->right = NULL;
+		}
+		else
+		{
+			printf("something went wrong: parent has invalid children\n");
+			return;
+		}
+		free(found);
+		return;
+	}
 
-  // case 4: found is an interior node with two children
-  // find next larger element in tree (go right, then go left as far as
-  // possible)
-  // printf("case 4:\n");
-  TreeNode * traverse = found->right;
-  TreeNode * traverseParent = found;
-  // now go left until reach a node with no left child
-  while(traverse->left != NULL) {
-    traverseParent = traverse;
-    traverse = traverse->left;
-  }
-  // at this point traverse should be the next largest node in the tree
-  found->value = traverse->value;  // put data in found
-  // check if traverse is a leaf node
-  if(traverse->left == NULL && traverse->right == NULL) {
-    // leaf node -- just delete it
-    if(traverseParent->left == traverse) {
-      traverseParent->left = NULL;
-      free(traverse);
-    } else if(traverseParent->right == traverse) {
-      traverseParent->right = NULL;
-      free(traverse);
-    } else {
-      printf("something went wrong: parent of traversed node has invalid children");
-      return;
-    }
-    return;
-  }
-  // traverse has a right subtree
-  if(traverse->left == NULL && traverse->right != NULL) {
-    if(traverseParent->left == traverse) {
-      traverseParent->left = traverse->right;
-      free(traverse);
-    } else if(traverseParent->right == traverse) {
-      traverseParent->right = traverse->right;
-      free(traverse);
-    }
-  }
-  return;
-  // that is all the cases
+	// case 2: found is an interior node with just one child on right side
+	if (found->left == NULL)
+	{
+		// printf("case 2:\n");
+		// determine if found is left or right child of parent
+		if (parent->left == found)
+		{
+			parent->left = found->right;
+		}
+		else if (parent->right == found)
+		{
+			parent->right = found->right;
+		}
+		else
+		{
+			printf("something went wrong: parent has invalid children\n");
+			return;
+		}
+		free(found);
+		return;
+	}
+
+	// case 3: found is an interior node with just one child on the left side
+	if (found->right == NULL)
+	{
+		// printf("case 3:\n");
+		// determine if found is left or right child of parent
+		if (parent->left == found)
+		{
+			parent->left = found->left;
+		}
+		else if (parent->right == found)
+		{
+			parent->right = found->left;
+		}
+		else
+		{
+			printf("something went wrong: parent has invalid children\n");
+			return;
+		}
+		free(found);
+		return;
+	}
+
+	// case 4: found is an interior node with two children
+	// find next larger element in tree (go right, then go left as far as
+	// possible)
+	// printf("case 4:\n");
+	TreeNode *traverse = found->right;
+	TreeNode *traverseParent = found;
+	// now go left until reach a node with no left child
+	while (traverse->left != NULL)
+	{
+		traverseParent = traverse;
+		traverse = traverse->left;
+	}
+	// at this point traverse should be the next largest node in the tree
+	found->value = traverse->value; // put data in found
+	// check if traverse is a leaf node
+	if (traverse->left == NULL && traverse->right == NULL)
+	{
+		// leaf node -- just delete it
+		if (traverseParent->left == traverse)
+		{
+			traverseParent->left = NULL;
+			free(traverse);
+		}
+		else if (traverseParent->right == traverse)
+		{
+			traverseParent->right = NULL;
+			free(traverse);
+		}
+		else
+		{
+			printf("something went wrong: parent of traversed node has invalid children");
+			return;
+		}
+		return;
+	}
+	// traverse has a right subtree
+	if (traverse->left == NULL && traverse->right != NULL)
+	{
+		if (traverseParent->left == traverse)
+		{
+			traverseParent->left = traverse->right;
+			free(traverse);
+		}
+		else if (traverseParent->right == traverse)
+		{
+			traverseParent->right = traverse->right;
+			free(traverse);
+		}
+	}
+	return;
+	// that is all the cases
 }
 
 /* TreeNode *insert(TreeNode *, airport *, int)

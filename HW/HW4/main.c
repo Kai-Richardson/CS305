@@ -9,7 +9,9 @@
 
 int main(int argc, char *argv[])
 {
-	int exited = false; //used to keep track if user has prompted exit
+	char input_buf[MAX_STRINGLEN]; //Our input buffer
+
+	int exited = NOT_INIT; //used to keep track if user has prompted exit
 
 	LNode *llhead = NULL;		//Our master llist head
 	TreeNode *tree_id = NULL;   //BST by ID2
@@ -17,20 +19,18 @@ int main(int argc, char *argv[])
 
 	if (argc > 1)
 	{
-
-		int shuffle = 0;
-
 		//Prompt user if they want to shuffle the input file or not
-		printf("Shuffle input (permanent!) (1/0): ");
-		scanf("%d", &shuffle);
+		printf("Shuffle input (permanent!) (Y/N): ");
+		fgets(input_buf, 2, stdin);
 		printf("\n");
 
-		if (shuffle)
+		if (input_buf[0] == 'Y')
 		{
 			char filebuf[100];
 			snprintf(filebuf, 99, "shuf -o %s <%s", argv[1], argv[1]);
 			system(filebuf);
 		}
+		fflush(stdin);
 
 		printf("Starting loading of %s...\n", argv[1]);
 		FILE *fp = fopen(argv[1], "r");
@@ -78,32 +78,42 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	while (exited == false)
+	while (exited == false || exited == NOT_INIT)
 	{
-		char input[MAX_STRINGLEN];
 
-		printf("Enter Command: ");
+		if (exited == NOT_INIT)
+		{
+			exited = false;
+		}
+		else
+		{
+			printf("Enter Command: ");
+		}
 
-		fgets(input, MAX_STRINGLEN, stdin);
+		fgets(input_buf, MAX_STRINGLEN, stdin);
 
 		//arrays to store input
 		char in0[MAX_STRINGLEN];
 		char in1[MAX_STRINGLEN];
+
+		//'empty' both char arrays
+		in0[0] = '\0';
+		in1[0] = '\0';
+
 		TreeNode *tmp;
 
-		sscanf(input, " %s %s", in0, in1);
+		sscanf(input_buf, " %s %s", in0, in1);
 
 		switch (tolower(in0[0])) //1st char is command operation (allows for "quit", "delete", etc.)
 		{
 		case 'q': //quits program
+			printf("Quiting...\n");
 			exited = true;
 			break;
 
 		case 'd': //deletes the airport by airport ID from the trees and LList and the struct itself and repairs the structures as needed
-			deleteByID(in1, &tree_id);
-
-			//deleteNodeID(tree_city, in1, CITY_SEARCH);
-
+			deleteByID(in1, &tree_id, ID_SEARCH);
+			deleteByID(in1, &tree_city, CITY_SEARCH);
 			deleList(findNode(in1, llhead), &llhead);
 			break;
 
@@ -127,6 +137,9 @@ int main(int argc, char *argv[])
 			default:
 				break;
 			}
+			break;
+
+		case '\0': //empty input, caused by shuffling input
 			break;
 
 		default:

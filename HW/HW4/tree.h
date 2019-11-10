@@ -20,8 +20,7 @@ typedef struct TreeNode
 } TreeNode;
 
 TreeNode *newNode(airport *value);
-//TreeNode *deleteNodeID(TreeNode *root, char *id_to_del);
-void deleteByID(char *to_del, TreeNode ** tptr);
+void deleteByID(char *to_del, TreeNode ** tptr, int what_cmp);
 TreeNode *insert(TreeNode *root, airport *value, int what_cmp);
 TreeNode *findByID(TreeNode *root, char *id_to_find);
 void printByCity(TreeNode *root, char *city_to_find);
