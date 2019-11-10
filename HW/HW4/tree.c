@@ -33,55 +33,130 @@ TreeNode *minValueNode(TreeNode *root)
 }
 //////////////////////////////////////////////////////////////////////////////////////
 
-/* TreeNode *deleteNodeID(TreeNode*, char *)
- * Deletes the given id in the passed tree, returns it.
- * Note: Partially adapted from StackOverflow code.
+/* deleteByID(char*, Treenode**)
+ * deletes node with data value d from the tree
+ * note: passing in a pointer to the root of the tree in case the
+ * root is updated
  */
-TreeNode* deleteNodeID(TreeNode* root, char* to_del)
-{
-    // base case
-    if (root == NULL) return root;
-
-    // If the key to be deleted is smaller than the root's key,
-    // then it lies in left subtree
-    if (strncmp(root->value->id2, to_del, MAX_STRINGLEN) < 0)
-        root->left = deleteNodeID(root->left, to_del);
-
-    // If the key to be deleted is greater than the root's key,
-    // then it lies in right subtree
-    else if (strncmp(root->value->id2, to_del, MAX_STRINGLEN) > 0)
-        root->right = deleteNodeID(root->right, to_del);
-
-    //found it
-    else
-    {
-        // node with only one child or no child
-        if (root->left == NULL)
-        {
-            TreeNode *temp = root->right;
-			printf("Deleted");
-            free(root);
-            return temp;
-        }
-        else if (root->right == NULL)
-        {
-            TreeNode *temp = root->left;
-			printf("Deleted");
-            free(root);
-            return temp;
-        }
-
-        // node with two children: Get the inorder successor (smallest
-        // in the right subtree)
-        TreeNode* temp = minValueNode(root->right);
-
-        // Copy the inorder successor's content to this node
-        root->value = temp->value;
-
-        // Delete the inorder successor
-        root->right = deleteNodeID(root->right, temp->value->id2);
+void deleteByID(char *to_del, TreeNode ** tptr) {
+  TreeNode * curr = *tptr;
+  TreeNode * found = NULL;
+  TreeNode * parent = NULL;
+  if(curr == NULL) { // no data in tree
+    return;
+  }
+  parent = NULL;
+  while(curr != NULL) {
+    if(strncmp(to_del, curr->value->id2, MAX_STRINGLEN) == 0) {
+      found = curr;
+      break;
+    } else if(strncmp(to_del, curr->value->id2, MAX_STRINGLEN) < 0) {
+      parent = curr;
+      curr = curr->left;
+    } else {
+      parent = curr;
+      curr = curr->right;
     }
-    return root;
+  }
+  if(found == NULL) {
+    return;   // not found in tree
+  }
+
+  // case 1: found is a leaf (just delete the node)
+  if(found->left == NULL && found->right == NULL) {
+    // printf("case 1\n");
+    // update parent's correct child
+    if(parent == NULL) {
+      // found was the only node in the tree
+      free(found);
+      *tptr = NULL;
+      return;
+    }
+    // parent is not null, so need to update its child to be null
+    if(parent->left == found) {
+      parent->left = NULL;
+    } else if(parent->right == found) {
+      parent->right = NULL;
+    } else {
+      printf("something went wrong: parent has invalid children\n");
+      return;
+    }
+    free(found);
+    return;
+  }
+
+  // case 2: found is an interior node with just one child on right side
+  if(found->left == NULL) {
+    // printf("case 2:\n");
+    // determine if found is left or right child of parent
+    if(parent->left == found) {
+      parent->left = found->right;
+    } else if(parent->right == found) {
+      parent->right = found->right;
+    } else {
+      printf("something went wrong: parent has invalid children\n");
+      return;
+    }
+    free(found);
+    return;
+  }
+
+  // case 3: found is an interior node with just one child on the left side
+  if(found->right == NULL) {
+    // printf("case 3:\n");
+    // determine if found is left or right child of parent
+    if(parent->left == found) {
+      parent->left = found->left;
+    } else if(parent->right == found) {
+      parent->right = found->left;
+    } else {
+      printf("something went wrong: parent has invalid children\n");
+      return;
+    }
+    free(found);
+    return;
+  }
+
+  // case 4: found is an interior node with two children
+  // find next larger element in tree (go right, then go left as far as
+  // possible)
+  // printf("case 4:\n");
+  TreeNode * traverse = found->right;
+  TreeNode * traverseParent = found;
+  // now go left until reach a node with no left child
+  while(traverse->left != NULL) {
+    traverseParent = traverse;
+    traverse = traverse->left;
+  }
+  // at this point traverse should be the next largest node in the tree
+  found->value = traverse->value;  // put data in found
+  // check if traverse is a leaf node
+  if(traverse->left == NULL && traverse->right == NULL) {
+    // leaf node -- just delete it
+    if(traverseParent->left == traverse) {
+      traverseParent->left = NULL;
+      free(traverse);
+    } else if(traverseParent->right == traverse) {
+      traverseParent->right = NULL;
+      free(traverse);
+    } else {
+      printf("something went wrong: parent of traversed node has invalid children");
+      return;
+    }
+    return;
+  }
+  // traverse has a right subtree
+  if(traverse->left == NULL && traverse->right != NULL) {
+    if(traverseParent->left == traverse) {
+      traverseParent->left = traverse->right;
+      free(traverse);
+    } else if(traverseParent->right == traverse) {
+      traverseParent->right = traverse->right;
+      free(traverse);
+    }
+  }
+  return;
+  // that is all the cases
 }
 
 /* TreeNode *insert(TreeNode *, airport *, int)

@@ -100,13 +100,11 @@ int main(int argc, char *argv[])
 			break;
 
 		case 'd': //deletes the airport by airport ID from the trees and LList and the struct itself and repairs the structures as needed
-			tmp = deleteNodeID(tree_id, in1);
+			deleteByID(in1, &tree_id);
 
 			//deleteNodeID(tree_city, in1, CITY_SEARCH);
 
 			deleList(findNode(in1, llhead), &llhead);
-			freeAirport(tmp->value);
-			free(tmp);
 			break;
 
 		case 's':

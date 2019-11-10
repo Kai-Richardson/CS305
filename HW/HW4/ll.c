@@ -172,6 +172,7 @@ int deleList(LNode *toDelete, LNode **listPtr)
     {
         *listPtr = list->next; // now list->next becomes first LNode in list
                                // returning new first address via pointer
+        freeAirport(toDelete->value);
         free(toDelete);
         return 1; // indicates that a LNode was deleted
     }
