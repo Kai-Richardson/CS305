@@ -4,9 +4,10 @@
 
 void printAirport(airport *air)
 {
-	if (air == NULL) return;
+	if (air == NULL)
+		return;
 
-	printf(" Name: %s | ", air->name);
+	printf("Name: %s | ", air->name);
 	printf("City: %s | ", air->city);
 	printf("Country: %s | ", air->country);
 	printf("ID1: %s | ", air->id1);

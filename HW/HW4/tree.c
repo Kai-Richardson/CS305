@@ -173,4 +173,37 @@ void freeTree(TreeNode *node)
 	free(node);
 }
 
-void searchTree(char *);
+/* TreeNode *findByID(TreeNode *, char *)
+ * Finds the given TreeNode with id equal to passed char and returns it
+ */
+TreeNode *findByID(TreeNode *root, char *id_to_find)
+{
+	//Root is either NULL or our target from prev. recursions
+	if (root == NULL || (strncmp(root->value->id2, id_to_find, MAX_STRINGLEN) == 0))
+		return root;
+
+	//else, there's stuff in the tree
+	if (strncmp(root->value->id2, id_to_find, MAX_STRINGLEN) < 0)
+		return findByID(root->left, id_to_find);
+	else
+		return findByID(root->right, id_to_find);
+}
+
+/* TreeNode *printByCity(TreeNode *, char *)
+ * Finds all Nodes with given value of city
+ */
+void printByCity(TreeNode *root, char *city_to_find)
+{
+	if (root == NULL) //If we reached below a leaf
+		return;
+	else if ((strncmp(root->value->city, city_to_find, MAX_STRINGLEN) == 0)) //We found one!
+	{
+		printAirport(root->value);
+	}
+
+	//Keep looking
+	if (strncmp(root->value->city, city_to_find, MAX_STRINGLEN) <= 0)
+		return printByCity(root->left, city_to_find);
+	else
+		return printByCity(root->right, city_to_find);
+}

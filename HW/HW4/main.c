@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 		int shuffle = 0;
 
 		//Prompt user if they want to shuffle the input file or not
-		printf("Shuffle input (1/0): ");
+		printf("Shuffle input (permanent!) (1/0): ");
 		scanf("%d", &shuffle);
 		printf("\n");
 
@@ -89,6 +89,7 @@ int main(int argc, char *argv[])
 		//arrays to store input
 		char in0[MAX_STRINGLEN];
 		char in1[MAX_STRINGLEN];
+		TreeNode *tmp;
 
 		sscanf(input, " %s %s", in0, in1);
 
@@ -99,10 +100,13 @@ int main(int argc, char *argv[])
 			break;
 
 		case 'd':
-			//TreeNode *temp;
-			/*temp = */deleteNode(tree_id, in1, ID_SEARCH);
+			/*TreeNode *temp;
+			temp = */
+			deleteNode(tree_id, in1, ID_SEARCH);
 			//temp->value->city;
 			//deleteNode(tree_city, in1, CITY_SEARCH);
+
+			//deleteNodeCity
 
 			deleList(findNode(in1, llhead), &llhead);
 
@@ -113,12 +117,14 @@ int main(int argc, char *argv[])
 		case 's':
 			switch (tolower(in0[1])) //switch on 2nd character
 			{
-			case 'n':
-				//search for an ariport by airport ID in the id tree
+			case 'n': //search for an ariport by airport ID in the id tree
+				tmp = findByID(tree_id, in1);
+				if (tmp != NULL)
+					printAirport(tmp->value);
 				break;
 
-			case 'c':
-				//search for all ariports in a search city in the city tree
+			case 'c': //search for all ariports in a search city in the city tree
+				printByCity(tree_city, in1);
 				break;
 
 			case 'l': //search for airport by ID and print info
