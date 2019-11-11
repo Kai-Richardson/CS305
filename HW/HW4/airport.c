@@ -1,7 +1,15 @@
+/* airport.c for CS305 HW4
+ * @author - Kai Richardson
+ * @date 2019-11-10
+ */
+
 #include "airport.h"
 #include <stdio.h>
 #include <stdlib.h>
 
+/* void printAirport(airport *)
+ * Prints the contents of the given airport pointer
+ */
 void printAirport(airport *air)
 {
 	if (air == NULL)
@@ -22,6 +30,9 @@ void printAirport(airport *air)
 	printf("Source: %s\n", air->source);
 }
 
+/* void freeAirport(airport *)
+ * Frees the given airport pointer passed
+ */
 void freeAirport(airport *air)
 {
 	free(air->name);

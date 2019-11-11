@@ -19,10 +19,16 @@ typedef struct TreeNode
 	struct TreeNode *left, *right;
 } TreeNode;
 
+//Used for findByID (circumventing lack of multiple returns)
+typedef struct rootParentHolder
+{
+	TreeNode *root, *parent;
+} rootParentHolder;
+
 TreeNode *newNode(airport *value);
-void deleteByID(char *to_del, TreeNode ** tptr, int what_cmp);
+airport *deleteByID(char *to_del, TreeNode ** tptr, int what_cmp, char *opt_city);
 TreeNode *insert(TreeNode *root, airport *value, int what_cmp);
-TreeNode *findByID(TreeNode *root, char *id_to_find);
+rootParentHolder *findByID(TreeNode *root, char *id_to_find, rootParentHolder *to_set);
 void printByCity(TreeNode *root, char *city_to_find);
 int compareport(TreeNode *node, airport *port, int what_cmp);
 void freeTree(TreeNode *root);

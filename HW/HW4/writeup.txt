@@ -1,0 +1,49 @@
+HW 4 by Kai Richardson
+Writeup edition
+
+1a. Meets all specifications.
+
+1b. A note to the following answers: I wrote an input-scrambler function specifically to address this.
+Not sure what was wanted in regards to a report.
+
+./main airports.dat
+Shuffle input (permanent!) (Y/N): N
+
+Starting loading of airports.dat...
+Enter Command: h
+q: quit, d <ID>: delete ID, sn <ID>: ID Tree Search, sc <City>: City Tree Search, sl <ID>: ID LL Search
+Enter Command: sl PHOG
+Name: KahuluiAirport | City: Kahului | Country: UnitedStates | ID1: OGG | ID2: PHOG | Lat: 20.898600 | Long: -156.429993 | Alt: 54 | Zone: -10 | Dst: N | Dst2: Pacific/Honolulu | Type: airport | Source: OurAirports
+Enter Command: sc Lahului
+Enter Command: sc Kahului
+Name: KahuluiAirport | City: Kahului | Country: UnitedStates | ID1: OGG | ID2: PHOG | Lat: 20.898600 | Long: -156.429993 | Alt: 54 | Zone: -10 | Dst: N | Dst2: Pacific/Honolulu | Type: airport | Source: OurAirports
+Enter Command: sn PHOG
+Name: KahuluiAirport | City: Kahului | Country: UnitedStates | ID1: OGG | ID2: PHOG | Lat: 20.898600 | Long: -156.429993 | Alt: 54 | Zone: -10 | Dst: N | Dst2: Pacific/Honolulu | Type: airport | Source: OurAirports
+Enter Command: d PHOG
+Enter Command: sn PHOG
+Enter Command: q
+Quiting...
+
+
+Note: All operations work and are tested.
+
+
+2c.
+function                Best	Worst	Avg		Input
+
+Search AirportID		O(1)	O(N)	O(N)	Best: first thing in tree, Worst: furthest down, Avg: middle of tree
+Search LList			O(1)	O(N)	O(N)	Best: at head, Worst: at tail, Avg: middle of list
+Delete AirportID		O(N)	O(N^2)	O(N^2)	Best: leaf on trees, Worst: interior tree node, Avg: often interior
+RepairTree				This is part of the above operation in my code.
+Make airportID Tree		O(N)	O(N)	O(N)	Has to create N elements no matter what
+
+3a. 15h8m
+
+3b. Covering the case of city and ID lookup succiently in the deletion of BSTs.
+
+Appendix A:
+I verify that the code and this write-up were authorized by me.
+I have documented the help I have recieved in comments in the code files.
+
+Appendix B:
+See attached code in this folder.

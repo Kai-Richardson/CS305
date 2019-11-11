@@ -1,7 +1,6 @@
 
 COMPILE = gcc -g
 
-
 main: main.o airport.o ll.o tree.o
 	$(COMPILE) -o main main.o airport.o ll.o tree.o
 
@@ -19,7 +18,7 @@ tree.o: tree.c tree.h
 
 lean: clean #ahh yes
 clean:
-	/bin/rm -f *.o run
+	/bin/rm -f *.o main
 
 production: airport.o ll.o tree.o
 	gcc -O3 -o main main.o airport.o ll.o tree.o

@@ -1,32 +1,21 @@
+/* ll.c for CS305 HW4
+ * @author - Kai Richardson
+ * @date 2019-11-10
+ * Note: Sections of the LL logic were copied from an earlier lab done in class.
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
 #include "ll.h"
 
-/* lengthList
- * parameter -- list
- * returns the length of the list (# nodes)
- */
-int lengthList(LNode *list)
-{
-    if (list == NULL)
-    {
-        return 0;
-    }
-    else
-    {
-        return lengthList(list->next) + 1;
-    }
-}
-
-/* freeList
- * parameter -- list
- * frees all nodes in the list
+/* void freeList(LNode *)
+ * frees all nodes in the list (and their airports), including the passed list itself
  */
 void freeList(LNode *list)
 {
-    if (list == NULL)
+    if (list == NULL) //passed null (likely recusrively)
     {
         return;
     }
@@ -38,53 +27,9 @@ void freeList(LNode *list)
     }
 }
 
-/* copyList
- * parameter -- list
- * returns a copy of the list
+/* LNode *makeNode(airport *, LNode *)
+ * Makes a node with the given airport and sets next equal to passed LNode
  */
-LNode *copyList(LNode *list)
-{
-    if (list == NULL)
-    {
-        return NULL;
-    }
-    else
-    {
-        return makeNode(list->value, copyList(list->next));
-    }
-}
-
-/* mergeList
- * parameters: list1 and list 2
- * merges the two lists, keeping the values in ascending order
- * NOTE: only works if list1 and list2 are sorted
- */
-LNode *mergeList(LNode *list1, LNode *list2)
-{
-    if (list1 == NULL)
-    {
-        return copyList(list2);
-    }
-    else if (list2 == NULL)
-    {
-        return copyList(list1);
-    }
-    else if (list1->value < list2->value)
-    {
-
-        return makeNode(list1->value, mergeList(list1->next, list2));
-    }
-    else
-    {
-
-        return makeNode(list2->value, mergeList(list1, list2->next));
-    }
-}
-
-/* makeNode
- * parameters -- ptr (the ptr to store in the LNode)
- *            -- nextItem (the next link of the LNode)
- * slightly different than textbook version */
 LNode *makeNode(airport *ptr, LNode *nextItem)
 {
     LNode *ret = (LNode *)malloc(sizeof(LNode));
@@ -93,9 +38,8 @@ LNode *makeNode(airport *ptr, LNode *nextItem)
     return ret;
 }
 
-/* print
- * parameter -- list (the linked list)
- * prints the values of the nodes (in order) of the list
+/* void print(LNode *)
+ * prints the names of all the airports in the list in order
  */
 void print(LNode *list)
 {
@@ -108,10 +52,8 @@ void print(LNode *list)
     printf("\n");
 }
 
-/* findPort
- * parameters -- to_find (the string to search for)
- *            -- list (the linked list)
- * returns a pointer to the first airport found with id to_find
+/* airport *findPort(char *, LNode *)
+ * returns a pointer to the first airport found with id to_find in given list
  * if no such value is found, returns NULL
  */
 airport *findPort(char *to_find, LNode *list)
@@ -128,9 +70,7 @@ airport *findPort(char *to_find, LNode *list)
     return NULL; // or could return list, since list has value NULL
 }
 
-/* findNode
- * parameters -- to_find (the string to search for)
- *            -- list (the linked list)
+/* LNode *findNode(char *, LNode *)
  * returns a pointer to the first LNode found with airport id == to_find
  * if no such value is found, returns NULL
  */
@@ -138,7 +78,7 @@ LNode *findNode(char *to_find, LNode *list)
 {
     while (list != NULL)
     {
-        if (strcmp(list->value->id2, to_find) == 0)
+        if (strcmp(list->value->id2, to_find) == 0) //if ids are equal
         {
             return list;
         }
@@ -148,13 +88,8 @@ LNode *findNode(char *to_find, LNode *list)
     return NULL; // or could return list, since list has value NULL
 }
 
-/* deleList
- * parameters -- toDelete (the LNode to find and delete)
- *            -- listPtr (pointer to the list)
- * note: must pass listPtr in case the first element of the list
- * is deleted -- passing the list by reference, so the address
- * to the first item in the list can get updated if necessary
- *
+/* int deleList(LNode *, LNode **)
+ * deletes the given LNode from the given LNode list pointer
  * returns 0 if no item found and deleted
  * returns 1 if a LNode is deleted
  */
@@ -196,10 +131,7 @@ int deleList(LNode *toDelete, LNode **listPtr)
     return 0; // toDelete not found
 }
 
-/* insertHead
- * parameters -- n (the value of the new LNode)
- *            -- listPtr (a pointer to the linked list for the insertion)
- *
+/* LNode *insertHead(airport *, LNode *)
  * inserts the new LNode at the front of the list, and returns it
  */
 LNode *insertHead(airport *air, LNode *listPtr)
