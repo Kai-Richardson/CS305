@@ -1,4 +1,4 @@
-/* 
+/*
  * Author: Tammy VanDeGrift, Tanya Crenshaw, Martin Cenek
  * main.h
  * contains constants and function prototypes
@@ -15,14 +15,14 @@
 #define DST 3
 
 // Define the function prototypes for the functions implemented in main.c
-Graph * buildGraph(char* source, char*** cities, int* n);
-int compare (const void * elem1, const void * elem2);
-void err(char * s);
-void usage(char * s);
+Graph *buildGraph(char *source, char ***cities, int *n);
+int compare(const void *elem1, const void *elem2);
+void err(char *s);
+void usage(char *s);
 
 // These functions are what students implement in dijkstra.c
-void dijkstra(Graph * g, char * source);  
-int isEmpty(Graph * g);
-int getMin(Graph * g);
+void dijkstra(Graph *g, char *source);
+int isEmpty(Graph *g);
+int getMin(Graph *g);
 
 #endif
