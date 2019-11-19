@@ -73,6 +73,6 @@ Graph *initialize(int V, char *labels[]);
 int addEdge(Graph *graph, char *src, char *dest, int cost);
 void printGraph(Graph *graph);
 void printLabels(Graph *graph);
-void freeGraph(Graph **graphAddr, char ***);
+void freeGraph(Graph **graphAddr, char ***, int numPorts);
 
 #endif

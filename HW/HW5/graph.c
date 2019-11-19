@@ -195,18 +195,34 @@ void printGraph(Graph *graph)
  * freeGraph
  * frees all memory allocated to the graph
  */
-void freeGraph(struct Graph **graphAddr, char ***airports)
+void freeGraph(struct Graph **graphAddr, char ***airports, int numPorts)
 {
-	//closely inspect graph initialize, addEdge, makeAdjNode to understand how the
-	//graph object and ajacency lists are constructed so you know how to free them
 	// check if graph and airports are non null
+	if (graphAddr == NULL || airports == NULL)
+		return;
 
-	//walk the list of lists of airport and deallocte each airport label then
-	//the airports array
+	for (int i = 0; i < numPorts; i++)
+	{
+		free((*airports)[i]);
+	}
+	free((*airports));
 
-	// for each vertex in teh graph
-	//  visit each neighbor and free the nighbor
-	// free the node itself
+	int num_of_verts = (*graphAddr)->V;
 
-	// finally free the graph object itself.
+	for (int i = 0; i < num_of_verts; i++)
+	{
+		AdjListNode *node = (*graphAddr)->array[i].head;
+		AdjListNode *holder;
+
+		while (node != NULL)
+		{
+			holder = node->next;
+			free(node);
+			node = holder;
+		}
+	}
+
+	free((*graphAddr)->array);
+	free((*graphAddr));
 }
+

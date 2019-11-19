@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
 
 //UNCOMMENT HERE
 */
-	freeGraph(&flights, &airports);
+	freeGraph(&flights, &airports, numberOfAirports);
 
 	return EXIT_SUCCESS;
 }
