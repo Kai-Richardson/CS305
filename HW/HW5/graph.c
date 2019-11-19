@@ -1,5 +1,6 @@
 /*
  * Author: Tammy VanDeGrift, Tanya Crenshaw, Martin Cenek
+ * Additions by Kai Richardson
  * graph.c
  * Graph function implementations, based on adjacency list
  */
