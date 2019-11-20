@@ -8,6 +8,29 @@
 
 void dijkstra(Graph *g, char *source)
 {
+	//already initialized
+
+	int src_vrt = -1;
+
+	//Iterate through all verticies
+	for (int i = 0; i < g->V; i++)
+	{
+		//Check if we found our airport
+		if (strncmp(g->array[i].label, source, 4) == 0)
+		{
+			src_vrt = i; //found it
+			g->array[i].dValue = 0; //origin
+			break;
+		}
+	}
+
+	while (!isEmpty(g))
+	{
+		int smallest = getMinIndx(g); // U
+
+
+	}
+
 }
 
 /* int isEmpty(Graph *)
