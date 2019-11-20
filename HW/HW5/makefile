@@ -16,7 +16,7 @@ dijkstra.o: dijkstra.c graph.h main.h
 
 # A rule to clean up the directory of all object files and executable
 # file.
-lean:
+lean: clean #bless
 clean:
 	/bin/rm -f *.o routeFinder
 
