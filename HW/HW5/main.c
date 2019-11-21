@@ -51,83 +51,90 @@ int main(int argc, char *argv[])
 
 	printGraph(flights);
 
-	//UNCOMMENT HERE
-	/*
-  // Are the names given at the command line in the list of airports?
-  int srcfound = 0;
-  int dstfound = 0;
-  for(int i = 0; i < numberOfAirports; i++) {
-    if(strncmp(argv[SRC], airports[i], MAXWIDTH) == 0) srcfound = 1;
-    if(strncmp(argv[DST], airports[i], MAXWIDTH) == 0) dstfound = 1;
-  }
+	// Are the names given at the command line in the list of airports?
+	int srcfound = 0;
+	int dstfound = 0;
+	for (int i = 0; i < numberOfAirports; i++)
+	{
+		if (strncmp(argv[SRC], airports[i], MAXWIDTH) == 0)
+			srcfound = 1;
+		if (strncmp(argv[DST], airports[i], MAXWIDTH) == 0)
+			dstfound = 1;
+	}
 
-  if(!srcfound) {
-    err(argv[SRC]);
-  }
-  if(!dstfound) {
-    err(argv[DST]);
-  }
+	if (!srcfound)
+	{
+		err(argv[SRC]);
+	}
+	if (!dstfound)
+	{
+		err(argv[DST]);
+	}
 
-  printf("\n------------------------------\n\n");
+	printf("\n------------------------------\n\n");
 
-  // Find the shortest paths and print the result.
-  dijkstra(flights, argv[SRC]);
-  printLabels(flights);
+	// Find the shortest paths and print the result.
+	dijkstra(flights, argv[SRC]);
+	printLabels(flights);
 
-  printf("\n------------------------------\n\n");
+	printf("\n------------------------------\n\n");
 
-  int destNum = -1;
-  int srcNum = -1;
-  // Get the index number of the destination and the source.
-  int i = 0;
-  while(i < flights->V && srcNum == -1) {
-    if( strncmp(argv[SRC], flights->array[i].label, MAXWIDTH) == 0) {
-      srcNum = i;
-    }
-    i++;
-  }
+	int destNum = -1;
+	int srcNum = -1;
+	// Get the index number of the destination and the source.
+	int i = 0;
+	while (i < flights->V && srcNum == -1)
+	{
+		if (strncmp(argv[SRC], flights->array[i].label, MAXWIDTH) == 0)
+		{
+			srcNum = i;
+		}
+		i++;
+	}
 
-  i = 0;
-  while(i < flights->V && destNum == -1) {
-    if( strncmp(argv[DST], flights->array[i].label, MAXWIDTH) == 0) {
-      destNum = i;
-    }
-    i++;
-  }
+	i = 0;
+	while (i < flights->V && destNum == -1)
+	{
+		if (strncmp(argv[DST], flights->array[i].label, MAXWIDTH) == 0)
+		{
+			destNum = i;
+		}
+		i++;
+	}
 
-  // Start at the destination, and going backwards to the source
-  // find all of the members of the path from the source to the destination.
-  // As I find each one, keep track of it in the path array.
-  int path[numberOfAirports];
+	// Start at the destination, and going backwards to the source
+	// find all of the members of the path from the source to the destination.
+	// As I find each one, keep track of it in the path array.
+	int path[numberOfAirports];
 
-  printf("Getting the path from %d to %d. \n", srcNum, destNum);
+	printf("Getting the path from %d to %d. \n", srcNum, destNum);
 
-  int j = 0;
-  int pathFinder = destNum;
-  while(pathFinder != srcNum) {
-    path[j] = flights->array[pathFinder].pred;
-    pathFinder = flights->array[pathFinder].pred;
-    j++;
-  }
+	int j = 0;
+	int pathFinder = destNum;
+	while (pathFinder != srcNum)
+	{
+		path[j] = flights->array[pathFinder].pred;
+		pathFinder = flights->array[pathFinder].pred;
+		j++;
+	}
 
-  printf("The path is %d flight(s) long: \n\n", j);
+	printf("The path is %d flight(s) long: \n\n", j);
 
-  // Print the path backwards.
-  j--;
-  while(j >= 0) {
-    printf("%s -> ", flights->jump[path[j]]);
-    j--;
-  }
+	// Print the path backwards.
+	j--;
+	while (j >= 0)
+	{
+		printf("%s -> ", flights->jump[path[j]]);
+		j--;
+	}
 
-  // Print the final destination.
-  printf("%s. \n", argv[DST]);
+	// Print the final destination.
+	printf("%s. \n", argv[DST]);
 
-  // Print the total mileage.
-  printf("%d miles.\n", flights->array[destNum].dValue);
-  printf("\n------------------------------\n");
+	// Print the total mileage.
+	printf("%d miles.\n", flights->array[destNum].dValue);
+	printf("\n------------------------------\n");
 
-//UNCOMMENT HERE
-*/
 	freeGraph(&flights, &airports, numberOfAirports);
 
 	return EXIT_SUCCESS;

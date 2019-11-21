@@ -5,13 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Sample PDX SFO",
+            "name": "Sample PDX SEA",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/routeFinder",
             "args": ["SampleRoutes.txt",
                     "PDX",
-                    "SFO"],
+                    "SEA"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
