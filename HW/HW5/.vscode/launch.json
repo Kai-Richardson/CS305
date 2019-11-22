@@ -5,13 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Sample PDX SEA",
+            "name": "Sample PDX OGG",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/routeFinder",
-            "args": ["SampleRoutes.txt",
+            "args": ["AllUSRoutes.txt",
                     "PDX",
-                    "SEA"],
+                    "OGG"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

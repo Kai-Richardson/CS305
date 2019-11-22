@@ -16,7 +16,7 @@ void dijkstra(Graph *g, char *source)
 	for (int i = 0; i < g->V; i++)
 	{
 		//Check if we found our airport
-		if (strncmp(g->array[i].label, source, 4) == 0)
+		if (strncmp(g->jump[i], source, 4) == 0)
 		{
 			src_vrt = i;			//found it
 			g->array[i].dValue = 0; //origin
@@ -24,15 +24,27 @@ void dijkstra(Graph *g, char *source)
 		}
 	}
 
+	if (src_vrt == NIL) return; //We didn't find anything!
+
 	while (!isEmpty(g))
 	{
 		int smallest_indx = getMinIndx(g); //
 
-		if (smallest_indx == NIL) break;
+		if (smallest_indx == NIL)
+			break;
 
-		int smallestD_and_cost = (g->array[smallest_indx].dValue + g->array[smallest_indx].head->cost);
+		AdjList pretest = g->array[smallest_indx];
+		AdjListNode *test = g->array[smallest_indx].head;
 
-		while (g->array[smallest_indx].head != NULL) {
+		int smallestD_and_cost = 0;
+		if (g->array[smallest_indx].head != NULL)
+		{
+			smallestD_and_cost = g->array[smallest_indx].head->cost;
+		}
+		smallestD_and_cost += g->array[smallest_indx].dValue;
+
+		while (g->array[smallest_indx].head != NULL)
+		{
 			int neighbor_indx = g->array[smallest_indx].head->dest;
 			if (g->array[neighbor_indx].dValue > smallestD_and_cost)
 			{
