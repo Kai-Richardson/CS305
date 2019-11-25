@@ -7,45 +7,54 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef enum {white, gray, black} COLOR;
+typedef enum
+{
+  white,
+  gray,
+  black
+} COLOR;
 
-typedef struct Graph {
-  int V;     //number of vertices in G
-  int ** M;  //2D array of ints, adjacency matrix
+typedef struct Graph
+{
+  int V;   //number of vertices in G
+  int **M; //2D array of ints, adjacency matrix
 } Graph;
 
-typedef struct DFS {
-  COLOR color;  // white, gray, or black
+typedef struct DFS
+{
+  COLOR color; // white, gray, or black
   int parent;
   int discover;
   int finish;
 } DFS;
 
-int time = 0;  // note that this is a global variable (not great programming
-               // practice) but need to have a global time count for DFS
-               // it would be better to pass in a pointer to a variable that
-               // stores the time that dfs could access and update, but
-               // for the purpose of keeping this lab simple, we have a
-               // global variable
+int time = 0; // note that this is a global variable (not great programming
+              // practice) but need to have a global time count for DFS
+              // it would be better to pass in a pointer to a variable that
+              // stores the time that dfs could access and update, but
+              // for the purpose of keeping this lab simple, we have a
+              // global variable
 
 // prototypes
-Graph * createEmptyGraph(int numVertices);
-int addEdge(Graph * g, int src, int dest);
-int outDegree(Graph * g, int v);
-int inDegree(Graph * g, int v);
-int degree(Graph * g, int v);
-void freeGraph(Graph * g);
-void printGraph(Graph * g);
-int isNeighbor(Graph * g, int x, int y);
-DFS * dfsInit(Graph * g);
-void dfs(Graph * g, DFS arr[], int src);
-void printReversePath(Graph * g, DFS arr[], int src, int dest);
+Graph *createEmptyGraph(int numVertices);
+int addEdge(Graph *g, int src, int dest);
+int outDegree(Graph *g, int v);
+int inDegree(Graph *g, int v);
+int degree(Graph *g, int v);
+void freeGraph(Graph *g);
+void printGraph(Graph *g);
+int isNeighbor(Graph *g, int x, int y);
+DFS *dfsInit(Graph *g);
+void dfs(Graph *g, DFS arr[], int src);
+int getDistance(Graph *g, DFS arr[], int src, int dest);
+void printReversePath(Graph *g, DFS arr[], int src, int dest);
 
 /* main creates a graph and processes it (degrees, neighbors, DFS, paths) */
-int main(void) {
+int main(void)
+{
   // create graph
   printf("Creating graph.\n");
-  Graph * g = createEmptyGraph(6);
+  Graph *g = createEmptyGraph(6);
   int ok1 = addEdge(g, 0, 5);
   int ok2 = addEdge(g, 0, 3);
   int ok3 = addEdge(g, 1, 2);
@@ -75,17 +84,20 @@ int main(void) {
   // print neighbor information
   printf("Neighbors of 0:\t");
   int i;
-  for(i = 0; i < g->V; i++) {
-    if(isNeighbor(g, 0, i)) {
+  for (i = 0; i < g->V; i++)
+  {
+    if (isNeighbor(g, 0, i))
+    {
       printf("%d  ", i);
     }
   }
   printf("\n\n");
 
   // print DFS information
-  DFS * arr = dfsInit(g);
+  DFS *arr = dfsInit(g);
   dfs(g, arr, 0);
-  for(i = 0; i < g->V; i++) {
+  for (i = 0; i < g->V; i++)
+  {
     printf("Node %d: %d/%d, parent: %d\n", i, arr[i].discover, arr[i].finish, arr[i].parent);
   }
 
@@ -96,34 +108,48 @@ int main(void) {
   printReversePath(g, arr, 0, 4);
   printReversePath(g, arr, 0, 5);
 
+  printf("Distance from 0 to 5: %d\n", getDistance(g, arr, 0, 5));
+  printf("Distance from 0 to 1: %d\n", getDistance(g, arr, 0, 1));
+  printf("Distance from 3 to 4: %d\n", getDistance(g, arr, 3, 4));
+  printf("Distance from 0 to 4: %d\n", getDistance(g, arr, 0, 4));
+  printf("Distance from 0 to 0: %d\n", getDistance(g, arr, 0, 0));
+
   freeGraph(g);
   return EXIT_SUCCESS;
 }
 
 /* createEmptyGraph sets up the graph data structure with numVertices */
-Graph * createEmptyGraph(int numVertices) {
-  if(numVertices <= 0) {
+Graph *createEmptyGraph(int numVertices)
+{
+  if (numVertices <= 0)
+  {
     return NULL;
   }
-  Graph * g = (Graph *)malloc(sizeof(Graph));
-  if(g == NULL) {
+  Graph *g = (Graph *)malloc(sizeof(Graph));
+  if (g == NULL)
+  {
     return NULL;
   }
   g->V = numVertices;
-  g->M = (int **) malloc(sizeof(int *) * numVertices);
+  g->M = (int **)malloc(sizeof(int *) * numVertices);
   int i;
-  if(g->M != NULL) {
-    for(i = 0; i < numVertices; i++) {
-      g->M[i] = (int *) malloc(sizeof(int) * numVertices);
-      if(g->M[i] == NULL) {
-	freeGraph(g);
-	return NULL;
+  if (g->M != NULL)
+  {
+    for (i = 0; i < numVertices; i++)
+    {
+      g->M[i] = (int *)malloc(sizeof(int) * numVertices);
+      if (g->M[i] == NULL)
+      {
+        freeGraph(g);
+        return NULL;
       }
     }
   }
   int j;
-  for(i = 0; i < numVertices; i++) {
-    for(j = 0; j < numVertices; j++) {
+  for (i = 0; i < numVertices; i++)
+  {
+    for (j = 0; j < numVertices; j++)
+    {
       g->M[i][j] = 0;
     }
   }
@@ -131,12 +157,15 @@ Graph * createEmptyGraph(int numVertices) {
 }
 
 /* freeGraph frees all memory associated with the graph */
-void freeGraph(Graph * g) {
-  if(g == NULL) {
+void freeGraph(Graph *g)
+{
+  if (g == NULL)
+  {
     return;
   }
   int i;
-  for(i = 0; i < g->V; i++) {
+  for (i = 0; i < g->V; i++)
+  {
     free(g->M[i]);
   }
   free(g->M);
@@ -145,14 +174,18 @@ void freeGraph(Graph * g) {
 }
 
 /* printGraph prints the graph as a matrix */
-void printGraph(Graph * g) {
-  if(g == NULL) {
+void printGraph(Graph *g)
+{
+  if (g == NULL)
+  {
     return;
   }
   int i, j;
   printf("Matrix for graph:\n");
-  for(i = 0; i < g->V; i++) {
-    for(j = 0; j < g->V; j++) {
+  for (i = 0; i < g->V; i++)
+  {
+    for (j = 0; j < g->V; j++)
+    {
       printf("%d\t", g->M[i][j]);
     }
     printf("\n");
@@ -166,46 +199,101 @@ void printGraph(Graph * g) {
 
 /* addEdge should do error-checking of the parameters and put a
    1 in the adjacency matrix at M[src][dest] */
-int addEdge(Graph * g, int src, int dest) {
-  if(g == NULL) {
+int addEdge(Graph *g, int src, int dest)
+{
+  if (g == NULL)
+  {
     printf("Graph is null. Cannot add edge.\n");
     return 0;
   }
-  // complete this function
+
+  if ((src < 0 || src >= g->V) || (dest < 0 || dest >= g->V))
+  {
+    printf("Vertex invalid. Cannot add edge.\n");
+    return 0;
+  }
+
+  if (g->M[src][dest] == 1)
+  {
+    printf("Edge already exists between %d and %d. Cannot add edge.\n", src, dest);
+    return 0;
+  }
+
+  g->M[src][dest] = 1; //add edge in our matrix
+  return 1;
+
   return 0;
 }
 
 /* outDegree returns the out degree of a vertex v */
-int outDegree(Graph * g, int v) {
-  if(g == NULL) {
+int outDegree(Graph *g, int v)
+{
+  if (g == NULL)
+  {
     return 0;
   }
-  // complete this function
-  return 0;
+
+  if (v < 0 || v >= g->V) //out-of-bounds check
+  {
+    return 0;
+  }
+  int edges = 0;
+
+  for (int i = 0; i < g->V; i++)
+  {
+    edges += g->M[v][i]; //row-major lookup of endpoints
+  }
+
+  return edges;
 }
 
 /* inDegree returns the in degree of a vertex v */
-int inDegree(Graph * g, int v) {
-  if(g == NULL) {
+int inDegree(Graph *g, int v)
+{
+  if (g == NULL)
+  {
     return 0;
   }
-  // complete this function
-  return 0;
+
+  if (v < 0 || v >= g->V) //out-of-bounds check
+  {
+    return 0;
+  }
+
+  int edges = 0;
+  for (int i = 0; i < g->V; i++)
+  {
+    edges += g->M[i][v]; //row-major lookup of startpoints
+  }
+
+  return edges;
 }
 
 /* degree returns the degree of a vertex v
  DONE FOR YOU */
-int degree(Graph * g, int v) {
+int degree(Graph *g, int v)
+{
   return inDegree(g, v) + outDegree(g, v);
 }
 
 /* isNeighbor returns 1 if edge (x, y), x to y, exists; 0 otherwise */
-int isNeighbor(Graph * g, int x, int y) {
-  if(g == NULL) {
+int isNeighbor(Graph *g, int x, int y)
+{
+  if (g == NULL)
+  {
     return 0;
   }
-  // complete this function
-  return 0;
+
+  if ((x < 0 || x >= g->V) || (y < 0 || y >= g->V)) //out-of-bounds check
+    return 0;
+
+  int edges = 0;
+  for (int i = 0; i < g->V; i++)
+  {
+    edges += g->M[x][y]; //row-major lookup of endpoints
+  }
+
+  return edges;
 }
 
 ////////////////////////////////////////////////////////
@@ -214,15 +302,18 @@ int isNeighbor(Graph * g, int x, int y) {
 
 /* dfsInit initializes the array of DFS structs, so that the parent
    is -1 for all nodes, color is white for all nodes, and discover and finish
-   times are -1 */ 
-DFS * dfsInit(Graph * g) {
-  if(g == NULL || g->V <= 0) {
+   times are -1 */
+DFS *dfsInit(Graph *g)
+{
+  if (g == NULL || g->V <= 0)
+  {
     time = 0;
     return NULL;
   }
-  DFS * arr = malloc(sizeof(DFS) * g->V);
+  DFS *arr = malloc(sizeof(DFS) * g->V);
   int i;
-  for(i = 0; i < g->V; i++) {
+  for (i = 0; i < g->V; i++)
+  {
     arr[i].parent = -1;
     arr[i].color = white;
     arr[i].discover = -1;
@@ -234,26 +325,53 @@ DFS * dfsInit(Graph * g) {
 
 /* dfs does depth-first search of the graph from src, filling in the arr
    of DFS structs as it processes, should be recursive */
-void dfs(Graph * g, DFS arr[], int src) {
+void dfs(Graph *g, DFS arr[], int src)
+{
   // do DFS from src node in graph g
-  if(g == NULL || arr == NULL) {
+  if (g == NULL || arr == NULL)
+  {
     return;
   }
-  if(src < 0 || src >= g->V) {
+  if (src < 0 || src >= g->V)
+  {
     return;
   }
 
-  // complete this function here:
+  if (src == 0)
+  {
+    printf("visited 0\n");
+  }
+
+  arr[src].color = gray;
+  time++;
+  arr[src].discover = time;
+
+  for (int i = 0; i < g->V; i++)
+  {
+    if (isNeighbor(g, src, i))
+    {
+      if (arr[i].color == white)
+      {
+        arr[i].parent = src;
+        dfs(g, arr, i);
+      }
+    }
+  }
+  arr[src].color = black;
+  time++;
+  arr[src].finish = time;
 
 }
 
 /* printReversePath prints the path from dest <- node <- node <- src <-
    note that you may assume that dfs has already filled in arr when
    doing dfs from the src */
-void printReversePath(Graph * g, DFS arr[], int src, int dest) {
+void printReversePath(Graph *g, DFS arr[], int src, int dest)
+{
   // print path from dest to src
   // note: assuming arr has values set from dfs from src
-  if(g == NULL || arr == NULL) {
+  if (g == NULL || arr == NULL)
+  {
     printf("graph or arr is invalid. No path.\n");
     return;
   }
@@ -261,11 +379,35 @@ void printReversePath(Graph * g, DFS arr[], int src, int dest) {
   printf("PATH: %d <-", dest);
   int current = dest;
 
-  // complete this function here: (about 3 lines of code)
+  while (arr[current].parent != -1)
+  {
+    printf("%d <-", arr[current].parent);
+    current = arr[current].parent;
+  }
 
-
-
-
-  //
   printf("\n");
+}
+
+//Returns distance from src to dest using the DFS data
+int getDistance(Graph *g, DFS arr[], int src, int dest) {
+  if (g == NULL || arr == NULL)
+  {
+    printf("graph or arr is invalid. No path.\n");
+    return -1;
+  }
+
+  int ancestor = dest;
+  int distance = 0;
+
+  while (arr[ancestor].parent != -1)
+  {
+    distance++;
+    if (arr[ancestor].parent == src)
+    {
+      return distance;
+    }
+    ancestor = arr[ancestor].parent;
+  }
+
+  return -1;
 }
