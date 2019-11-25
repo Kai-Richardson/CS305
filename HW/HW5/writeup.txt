@@ -1,0 +1,39 @@
+HW5 - CS305
+By Kai Richardson
+
+1a. Meets all Specifications
+
+1b.
+
+Source		Destination		Path											Miles
+------------------------------------------------------------------------------------
+LAX			PVD				LAX -> MDW -> PVD								2593
+ATL			JFK				ATL -> JFK										760
+SEA			LAX				SEA -> LAX										954
+PHX			DEN				PHX -> DEN										602
+PVD			JFK				PVD -> JFK										144
+DFW			ATL				DFW -> ATL										731
+MTM			MRI				MTM -> WFB -> PSG -> MRI						801
+HIB			HIO				HIB -> INL -> GFK -> BZN -> BOI -> RDM -> HIO	1611
+INL			ZZV				INL -> PIT -> HPN -> ZZV						1637
+WWD			YUM				WWD -> HPN -> SCE -> PHX -> YUM					2474
+YAK			BAF				YAK -> SEA -> MSO -> SBN -> BAF					3597
+AVL			BIF				AVL -> TYS -> OKC -> BIF						1414
+
+
+2. See prims.pdf in this folder for the drawing.
+
+3. See kruskal.jpg in this folder for drawing.
+
+
+
+4a. 5h37m
+
+4b. The most challenging part was finalizing the dijkstra function.
+
+Appendix A:
+I verify that the code and this write-up were authored by me. I have documented the help I have received
+in comments in the code files. I have not distributed my code to anyone else except
+via this homework submission.
+
+Appendix B: See attached code.

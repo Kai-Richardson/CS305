@@ -1,3 +1,8 @@
+/*
+ * dijkstra.c
+ * By Kai Richardson
+ * I recieved some help on the logic of dijkstra() from people in my dorm.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
