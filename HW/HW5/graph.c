@@ -154,8 +154,7 @@ void printLabels(Graph *graph)
 	int v;
 	for (v = 0; v < graph->V; ++v)
 	{
-		printf("City %d: %s.  dValue: %d\n", v, graph->jump[v],
-			   graph->array[v].dValue);
+		printf("City %d: %s.  dValue: %d\n", v, graph->jump[v], graph->array[v].dValue);
 	}
 	return;
 }

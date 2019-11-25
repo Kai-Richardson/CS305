@@ -1,104 +1,95 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stddef.h>
 #include <string.h>
-#include <limits.h>
-#include "main.h"
-#include "graph.h"
 
+#include "graph.h"
+#include "main.h"
+
+/* void dijkstra(Graph *, char *)
+ * Sets up the given graph with distance values and paths emmanating from source node specified by char*
+ */
 void dijkstra(Graph *g, char *source)
 {
-	//already initialized
-
-	int src_vrt = -1;
-
-	//Iterate through all verticies
-	for (int i = 0; i < g->V; i++)
-	{
-		//Check if we found our airport
-		if (strncmp(g->jump[i], source, 4) == 0)
-		{
-			src_vrt = i;			//found it
-			g->array[i].dValue = 0; //origin
-			break;
-		}
-	}
-
-	if (src_vrt == NIL) return; //We didn't find anything!
-
-	while (!isEmpty(g))
-	{
-		int smallest_indx = getMinIndx(g); //
-
-		if (smallest_indx == NIL)
+	int sourceIndex = -1;
+	//get the index of our source airport
+	for (sourceIndex = 0; sourceIndex < g->V; sourceIndex++)
+		if (strcmp(g->jump[sourceIndex], source) == 0)
 			break;
 
-		AdjList pretest = g->array[smallest_indx];
-		AdjListNode *test = g->array[smallest_indx].head;
+	//if we didn't find it, return error
+	if (sourceIndex == NIL)
+		return;
 
-		int smallestD_and_cost = 0;
-		if (g->array[smallest_indx].head != NULL)
-		{
-			smallestD_and_cost = g->array[smallest_indx].head->cost;
-		}
-		smallestD_and_cost += g->array[smallest_indx].dValue;
+	//Set src to 0 to let getMin function find it
+	g->array[sourceIndex].dValue = 0;
 
-		while (g->array[smallest_indx].head != NULL)
+	//while each node has not been visited and is still white
+	while (isEmpty(g) != NIL)
+	{
+		//find the small_value dValue in our graph
+		int minIndex = getMin(g);
+		if (minIndex == NIL)
+			return;
+
+		AdjListNode *neighborNode = g->array[minIndex].head;
+
+		//go through the neighbors of the node
+		while (neighborNode != NULL)
 		{
-			int neighbor_indx = g->array[smallest_indx].head->dest;
-			if (g->array[neighbor_indx].dValue > smallestD_and_cost)
+			if (g->array[neighborNode->dest].dValue > g->array[minIndex].dValue + neighborNode->cost)
 			{
-				g->array[neighbor_indx].dValue = smallestD_and_cost;
-				g->array[neighbor_indx].pred = smallest_indx;
-				break;
+				g->array[neighborNode->dest].dValue = (g->array[minIndex].dValue + neighborNode->cost); //set dValue to our calc'd cost
+				g->array[neighborNode->dest].pred = minIndex;
 			}
-			g->array[smallest_indx].head = g->array[smallest_indx].head->next;
-		}
 
-		g->array[smallest_indx].color = BLACK;
+			neighborNode = neighborNode->next; //move to next neighbor
+		}
+		g->array[minIndex].color = BLACK; //set node as traversed
 	}
 }
 
 /* int isEmpty(Graph *)
- *
- * Returns 0 if provided graph is non-empty, 1 if empty
+ * Checks if the graph is empty, returns 1 if empty.
  */
 int isEmpty(Graph *g)
 {
+	//if graph is null, error
 	if (g == NULL)
-		return 1;
+		return NIL;
 
-	//Iterate through all verticies
+	//check if any node is white
 	for (int i = 0; i < g->V; i++)
 	{
 		if (g->array[i].color == WHITE)
-			return 0;
+			return 0; //found one, not empty
 	}
-
-	return 1;
+	return 1; //not found, empty
 }
 
-/* int getMinIndx(Graph *)
- *
- * Returns the index of the smallest white node in the provided graph
+/* int getMin(Graph *)
+ * Gets the node with the smallest dValue in the graph that's white
  */
-int getMinIndx(Graph *g)
+int getMin(Graph *g)
 {
+	//if graph is null, error
 	if (g == NULL)
-		return -1;
+		return NIL;
 
-	int small_index = -1;
-	int small_value = INT_MAX;
+	int small_value = INF; //keep track of value, set to intmax for comparison/set
+	int small_index;	   //keep track of index
 
-	//Iterate through all verticies
+	//try and find a dValue smaller than our tracked smallest
 	for (int i = 0; i < g->V; i++)
 	{
-		if ((g->array[i].color == WHITE) && (g->array[i].dValue < small_value))
+		if (g->array[i].color == WHITE && g->array[i].dValue < small_value)
 		{
+			small_value = g->array[i].dValue; //Found one! Set our values.
 			small_index = i;
-			small_value = g->array[i].dValue;
 		}
 	}
+	//if no change from init, error
+	if (small_value == INT_MAX)
+		return NIL;
 
 	return small_index;
 }

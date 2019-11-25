@@ -23,6 +23,6 @@ void usage(char *s);
 // These functions are what students implement in dijkstra.c
 void dijkstra(Graph *g, char *source);
 int isEmpty(Graph *g);
-int getMinIndx(Graph *g);
+int getMin(Graph *g);
 
 #endif
